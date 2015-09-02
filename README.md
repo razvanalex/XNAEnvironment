@@ -7,6 +7,7 @@ This porject is an enviroment made in C# with XNA 4.0 framework. The engine is a
 * Added day/night cycle
 * Added light scattering
 * Added clouds rendering system
+* Added cloudy and sunny weather
 * Changed texture for sun
 * New billboard system that supports more type of billboards
 * Added instanced billboard with level of details
@@ -25,6 +26,10 @@ This porject is an enviroment made in C# with XNA 4.0 framework. The engine is a
 * New terrain rendering system(may be quadtree rendering)
 * Shadows for billboards
 * Add new billboards
+* New textures
+* Add rain and thunder
+* Add first-person and third-person camera
+* Add support for VSM (variance shadow mapping)
 
 #Known Issues
 * The game is laggy and not bug free
