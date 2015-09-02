@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics" xmlns:Framework="Microsoft.Xna.Framework">
+  <Asset Type="Graphics:NodeContent">
+    <Name>RootNode</Name>
+    <Identity>
+      <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Fir\Far_FarFir_Tree.fbx</SourceFilename>
+      <SourceTool>FbxImporter</SourceTool>
+    </Identity>
+    <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
+    <Children>
+      <Child>
+        <Name>Model</Name>
+        <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
+        <Children>
+          <Child>
+            <Name>Fir_Tree1</Name>
+            <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
+          </Child>
+        </Children>
+      </Child>
+      <Child Type="Graphics:MeshContent">
+        <Name>Mesh1</Name>
+        <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
+        <Positions>-111.26474 8.17124146E-14 -0.325228721 -111.26474 759.5073 -0.325228721 -4.42099047 759.5073 -0.325228721 -0.596074939 759.5073 -0.325228721 0.325228721 759.5073 -0.325228721 102.42276 759.5073 -0.325228721 102.42276 8.17124146E-14 -0.325228721 0.325228721 8.17124146E-14 -0.325228721 -4.42099047 8.17124146E-14 -0.325228721 0.325228721 8.17124146E-14 -111.26474 0.325228721 759.5073 -111.26474 0.325228721 759.5073 -4.42099047 0.325228721 759.5073 -0.596074939 0.325228721 759.5073 -0.325228721 0.325228721 759.5073 102.42276 0.325228721 8.17124146E-14 102.42276 0.325228721 8.17124146E-14 -0.325228721 0.325228721 8.17124146E-14 -4.42099047</Positions>
+        <Geometry>
+          <Batch>
+            <Material>#Resource1</Material>
+            <Indices>2 1 0 0 3 2 4 3 0 4 5 3 6 5 4 6 7 5 8 7 6 11 10 9 9 12 11 13 12 9 13 14 12 15 14 13 15 16 14 17 16 15</Indices>
+            <Vertices>
+              <PositionIndices>0 1 2 3 8 4 7 5 6 9 10 11 12 17 13 16 14 15</PositionIndices>
+              <Channels>
+                <VertexChannel Name="Normal0" ElementType="Framework:Vector3">0 0 -1 0 0 -1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -1 0 0 -1 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0</VertexChannel>
+                <VertexChannel Name="TextureCoordinate0" ElementType="Framework:Vector2">1.01030295E-14 1 0 0 0.5 0 0.5178996 0 0.5 1 0.522211 0 0.522211 1 1 0 1 1 1.01030295E-14 1 0 0 0.5 0 0.5178996 0 0.5 1 0.519167066 0 0.519167066 1 1 0 1 1</VertexChannel>
+                <VertexChannel Name="Color0" ElementType="Framework:Vector4">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</VertexChannel>
+              </Channels>
+            </Vertices>
+          </Batch>
+        </Geometry>
+      </Child>
+    </Children>
+  </Asset>
+  <Resources>
+    <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
+      <Name>M_4ABIPIN0</Name>
+      <Identity>
+        <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Fir\Far_FarFir_Tree.fbx</SourceFilename>
+        <SourceTool>FbxImporter</SourceTool>
+      </Identity>
+      <OpaqueData>
+        <Data Key="DiffuseColor" Type="Framework:Vector3">0.647058845 0.654902 0.596078455</Data>
+        <Data Key="EmissiveColor" Type="Framework:Vector3">0 0 0</Data>
+        <Data Key="Alpha" Type="float">1</Data>
+        <Data Key="SpecularColor" Type="Framework:Vector3">0.33 0.33 0.33</Data>
+        <Data Key="SpecularPower" Type="float">20</Data>
+      </OpaqueData>
+      <Textures>
+        <Texture Key="Texture">
+          <OpaqueData>
+            <Data Key="TextureCoordinate">TextureCoordinate0</Data>
+          </OpaqueData>
+          <Reference>#External1</Reference>
+        </Texture>
+      </Textures>
+    </Resource>
+  </Resources>
+  <ExternalReferences>
+    <ExternalReference ID="#External1" TargetType="Graphics:TextureContent">..\..\..\..\..\..\..\WindowsGame2Content\models\Trees\Fir\Far_FarFir_Tree\M_4ABIPIN0.png</ExternalReference>
+  </ExternalReferences>
+</XnaContent>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<XnaContent xmlns:Graphics="Microsoft.Xna.Framework.Content.Pipeline.Graphics" xmlns:Framework="Microsoft.Xna.Framework">
+  <Asset Type="Graphics:MeshContent">
+    <Name>Plane_Node</Name>
+    <Identity>
+      <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\plane.fbx</SourceFilename>
+      <SourceTool>FbxImporter</SourceTool>
+    </Identity>
+    <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
+    <Positions>1 0 -1 -1 0 -1 -1 0 1 1 0 1</Positions>
+    <Geometry>
+      <Batch>
+        <Material>#Resource1</Material>
+        <Indices>2 1 0 0 3 2</Indices>
+        <Vertices>
+          <PositionIndices>0 1 2 3</PositionIndices>
+          <Channels>
+            <VertexChannel Name="Normal0" ElementType="Framework:Vector3">0 1 0 0 1 0 0 1 0 0 1 0</VertexChannel>
+            <VertexChannel Name="TextureCoordinate0" ElementType="Framework:Vector2">1 1 0 1 0 0 1 0</VertexChannel>
+            <VertexChannel Name="Color0" ElementType="Framework:Vector4">1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1</VertexChannel>
+          </Channels>
+        </Vertices>
+      </Batch>
+    </Geometry>
+  </Asset>
+  <Resources>
+    <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
+      <Name></Name>
+      <Identity>
+        <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\plane.fbx</SourceFilename>
+        <SourceTool>FbxImporter</SourceTool>
+      </Identity>
+      <OpaqueData>
+        <Data Key="Effect">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;Trait Data="..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 12.0\Common7\IDE\Extensions\Microsoft\VsGraphics\Assets\Effects\Phong.dgsl" Desc="" Flags="9240" Id="Effect" Name="Effect" Type="9" Vis="1" xmlns="Trait" /&gt;</Data>
+        <Data Key="MaterialAmbient" Type="Framework:Vector4">1 1 1 1</Data>
+        <Data Key="MaterialDiffuse" Type="Framework:Vector4">1 1 1 1</Data>
+        <Data Key="MaterialSpecular" Type="Framework:Vector4">0 0 0 0</Data>
+        <Data Key="MaterialSpecularPower" Type="float">1</Data>
+        <Data Key="Texture1">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;Trait Data="" Desc="" Flags="8200" Id="Texture1" Name="Texture1" Type="9" Vis="4" xmlns="Trait" /&gt;</Data>
+      </OpaqueData>
+    </Resource>
+  </Resources>
+</XnaContent>

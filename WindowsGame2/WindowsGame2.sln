@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGame2", "WindowsGame2\WindowsGame2\WindowsGame2.csproj", "{B1515740-9F76-4341-9A0A-24C823D521F0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGame2Content", "WindowsGame2\WindowsGame2Content\WindowsGame2Content.contentproj", "{8CC7FF40-D83D-4647-A5FE-AA901308DEF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstancedModelPipeline", "InstancedModelPipeline\InstancedModelPipeline.csproj", "{1E0C98D6-41D3-4C90-A607-1E608FB87E21}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1515740-9F76-4341-9A0A-24C823D521F0}.Debug|x86.ActiveCfg = Debug|x86
+		{B1515740-9F76-4341-9A0A-24C823D521F0}.Debug|x86.Build.0 = Debug|x86
+		{B1515740-9F76-4341-9A0A-24C823D521F0}.Release|x86.ActiveCfg = Release|x86
+		{B1515740-9F76-4341-9A0A-24C823D521F0}.Release|x86.Build.0 = Release|x86
+		{8CC7FF40-D83D-4647-A5FE-AA901308DEF4}.Debug|x86.ActiveCfg = Debug|x86
+		{8CC7FF40-D83D-4647-A5FE-AA901308DEF4}.Release|x86.ActiveCfg = Release|x86
+		{1E0C98D6-41D3-4C90-A607-1E608FB87E21}.Debug|x86.ActiveCfg = Debug|x86
+		{1E0C98D6-41D3-4C90-A607-1E608FB87E21}.Debug|x86.Build.0 = Debug|x86
+		{1E0C98D6-41D3-4C90-A607-1E608FB87E21}.Release|x86.ActiveCfg = Release|x86
+		{1E0C98D6-41D3-4C90-A607-1E608FB87E21}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal
