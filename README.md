@@ -21,6 +21,8 @@ This project is an environment made in C# with XNA 4.0 framework. The engine is 
 * Added FPS counter
 * Implemented depth blur(not fully working - due to code changing; this function isn't working now, but it wil be fixed)
 * Implemented simple shadow mapping for models(not working now)
+* Added possibility to change texturetiling for each taexture
+* First pre-release on GitHub - v0.1-alpha
 
 #Upcoming features
 * New terrain rendering system(may be quadtree rendering)
