@@ -1,5 +1,5 @@
 # XNAEnviroment
-This porject is an enviroment made in C# with XNA 4.0 framework. The engine is an union of many projects made in XNA 3.0/3.1, adapted and converted for XNA 4.0, with my work. This project contains: sky with light scattering with day/night cycle and sun/moon, water plane, terrain, billboard system(for trees rendering) and much more. New futures are comming soon! This project is free for all, so you can use it as you wish, but include me in your devs list(I've been working hard for this).
+This project is an enviroment made in C# with XNA 4.0 framework. The engine is an union of many projects made in XNA 3.0/3.1, adapted and converted for XNA 4.0, with my work. This project contains: sky with light scattering with day/night cycle and sun/moon, water plane, terrain, billboard system(for trees rendering) and much more. New futures are comming soon! This project is free for all, so you can use it as you wish, but include me in your devs list(I've been working hard for this).
 
 #Changelog
 * First version uploaded in GitHub!
