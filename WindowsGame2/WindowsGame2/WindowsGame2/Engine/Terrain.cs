@@ -234,8 +234,6 @@ namespace Engine
             effect.Parameters["BaseTexture"].SetValue(baseTexture);
             effect.Parameters["LightDirection"].SetValue(lightDirection);
             effect.Parameters["LightColor"].SetValue(lightColor);
-       
-           // effect.Parameters["NoOfTextures"].SetValue(NoOfTextures);
             effect.Parameters["TextureTiling"].SetValue(textureTiling);
             
             effect.Parameters["RTexture"].SetValue(RTexture);

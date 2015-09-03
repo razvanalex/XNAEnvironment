@@ -39,9 +39,8 @@ namespace Engine
         const float waterHeight = 5.0f;
         RenderTarget2D refractionTarg;
 
-
         public Water(ContentManager content, GraphicsDevice graphics,
-            Vector3 position, Vector2 size, float WaveLength, float WaveHeight, float WaveSpeed, Vector3 LightDirection, Vector3 LightColor)
+            Vector3 position, Vector2 size, float WaveLength, float WaveHeight, float WaveSpeed, Vector3 LightDirection, Vector3 LightColor, float SunFactor)
         {
             this.content = content;
             this.graphics = graphics;
@@ -60,7 +59,8 @@ namespace Engine
             waterEffect.Parameters["WaveSpeed"].SetValue(WaveSpeed);
             waterEffect.Parameters["LightDirection"].SetValue(Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)));
             waterEffect.Parameters["LightColor"].SetValue(LightColor);
-  
+            waterEffect.Parameters["SunFactor"].SetValue(SunFactor);
+
             refractionTarg = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             
             reflectionTarg = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
@@ -191,14 +191,14 @@ namespace Engine
 
         protected override void LoadContent()
         {
-            water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);//65
+            water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);//65
             
             base.LoadContent();
         }
 
         public override void Update(GameTime gameTime)
         {
-            water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);//65
+            water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);//65
             UpdateWater();
 
             base.Update(gameTime);
@@ -230,25 +230,25 @@ namespace Engine
                         WaveLength = 0.6f;
                         WaveHeight = 0.2f;
                         WaveSpeed = 0.004f;
-                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                     case 2:
                         WaveLength = 0.6f;
                         WaveHeight = 0.2f;
                         WaveSpeed = 0.04f;
-                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                     case 3:
                         WaveLength = 0.003f;
                         WaveHeight = 0.01f;
                         WaveSpeed = 0.02f;
-                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                     case 4:
                         WaveLength = 0.06f;
                         WaveHeight = 0.02f;
                         WaveSpeed = 0.004f;
-                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(game.Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                 }
             WaterState = 0;

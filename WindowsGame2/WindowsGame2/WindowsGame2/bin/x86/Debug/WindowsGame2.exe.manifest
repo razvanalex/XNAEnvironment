@@ -68,14 +68,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WindowsGame2.exe" size="84392">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WindowsGame2.exe" size="84904">
       <assemblyIdentity name="WindowsGame2" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>wF9mpRGDYYiSYHw3alaRt+2mz94=</dsig:DigestValue>
+        <dsig:DigestValue>smxH1owwVKDOaojKBxoDbRwem7o=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -130,16 +130,16 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>F7fu9OFISbgux6v6KizTpTL1Wag=</dsig:DigestValue>
+      <dsig:DigestValue>oseThQL84hDtT01OUGzBvkX//Pg=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Effects\Water.xnb" size="16724">
+  <file name="Content\Effects\Water.xnb" size="16900">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>NKVRpl5+m+wna+hpEc7Qorxxp+M=</dsig:DigestValue>
+      <dsig:DigestValue>bzpK0HVWIn/w75d8pmrgLNl9wXA=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\models\InstancedModel.xnb" size="8772">

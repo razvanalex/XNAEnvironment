@@ -15,6 +15,7 @@ float3 BaseColor = float3(0.2, 0.2, 0.8);
 float BaseColorAmount = 0.3f;
 float4  WaterColor = float4(0.5f, 0.79f, 0.75f, 1.0f);
 float4  WaterColor2 = float4(0.10980f, 0.30196f, 0.49412f, 1.0f);
+float SunFactor = 0.5;
 
 float WaveLength;// = 0.6;
 float WaveHeight;// = 0.2;
@@ -152,17 +153,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 reflectionVector = normalize(reflect(viewDirection, normal.bgr));
 
 	float sunPower = 150;
-	float SunFactor = 0.5;
+	float sunFactor = SunFactor;
 	
 	if (CameraPosition.y < WaterHeigh)
 	{
 		sunPower = 15.0f;
-		SunFactor = 2.5f;
+		sunFactor = 2.5f;
 	}
 	
 	float specular = pow(saturate(dot(reflectionVector, float3(-LightDirection.x, LightDirection.y, -LightDirection.z))), sunPower);
 
-	float3 sunLight = SunFactor * specular * float4(LightColor, 1);
+	float3 sunLight = sunFactor * specular * float4(LightColor, 1);
 
 	float frasnelTerm = saturate(dot(viewDirection, normal.rgb));
 

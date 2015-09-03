@@ -197,8 +197,7 @@ namespace WindowsGame2
             terrain.textureTiling[3] = 100; // Blue Texture
             #endregion
 
-            water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);//65
-
+            water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);//65
             #region BillBoards
             Random rnd = new Random();
             Random rotRND = new Random();
@@ -426,25 +425,25 @@ namespace WindowsGame2
                         WaveLength = 0.6f;
                         WaveHeight = 0.2f;
                         WaveSpeed = 0.004f;
-                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                     case 2:
                         WaveLength = 0.6f;
                         WaveHeight = 0.2f;
                         WaveSpeed = 0.04f;
-                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                     case 3:
                         WaveLength = 0.003f;
                         WaveHeight = 0.01f;
                         WaveSpeed = 0.02f;
-                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                     case 4:
                         WaveLength = 0.06f;
                         WaveHeight = 0.02f;
                         WaveSpeed = 0.004f;
-                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
+                        water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
                         break;
                 }
 
@@ -469,8 +468,8 @@ namespace WindowsGame2
        
             //  Thread t1 = new Thread(delegate()
            // {
-                water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);
-                //terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//Terain"), 100f, THeight, Content.Load<Texture2D>("textures//Terrain//grass"), 1, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, GraphicsDevice, Content);
+            water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
+            //terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//Terain"), 100f, THeight, Content.Load<Texture2D>("textures//Terrain//grass"), 1, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, GraphicsDevice, Content);
           //  });
            // t1.Start();          
             

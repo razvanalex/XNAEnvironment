@@ -112,6 +112,7 @@ namespace Engine.Sky
         }
 
         public float Light_anim = 1.6f, r = 0, g = 0, b = 0, speed = 0.0005f, a = 0.2f;
+        public float SunFactor;
         public Vector3 AmbientColor;
         bool sunset = false;
         public override void Update(GameTime gameTime)
@@ -125,6 +126,7 @@ namespace Engine.Sky
             {
                 LightColor = new Vector3(2);
                 AmbientColor = new Vector3(0.2f);
+                SunFactor = 0.5f;
             }
             else if ((Light_anim >= (MathHelper.Pi / 2 - 0.20f) && Light_anim <= MathHelper.Pi / 2 + 0.20f) || (Light_anim >= (MathHelper.Pi * 3 / 2 - 0.20f) && Light_anim <= MathHelper.Pi * 3 / 2 + 0.20f))
             {
@@ -137,13 +139,15 @@ namespace Engine.Sky
                     g = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 15;
                     b = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 10;
                     a = ((Light_anim - MathHelper.PiOver2 + 0.10f));
+                    SunFactor = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 2;
                 }
                 else //sunset
                 {
                     r = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 20;
                     g = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 15;
                     b = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 10;
-                    a = ((Light_anim - 3 * MathHelper.PiOver2 - 0.10f));
+                    a = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f));
+                    SunFactor = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 2;
 
                 }
                 if (r >= 2) r = 2;
@@ -153,8 +157,9 @@ namespace Engine.Sky
                 if (b >= 2) b = 2;
                 if (b <= -0.2f) b = -0.2f;
                 if (a >= 0.2f) a = 0.2f;
-                if (a <= -0.2f) a = -0.2f;
-
+                if (a <= -0.2f) a = -0.12f;
+                if (SunFactor <= 0f) SunFactor = 0f;
+                
                 LightColor = new Vector3(r, g, b);
                 AmbientColor = new Vector3(a);
             }
@@ -162,6 +167,7 @@ namespace Engine.Sky
             {
                 LightColor = new Vector3(-0.2f);
                 AmbientColor = new Vector3(-0.2f);
+                SunFactor = 0;
             }
 
             base.Update(gameTime);

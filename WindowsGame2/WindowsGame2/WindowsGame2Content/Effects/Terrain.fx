@@ -7,8 +7,8 @@ float3 AmbientColor = float3(-0.2, -0.2, -0.2);
 float WaterHeigh = 600;
 float4  WaterColor = float4(0.10980f, 0.30196f, 0.49412f, 1.0f);
 
-#define NoOfTexture 4
-float TextureTiling[NoOfTexture];
+const static int NoOfTextures = 4;
+float TextureTiling[NoOfTextures];
 
 float4 ClipPlane;
 bool ClipPlaneEnabled = false;
@@ -113,7 +113,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float3 normal = normalize(input.Normal);
 	light = clamp(light + 0.4f, 0, 1);
 	light += saturate(dot(lightDir, normal)) * LightColor;
-	
+
 	float3 base = tex2D(BaseTextureSampler, input.UV * TextureTiling[0]);
 	float3 rTex = tex2D(RTextureSampler, input.UV * TextureTiling[1]);
 	float3 gTex = tex2D(GTextureSampler, input.UV * TextureTiling[2]);
