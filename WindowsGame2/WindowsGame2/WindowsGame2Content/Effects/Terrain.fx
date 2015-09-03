@@ -4,9 +4,11 @@ float4x4 Projection;
 float3 LightDirection = float3(1, -1, 0);
 float3 LightColor = float3(1, 1, 1);
 float3 AmbientColor = float3(-0.2, -0.2, -0.2);
-float TextureTiling = 1;
 float WaterHeigh = 600;
 float4  WaterColor = float4(0.10980f, 0.30196f, 0.49412f, 1.0f);
+
+#define NoOfTexture 4
+float TextureTiling[NoOfTexture];
 
 float4 ClipPlane;
 bool ClipPlaneEnabled = false;
@@ -106,22 +108,21 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	if (ClipPlaneEnabled)
 	clip(dot(float4(input.WorldPosition, 1), ClipPlane));
 
-	//float light = dot(normalize(input.Normal), normalize(LightDirection));
 	float3 light = AmbientColor;
-		float3 lightDir = normalize(LightDirection);
-		float3 normal = normalize(input.Normal);
-		light = clamp(light + 0.4f, 0, 1);
+	float3 lightDir = normalize(LightDirection);
+	float3 normal = normalize(input.Normal);
+	light = clamp(light + 0.4f, 0, 1);
 	light += saturate(dot(lightDir, normal)) * LightColor;
+	
+	float3 base = tex2D(BaseTextureSampler, input.UV * TextureTiling[0]);
+	float3 rTex = tex2D(RTextureSampler, input.UV * TextureTiling[1]);
+	float3 gTex = tex2D(GTextureSampler, input.UV * TextureTiling[2]);
+	float3 bTex = tex2D(BTextureSampler, input.UV * TextureTiling[3]);
 
-	float3 rTex = tex2D(RTextureSampler, input.UV * TextureTiling);
-		float3 gTex = tex2D(GTextureSampler, input.UV * TextureTiling);
-		float3 bTex = tex2D(BTextureSampler, input.UV * TextureTiling);
-		float3 base = tex2D(BaseTextureSampler, input.UV * TextureTiling);
+	float3 weightMap = tex2D(WeightMapSampler, input.UV);
 
-		float3 weightMap = tex2D(WeightMapSampler, input.UV);
-
-		float3 output = clamp(1.0f - weightMap.r - weightMap.g - weightMap.b, 0, 1);
-		output *= base;
+	float3 output = clamp(1.0f - weightMap.r - weightMap.g - weightMap.b, 0, 1);
+	output *= base;
 
 	output += weightMap.r * rTex + weightMap.g * gTex + weightMap.b * bTex;
 	

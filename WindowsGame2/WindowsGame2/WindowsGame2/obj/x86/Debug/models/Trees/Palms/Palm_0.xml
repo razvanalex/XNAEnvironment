@@ -3,7 +3,7 @@
   <Asset Type="Graphics:NodeContent">
     <Name>Model</Name>
     <Identity>
-      <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
+      <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -57,7 +57,7 @@
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Name>pinetreebark1</Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -79,7 +79,7 @@
     <Resource ID="#Resource2" Type="Graphics:BasicMaterialContent">
       <Name>palmtreeleaf</Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -101,7 +101,7 @@
     <Resource ID="#Resource3" Type="Graphics:BasicMaterialContent">
       <Name>White</Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Palms\Palm.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>

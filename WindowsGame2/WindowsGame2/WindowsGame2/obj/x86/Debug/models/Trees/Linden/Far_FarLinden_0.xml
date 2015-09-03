@@ -3,7 +3,7 @@
   <Asset Type="Graphics:NodeContent">
     <Name>RootNode</Name>
     <Identity>
-      <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Far_FarLinden.fbx</SourceFilename>
+      <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Far_FarLinden.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -62,7 +62,7 @@
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Name></Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Far_FarLinden.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Far_FarLinden.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -84,7 +84,7 @@
     <Resource ID="#Resource2" Type="Graphics:BasicMaterialContent">
       <Name></Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Far_FarLinden.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Far_FarLinden.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>

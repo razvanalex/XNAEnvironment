@@ -191,6 +191,10 @@ namespace WindowsGame2
             terrain.GTexture = Content.Load<Texture2D>("textures//Terrain//grass_tile");
             terrain.BTexture = Content.Load<Texture2D>("textures//Terrain//snow");
             terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
+            terrain.textureTiling[0] = 100; // Base Texture
+            terrain.textureTiling[1] = 100; // Red Texture
+            terrain.textureTiling[2] = 1000; // Green Texture
+            terrain.textureTiling[3] = 100; // Blue Texture
             #endregion
 
             water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor);//65

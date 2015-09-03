@@ -195,6 +195,7 @@
       <Name>grass_tile</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
     </Compile>
     <Compile Include="textures\Terrain\rock.bmp">
       <Name>rock</Name>
