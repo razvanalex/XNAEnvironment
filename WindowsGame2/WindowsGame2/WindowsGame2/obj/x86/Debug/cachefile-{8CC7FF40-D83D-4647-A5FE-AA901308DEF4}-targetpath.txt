@@ -80,9 +80,9 @@ Content\textures\Terrain\grass\grass.xnb
 Content\textures\Terrain\rock\rock.xnb
 Content\textures\Terrain\snow\snow.xnb
 Content\textures\Terrain\sand\sand.xnb
-Content\textures\Terrain\grass\weightMap.xnb
-Content\textures\Terrain\rock\weightMap.xnb
-Content\textures\Terrain\snow\weightMap.xnb
-Content\textures\Terrain\sand\weightMap.xnb
 Content\textures\Terrain\rocks_sand\rocks_sand.xnb
-Content\textures\Terrain\rocks_sand\weightMap.xnb
+Content\textures\Terrain\grass\grassMap.xnb
+Content\textures\Terrain\rock\rockMap.xnb
+Content\textures\Terrain\rocks_sand\rocks_sandMap.xnb
+Content\textures\Terrain\sand\sandMap.xnb
+Content\textures\Terrain\snow\snowMap.xnb

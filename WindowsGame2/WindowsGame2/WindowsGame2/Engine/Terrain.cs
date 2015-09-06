@@ -30,7 +30,7 @@ namespace Engine
         public Vector3 lightColor { get; set; }
 
         public Texture2D[] Textures = new Texture2D[NoOfTextures];
-        public Texture2D[] WeightMap = new Texture2D[NoOfTextures];
+        public Texture2D[] TexturesMaps = new Texture2D[NoOfTextures];
 
         public Texture2D DetailTexture;
         public float DetailDistance = 0;
@@ -239,8 +239,8 @@ namespace Engine
 
             for (int i = 1; i <= NoOfTextures; i++)
             {
-                effect.Parameters[("Texture" + i).ToString()].SetValue(Textures[i - 1]);             
-                effect.Parameters[("WeightMap" + i).ToString()].SetValue(WeightMap[i - 1]);
+                effect.Parameters[("Texture" + i).ToString()].SetValue(Textures[i - 1]);
+                effect.Parameters[("TexturesMaps" + i).ToString()].SetValue(TexturesMaps[i - 1]);
             }
 
             effect.Parameters["DetailTexture"].SetValue(DetailTexture);

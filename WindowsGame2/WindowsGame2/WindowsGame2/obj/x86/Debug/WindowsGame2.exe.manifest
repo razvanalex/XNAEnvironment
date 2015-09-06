@@ -75,7 +75,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>/mzUvv+kuN7XrSULQx0t7fibN6M=</dsig:DigestValue>
+        <dsig:DigestValue>zdAlkuXB8kzSz6e8BtkytWdaA0k=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -124,13 +124,13 @@
       <dsig:DigestValue>OuIUMeWhd+SlVFy1VyJfh1BW4cM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Effects\Terrain.xnb" size="15548">
+  <file name="Content\Effects\Terrain.xnb" size="15584">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>nLDG+z7gVgcFqvK3B7M+EokwInI=</dsig:DigestValue>
+      <dsig:DigestValue>Hw84Si1QCvj4lOFdW24NA+YqHg8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Effects\Water.xnb" size="16900">
@@ -718,7 +718,7 @@
       <dsig:DigestValue>TaE1VZ3qr3/K/e4TLythHeDA60U=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\textures\Terrain\grass\weightMap.xnb" size="1398323">
+  <file name="Content\textures\Terrain\grass\grassMap.xnb" size="1398323">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
@@ -745,7 +745,7 @@
       <dsig:DigestValue>TAlYaG37+Y+CTsgGcNEGnzZlfSo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\textures\Terrain\rock\weightMap.xnb" size="1398323">
+  <file name="Content\textures\Terrain\rock\rockMap.xnb" size="1398323">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
@@ -763,7 +763,7 @@
       <dsig:DigestValue>/a3k7UmJpc3jecooMar/fQR1kPk=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\textures\Terrain\rocks_sand\weightMap.xnb" size="1398323">
+  <file name="Content\textures\Terrain\rocks_sand\rocks_sandMap.xnb" size="1398323">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
@@ -781,7 +781,7 @@
       <dsig:DigestValue>On4CQsUEDBB7Cgsg6tuZ7C0aHyo=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\textures\Terrain\sand\weightMap.xnb" size="1398323">
+  <file name="Content\textures\Terrain\sand\sandMap.xnb" size="1398323">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
@@ -796,10 +796,10 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>OkfBUCSwKvV6/3xWyMPXUW20Bu4=</dsig:DigestValue>
+      <dsig:DigestValue>QcdVY41Fk47HPfpLRqp1942O6X8=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\textures\Terrain\snow\weightMap.xnb" size="1398323">
+  <file name="Content\textures\Terrain\snow\snowMap.xnb" size="1398323">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />

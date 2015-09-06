@@ -331,25 +331,25 @@ namespace WindowsGame2
 
         public void TerrainTextures()
         {
-            //weightMaps
-            terrain.WeightMap[0] = Content.Load<Texture2D>("textures//Terrain//grass//weightMap");
-            terrain.WeightMap[1] = Content.Load<Texture2D>("textures//Terrain//rock//weightMap");
-            terrain.WeightMap[2] = Content.Load<Texture2D>("textures//Terrain//sand//weightMap");
-            terrain.WeightMap[3] = Content.Load<Texture2D>("textures//Terrain//snow//weightMap");
-            terrain.WeightMap[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//weightMap");
-            //textures  rocks_sand
+            //TexturesMaps
+            terrain.TexturesMaps[0] = Content.Load<Texture2D>("textures//Terrain//grass//grassMap");
+            terrain.TexturesMaps[1] = Content.Load<Texture2D>("textures//Terrain//rock//rockMap");
+            terrain.TexturesMaps[2] = Content.Load<Texture2D>("textures//Terrain//sand//sandMap");
+            terrain.TexturesMaps[3] = Content.Load<Texture2D>("textures//Terrain//snow//snowMap");
+            terrain.TexturesMaps[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//rocks_sandMap");
+            //Textures
             terrain.Textures[0] = Content.Load<Texture2D>("textures//Terrain//grass//grass");
             terrain.Textures[1] = Content.Load<Texture2D>("textures//Terrain//rock//rock");
             terrain.Textures[2] = Content.Load<Texture2D>("textures//Terrain//sand//sand");
             terrain.Textures[3] = Content.Load<Texture2D>("textures//Terrain//snow//snow");
             terrain.Textures[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//rocks_sand");
-            //detail
+            //Detail Texture
             terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
-            //tiling
+            //Tiling
             terrain.textureTiling[0] = 1000;
             terrain.textureTiling[1] = 1000;
             terrain.textureTiling[2] = 100;
-            terrain.textureTiling[3] = 100;
+            terrain.textureTiling[3] = 1000;
             terrain.textureTiling[4] = 1000;
         }
 

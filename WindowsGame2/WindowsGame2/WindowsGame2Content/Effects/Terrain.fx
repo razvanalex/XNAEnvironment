@@ -55,38 +55,38 @@ sampler TextureSampler[NoOfTextures] = {
 	}
 };
 
-texture WeightMap1, WeightMap2, WeightMap3, WeightMap4, WeightMap5;
-sampler WeightMapSampler[NoOfTextures] = {
+texture TexturesMaps1, TexturesMaps2, TexturesMaps3, TexturesMaps4, TexturesMaps5;
+sampler TexturesMapSampler[NoOfTextures] = {
 	sampler_state {
-		texture = <WeightMap1>;
+		texture = <TexturesMaps1>;
 		AddressU = Clamp;
 		AddressV = Clamp;
 		MinFilter = Linear;
 		MagFilter = Linear;
 	},
 	sampler_state {
-		texture = <WeightMap2>;
+		texture = <TexturesMaps2>;
 		AddressU = Clamp;
 		AddressV = Clamp;
 		MinFilter = Linear;
 		MagFilter = Linear;
 	},
 	sampler_state {
-		texture = <WeightMap3>;
+		texture = <TexturesMaps3>;
 		AddressU = Clamp;
 		AddressV = Clamp;
 		MinFilter = Linear;
 		MagFilter = Linear;
 	},
 	sampler_state {
-		texture = <WeightMap4>;
+		texture = <TexturesMaps4>;
 		AddressU = Clamp;
 		AddressV = Clamp;
 		MinFilter = Linear;
 		MagFilter = Linear;
 	},
 	sampler_state {
-		texture = <WeightMap5>;
+		texture = <TexturesMaps5>;
 		AddressU = Clamp;
 		AddressV = Clamp;
 		MinFilter = Linear;
@@ -148,22 +148,22 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	light = clamp(light + 0.4f, 0, 1);
 	light += saturate(dot(lightDir, normal)) * LightColor;
 
-	float3 Tex[NoOfTextures], weightMap[NoOfTextures];
+	float3 Tex[NoOfTextures], TexMaps[NoOfTextures];
 
 	for (int i = 0; i < NoOfTextures; i++)
 	{
 		Tex[i] = tex2D(TextureSampler[i], input.UV * TextureTiling[i]);
-		weightMap[i] = tex2D(WeightMapSampler[i], input.UV);
+		TexMaps[i] = tex2D(TexturesMapSampler[i], input.UV);
 	}
 
 	float dif = 1.0f;
 	for (int i = 0; i < NoOfTextures; i++)
-		dif -= weightMap[i].r;
+		dif -= TexMaps[i].r;
 
 	float3 output = clamp(dif, 0, 1);
 
 	for (int i = 0; i < NoOfTextures; i++)
-		output += weightMap[i].r * Tex[i];
+		output += TexMaps[i].r * Tex[i];
 	
 	float bBlendDist;
 	float bBlendWidth;
