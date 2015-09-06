@@ -23,20 +23,21 @@ namespace Engine
         GraphicsDevice GraphicsDevice; // Graphics device to draw with
         Texture2D heightMap; // Heightmap texture
 
-        Texture2D baseTexture;
-        public const int NoOfTextures = 4;
+        public const int NoOfTextures = 5;
         public float[] textureTiling = new float[NoOfTextures];
 
         public Vector3 lightDirection { get; set; }
         public Vector3 lightColor { get; set; }
 
-        public Texture2D RTexture, BTexture, GTexture, WeightMap;
+        public Texture2D[] Textures = new Texture2D[NoOfTextures];
+        public Texture2D[] WeightMap = new Texture2D[NoOfTextures];
+
         public Texture2D DetailTexture;
         public float DetailDistance = 0;
         public float DetailTextureTiling = 1000;
 
         public Terrain(Texture2D HeightMap, float CellSize, float Height,
-            Texture2D BaseTexture, float textureTiling, Vector3 LightDirection,Vector3 LightColor,
+            float textureTiling, Vector3 LightDirection,Vector3 LightColor,
             GraphicsDevice GraphicsDevice, ContentManager Content)
         {
             this.heightMap = HeightMap;
@@ -44,7 +45,7 @@ namespace Engine
             this.length = HeightMap.Height;
             this.cellSize = CellSize;
             this.height = Height;
-            this.baseTexture = BaseTexture;           
+        
             this.lightDirection = LightDirection;
             this.lightColor = LightColor;
 
@@ -231,15 +232,16 @@ namespace Engine
 
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
-            effect.Parameters["BaseTexture"].SetValue(baseTexture);
+
             effect.Parameters["LightDirection"].SetValue(lightDirection);
             effect.Parameters["LightColor"].SetValue(lightColor);
             effect.Parameters["TextureTiling"].SetValue(textureTiling);
-            
-            effect.Parameters["RTexture"].SetValue(RTexture);
-            effect.Parameters["GTexture"].SetValue(GTexture);
-            effect.Parameters["BTexture"].SetValue(BTexture);
-            effect.Parameters["WeightMap"].SetValue(WeightMap);
+
+            for (int i = 1; i <= NoOfTextures; i++)
+            {
+                effect.Parameters[("Texture" + i).ToString()].SetValue(Textures[i - 1]);             
+                effect.Parameters[("WeightMap" + i).ToString()].SetValue(WeightMap[i - 1]);
+            }
 
             effect.Parameters["DetailTexture"].SetValue(DetailTexture);
             effect.Parameters["DetailDistance"].SetValue(DetailDistance);

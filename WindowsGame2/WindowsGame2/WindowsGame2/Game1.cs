@@ -115,6 +115,21 @@ namespace WindowsGame2
         //Shadow
         //    PrelightingRenderer renderer;
 
+        //Update
+        int Water_Graph, oldWater_Graph, WaterState, oldWaterState;
+        KeyboardState keyState, oldKeyState;
+
+        int[] no_1 = new int[noTypeOfTrees];
+        int[] no_2 = new int[noTypeOfTrees];
+        int[] no_3 = new int[noTypeOfTrees];
+        int[] no_4 = new int[noTypeOfTrees];
+        int[] no_t = new int[noTypeOfTrees];
+
+        bool fullScreen;
+        bool[,][] visible_tree = new bool[noTypeOfTrees, 4][];
+        double distance;
+        float timer = 0;
+
         private enum Status
         {
             Manual = 0,
@@ -185,16 +200,8 @@ namespace WindowsGame2
             spriteFont = Content.Load<SpriteFont>("SpriteFont1");
 
             #region Terrain
-            terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, Content.Load<Texture2D>("textures//Terrain//grass"), 100, LightDirection, LightColor, GraphicsDevice, Content);
-            terrain.WeightMap = Content.Load<Texture2D>("textures//Terrain//weightMap");
-            terrain.RTexture = Content.Load<Texture2D>("textures//Terrain//sand");
-            terrain.GTexture = Content.Load<Texture2D>("textures//Terrain//grass_tile");
-            terrain.BTexture = Content.Load<Texture2D>("textures//Terrain//snow");
-            terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
-            terrain.textureTiling[0] = 100; // Base Texture
-            terrain.textureTiling[1] = 100; // Red Texture
-            terrain.textureTiling[2] = 1000; // Green Texture
-            terrain.textureTiling[3] = 100; // Blue Texture
+            terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, 100, LightDirection, LightColor, GraphicsDevice, Content);
+            TerrainTextures();
             #endregion
 
             water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);//65
@@ -322,19 +329,30 @@ namespace WindowsGame2
             // TODO: Unload any non ContentManager content here
         }
 
-        int Water_Graph, oldWater_Graph, WaterState, oldWaterState;
-        KeyboardState keyState, oldKeyState;
+        public void TerrainTextures()
+        {
+            //weightMaps
+            terrain.WeightMap[0] = Content.Load<Texture2D>("textures//Terrain//grass//weightMap");
+            terrain.WeightMap[1] = Content.Load<Texture2D>("textures//Terrain//rock//weightMap");
+            terrain.WeightMap[2] = Content.Load<Texture2D>("textures//Terrain//sand//weightMap");
+            terrain.WeightMap[3] = Content.Load<Texture2D>("textures//Terrain//snow//weightMap");
+            terrain.WeightMap[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//weightMap");
+            //textures  rocks_sand
+            terrain.Textures[0] = Content.Load<Texture2D>("textures//Terrain//grass//grass");
+            terrain.Textures[1] = Content.Load<Texture2D>("textures//Terrain//rock//rock");
+            terrain.Textures[2] = Content.Load<Texture2D>("textures//Terrain//sand//sand");
+            terrain.Textures[3] = Content.Load<Texture2D>("textures//Terrain//snow//snow");
+            terrain.Textures[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//rocks_sand");
+            //detail
+            terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
+            //tiling
+            terrain.textureTiling[0] = 1000;
+            terrain.textureTiling[1] = 1000;
+            terrain.textureTiling[2] = 100;
+            terrain.textureTiling[3] = 100;
+            terrain.textureTiling[4] = 1000;
+        }
 
-        int[] no_1 = new int[noTypeOfTrees];
-        int[] no_2 = new int[noTypeOfTrees];
-        int[] no_3 = new int[noTypeOfTrees];
-        int[] no_4 = new int[noTypeOfTrees];
-        int[] no_t = new int[noTypeOfTrees];
-
-        bool fullScreen;
-        bool[,][] visible_tree = new bool[noTypeOfTrees, 4][];
-        double distance;
-        float timer = 0;
         protected override void Update(GameTime gameTime)
         {
 
@@ -375,15 +393,16 @@ namespace WindowsGame2
             if (keyState.IsKeyDown(Keys.PageUp))
             {
                 THeight += 10;
-                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, Content.Load<Texture2D>("textures//Terrain//grass"), 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
-                terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
+                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
+                TerrainTextures();
             }
             else if (keyState.IsKeyDown(Keys.PageDown))
             {
                 THeight -= 10;
-                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, Content.Load<Texture2D>("textures//Terrain//grass"), 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
-                terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
+                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
+                TerrainTextures();
             }
+
 
             if ((keyState.IsKeyDown(Keys.T) && oldKeyState.IsKeyUp(Keys.T)) && !terrain_)
                 terrain_ = true;

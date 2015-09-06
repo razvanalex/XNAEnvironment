@@ -7,7 +7,7 @@ float3 AmbientColor = float3(-0.2, -0.2, -0.2);
 float WaterHeigh = 600;
 float4  WaterColor = float4(0.10980f, 0.30196f, 0.49412f, 1.0f);
 
-const static int NoOfTextures = 4;
+const static int NoOfTextures = 5;
 float TextureTiling[NoOfTextures];
 
 float4 ClipPlane;
@@ -15,49 +15,83 @@ bool ClipPlaneEnabled = false;
 
 float3 CameraPosition;
 
-texture RTexture;
-sampler RTextureSampler = sampler_state {
-	texture = <RTexture>;
-	AddressU = Wrap;
-	AddressV = Wrap;
-	MinFilter = Anisotropic;
-	MagFilter = Anisotropic;
+texture Texture1, Texture2, Texture3, Texture4, Texture5;
+
+sampler TextureSampler[NoOfTextures] = {
+	sampler_state {
+		texture = <Texture1>;
+		AddressU = Wrap;
+		AddressV = Wrap;
+		MinFilter = Anisotropic;
+		MagFilter = Anisotropic;
+	},
+	sampler_state {
+		texture = <Texture2>;
+		AddressU = Wrap;
+		AddressV = Wrap;
+		MinFilter = Anisotropic;
+		MagFilter = Anisotropic;
+	},
+	sampler_state {
+		texture = <Texture3>;
+		AddressU = Wrap;
+		AddressV = Wrap;
+		MinFilter = Anisotropic;
+		MagFilter = Anisotropic;
+	},
+	sampler_state {
+		texture = <Texture4>;
+		AddressU = Wrap;
+		AddressV = Wrap;
+		MinFilter = Anisotropic;
+		MagFilter = Anisotropic;
+	},
+	sampler_state {
+		texture = <Texture5>;
+		AddressU = Wrap;
+		AddressV = Wrap;
+		MinFilter = Anisotropic;
+		MagFilter = Anisotropic;
+	}
 };
 
-texture GTexture;
-sampler GTextureSampler = sampler_state {
-	texture = <GTexture>;
-	AddressU = Wrap;
-	AddressV = Wrap;
-	MinFilter = Anisotropic;
-	MagFilter = Anisotropic;
-};
-
-texture BTexture;
-sampler BTextureSampler = sampler_state {
-	texture = <BTexture>;
-	AddressU = Wrap;
-	AddressV = Wrap;
-	MinFilter = Anisotropic;
-	MagFilter = Anisotropic;
-};
-
-texture BaseTexture;
-sampler BaseTextureSampler = sampler_state {
-	texture = <BaseTexture>;
-	AddressU = Wrap;
-	AddressV = Wrap;
-	MinFilter = Anisotropic;
-	MagFilter = Anisotropic;
-};
-
-texture WeightMap;
-sampler WeightMapSampler = sampler_state {
-	texture = <WeightMap>;
-	AddressU = Clamp;
-	AddressV = Clamp;
-	MinFilter = Linear;
-	MagFilter = Linear;
+texture WeightMap1, WeightMap2, WeightMap3, WeightMap4, WeightMap5;
+sampler WeightMapSampler[NoOfTextures] = {
+	sampler_state {
+		texture = <WeightMap1>;
+		AddressU = Clamp;
+		AddressV = Clamp;
+		MinFilter = Linear;
+		MagFilter = Linear;
+	},
+	sampler_state {
+		texture = <WeightMap2>;
+		AddressU = Clamp;
+		AddressV = Clamp;
+		MinFilter = Linear;
+		MagFilter = Linear;
+	},
+	sampler_state {
+		texture = <WeightMap3>;
+		AddressU = Clamp;
+		AddressV = Clamp;
+		MinFilter = Linear;
+		MagFilter = Linear;
+	},
+	sampler_state {
+		texture = <WeightMap4>;
+		AddressU = Clamp;
+		AddressV = Clamp;
+		MinFilter = Linear;
+		MagFilter = Linear;
+	},
+	sampler_state {
+		texture = <WeightMap5>;
+		AddressU = Clamp;
+		AddressV = Clamp;
+		MinFilter = Linear;
+		MagFilter = Linear;
+	}
 };
 
 float DetailTextureTiling;
@@ -114,17 +148,22 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	light = clamp(light + 0.4f, 0, 1);
 	light += saturate(dot(lightDir, normal)) * LightColor;
 
-	float3 base = tex2D(BaseTextureSampler, input.UV * TextureTiling[0]);
-	float3 rTex = tex2D(RTextureSampler, input.UV * TextureTiling[1]);
-	float3 gTex = tex2D(GTextureSampler, input.UV * TextureTiling[2]);
-	float3 bTex = tex2D(BTextureSampler, input.UV * TextureTiling[3]);
+	float3 Tex[NoOfTextures], weightMap[NoOfTextures];
 
-	float3 weightMap = tex2D(WeightMapSampler, input.UV);
+	for (int i = 0; i < NoOfTextures; i++)
+	{
+		Tex[i] = tex2D(TextureSampler[i], input.UV * TextureTiling[i]);
+		weightMap[i] = tex2D(WeightMapSampler[i], input.UV);
+	}
 
-	float3 output = clamp(1.0f - weightMap.r - weightMap.g - weightMap.b, 0, 1);
-	output *= base;
+	float dif = 1.0f;
+	for (int i = 0; i < NoOfTextures; i++)
+		dif -= weightMap[i].r;
 
-	output += weightMap.r * rTex + weightMap.g * gTex + weightMap.b * bTex;
+	float3 output = clamp(dif, 0, 1);
+
+	for (int i = 0; i < NoOfTextures; i++)
+		output += weightMap[i].r * Tex[i];
 	
 	float bBlendDist;
 	float bBlendWidth;

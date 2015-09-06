@@ -41,10 +41,7 @@ Content\textures\Skybox\skyboxtexture.xnb
 Content\textures\Sky\moon.xnb
 Content\textures\Sky\moonglow.xnb
 Content\textures\Water\waves.xnb
-Content\textures\Terrain\rock.xnb
-Content\textures\Terrain\rocks_sand.xnb
 Content\textures\Terrain\weightMap.xnb
-Content\textures\Terrain\snow.xnb
 Content\textures\Terrain\noise_texture.xnb
 Content\textures\Terrain\Tree_Map.xnb
 Content\textures\Terrain\grass.xnb
@@ -66,7 +63,6 @@ Content\models\Trees\Palms\Palm\palmtreeleaf.xnb
 Content\models\Trees\Palms\Palm\pinetreebark1.xnb
 Content\textures\Terrain\terain.xnb
 Content\textures\Terrain\terrain.xnb
-Content\textures\Terrain\sand.xnb
 Content\SpriteFont1.xnb
 Content\models\Trees\Fir\Fir_Tree\rinde5_0.xnb
 Content\models\Trees\Fir\Fir_Tree\tannenzweig1_0.xnb
@@ -80,4 +76,13 @@ Content\models\Trees\Linden\Linden\SampleLeaves_2_0.xnb
 Content\models\Trees\Fir\Far_FarFir_Tree\M_4ABIPIN0_0.xnb
 Content\models\Trees\Palms\Palm\pinetreebark1_0.xnb
 Content\models\Trees\Palms\Palm\palmtreeleaf_0.xnb
-Content\textures\Terrain\grass_tile.xnb
+Content\textures\Terrain\grass\grass.xnb
+Content\textures\Terrain\rock\rock.xnb
+Content\textures\Terrain\snow\snow.xnb
+Content\textures\Terrain\sand\sand.xnb
+Content\textures\Terrain\grass\weightMap.xnb
+Content\textures\Terrain\rock\weightMap.xnb
+Content\textures\Terrain\snow\weightMap.xnb
+Content\textures\Terrain\sand\weightMap.xnb
+Content\textures\Terrain\rocks_sand\rocks_sand.xnb
+Content\textures\Terrain\rocks_sand\weightMap.xnb
