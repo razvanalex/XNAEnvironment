@@ -3,7 +3,7 @@
   <Asset Type="Graphics:MeshContent">
     <Name>AlanTree</Name>
     <Identity>
-      <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
+      <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>9.438125 0 0 0 0 9.438105 -0.0193591528 0 0 0.0193591528 9.438105 0 0 0 0 1</Transform>
@@ -51,7 +51,7 @@
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Name>Default</Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -65,7 +65,7 @@
     <Resource ID="#Resource2" Type="Graphics:BasicMaterialContent">
       <Name>BroadleafBark</Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>
@@ -87,7 +87,7 @@
     <Resource ID="#Resource3" Type="Graphics:BasicMaterialContent">
       <Name>SampleLeaves_2</Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\Trees\Linden\Linden.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>

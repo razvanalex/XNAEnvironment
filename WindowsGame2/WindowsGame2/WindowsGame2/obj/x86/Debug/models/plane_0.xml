@@ -3,7 +3,7 @@
   <Asset Type="Graphics:MeshContent">
     <Name>Plane_Node</Name>
     <Identity>
-      <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\plane.fbx</SourceFilename>
+      <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\plane.fbx</SourceFilename>
       <SourceTool>FbxImporter</SourceTool>
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
@@ -27,7 +27,7 @@
     <Resource ID="#Resource1" Type="Graphics:BasicMaterialContent">
       <Name></Name>
       <Identity>
-        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnviroment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\plane.fbx</SourceFilename>
+        <SourceFilename>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2Content\models\plane.fbx</SourceFilename>
         <SourceTool>FbxImporter</SourceTool>
       </Identity>
       <OpaqueData>

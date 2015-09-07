@@ -209,9 +209,18 @@ namespace WindowsGame2
             Random rnd = new Random();
             Random rotRND = new Random();
             effect = Content.Load<Effect>("models//InstancedModel");
-            Texture2D TreeMap = Content.Load<Texture2D>("textures//Terrain//Tree_Map");
-            Color[] TreePixels = new Color[TreeMap.Width * TreeMap.Height];
-            TreeMap.GetData<Color>(TreePixels);
+            Texture2D[] TreeMap = new Texture2D[noTypeOfTrees];
+
+            TreeMap[0] = Content.Load<Texture2D>("models//Trees//Fir//Fir_TreeMAP");
+            TreeMap[1] = Content.Load<Texture2D>("models//Trees//Linden//Linden_TreeMAP");
+            TreeMap[2] = Content.Load<Texture2D>("models//Trees//Palms//Palm_TreeMAP");
+            
+            Color[][] TreePixels = new Color[noTypeOfTrees][];         
+            for (int tree = 0; tree < noTypeOfTrees; tree++)
+            { 
+                TreePixels[tree] = new Color[TreeMap[tree].Width * TreeMap[tree].Height];
+                TreeMap[tree].GetData<Color>(TreePixels[tree]);
+            }
 
             noTree[0] = 2500; //firs
             noTree[1] = 2500; //lindens
@@ -239,9 +248,9 @@ namespace WindowsGame2
                     float texVal;
                     switch(tree)
                     {
-                        case 0: texVal = TreePixels[zCoord * 512 + xCoord].R / 255f; break;
-                        case 1: texVal = TreePixels[zCoord * 512 + xCoord].G / 255f; break;
-                        case 2: texVal = TreePixels[zCoord * 512 + xCoord].B / 255f; break;
+                        case 0: texVal = TreePixels[tree][zCoord * 512 + xCoord].R / 255f; break;
+                        case 1: texVal = TreePixels[tree][zCoord * 512 + xCoord].R / 255f; break;
+                        case 2: texVal = TreePixels[tree][zCoord * 512 + xCoord].R / 255f; break;
                         default: texVal = 0; break;
                     }                      
 
