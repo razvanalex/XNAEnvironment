@@ -9,7 +9,7 @@ texture RefractionMap;
 
 float3 LightDirection = float3(1, 1, 1);
 float3 LightColor = float3(0.0f, 5.0f, 0);
-float WaterHeigh = 600;
+float WaterHeight = 600;
 
 float3 BaseColor = float3(0.2, 0.2, 0.8);
 float BaseColorAmount = 0.3f;
@@ -155,7 +155,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float sunPower = 150;
 	float sunFactor = SunFactor;
 	
-	if (CameraPosition.y < WaterHeigh)
+	if (CameraPosition.y < WaterHeight)
 	{
 		sunPower = 15.0f;
 		sunFactor = 2.5f;
@@ -179,7 +179,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 	float dBlendFactor = saturate((pow((pow((input.WorldPosition.z - CameraPosition.z), 2) + pow((input.WorldPosition.x - CameraPosition.x), 2)), 0.5) - dBlendDist) / (dBlendWidth - dBlendDist));
 
-	if (CameraPosition.y < WaterHeigh)
+	if (CameraPosition.y < WaterHeight)
 	{
 		color.rgb = WaterColor*lerp(refraction, reflection, 0) + sunLight;
 		color.rgb = lerp(color.rgb, WaterColor2.rgb, clamp(((input.Depth - BlendDist) / BlendWidth), 0, 1));

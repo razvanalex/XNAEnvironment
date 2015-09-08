@@ -4,10 +4,10 @@ float4x4 Projection;
 float3 LightDirection = float3(1, -1, 0);
 float3 LightColor = float3(1, 1, 1);
 float3 AmbientColor = float3(-0.2, -0.2, -0.2);
-float WaterHeigh = 600;
+float WaterHeight = 600;
 float4  WaterColor = float4(0.10980f, 0.30196f, 0.49412f, 1.0f);
 
-const static int NoOfTextures = 5;
+const static int NoOfTextures = 6;
 float TextureTiling[NoOfTextures];
 
 float4 ClipPlane;
@@ -15,7 +15,7 @@ bool ClipPlaneEnabled = false;
 
 float3 CameraPosition;
 
-texture Texture1, Texture2, Texture3, Texture4, Texture5;
+texture Texture1, Texture2, Texture3, Texture4, Texture5, Texture6;
 
 sampler TextureSampler[NoOfTextures] = {
 	sampler_state {
@@ -52,10 +52,17 @@ sampler TextureSampler[NoOfTextures] = {
 		AddressV = Wrap;
 		MinFilter = Anisotropic;
 		MagFilter = Anisotropic;
+	},
+		sampler_state {
+		texture = <Texture6>;
+		AddressU = Wrap;
+		AddressV = Wrap;
+		MinFilter = Anisotropic;
+		MagFilter = Anisotropic;
 	}
 };
 
-texture TexturesMaps1, TexturesMaps2, TexturesMaps3, TexturesMaps4, TexturesMaps5;
+texture TexturesMaps1, TexturesMaps2, TexturesMaps3, TexturesMaps4, TexturesMaps5, TexturesMaps6;
 sampler TexturesMapSampler[NoOfTextures] = {
 	sampler_state {
 		texture = <TexturesMaps1>;
@@ -87,6 +94,13 @@ sampler TexturesMapSampler[NoOfTextures] = {
 	},
 	sampler_state {
 		texture = <TexturesMaps5>;
+		AddressU = Clamp;
+		AddressV = Clamp;
+		MinFilter = Linear;
+		MagFilter = Linear;
+	},
+		sampler_state {
+		texture = <TexturesMaps6>;
 		AddressU = Clamp;
 		AddressV = Clamp;
 		MinFilter = Linear;
@@ -172,17 +186,17 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float detailDistance = DetailDistance;
 	float sunFactor = 4; //4  7
 
-	if (CameraPosition.y > WaterHeigh)
+	if (CameraPosition.y > WaterHeight)
 	{
-		if (input.Height < WaterHeigh && input.WorldPosition.y < WaterHeigh)
+		if (input.Height < WaterHeight && input.WorldPosition.y < WaterHeight)
 		{
 			detailDistance = 500;
 
-			float BlendDist = 500;
-			float BlendWidth = 600;
+			float BlendDist = WaterHeight - 100;
+			float BlendWidth = WaterHeight;
 	
-			bBlendDist = 400;
-			bBlendWidth = 600;
+			bBlendDist = WaterHeight - 200;
+			bBlendWidth = WaterHeight;
 		
 			//Gradient for XY plane
 			float dBlendDist = 2500;
@@ -209,9 +223,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 		}
 		else output *= saturate(light);
 	}
-	if (CameraPosition.y < WaterHeigh)
+	if (CameraPosition.y < WaterHeight)
 	{
-		if (input.WorldPosition.y < WaterHeigh)
+		if (input.WorldPosition.y < WaterHeight)
 		{
 			
 			bBlendDist = 400;

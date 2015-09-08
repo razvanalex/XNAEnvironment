@@ -23,7 +23,7 @@ namespace Engine
         GraphicsDevice GraphicsDevice; // Graphics device to draw with
         Texture2D heightMap; // Heightmap texture
 
-        public const int NoOfTextures = 5;
+        public const int NoOfTextures = 6;
         public float[] textureTiling = new float[NoOfTextures];
 
         public Vector3 lightDirection { get; set; }
@@ -35,6 +35,8 @@ namespace Engine
         public Texture2D DetailTexture;
         public float DetailDistance = 0;
         public float DetailTextureTiling = 1000;
+
+        public float WaterHeight = 0f;
 
         public Terrain(Texture2D HeightMap, float CellSize, float Height,
             float textureTiling, Vector3 LightDirection,Vector3 LightColor,
@@ -247,6 +249,7 @@ namespace Engine
             effect.Parameters["DetailDistance"].SetValue(DetailDistance);
             effect.Parameters["DetailTextureTiling"].SetValue(DetailTextureTiling);
             effect.Parameters["CameraPosition"].SetValue(CameraPosition);
+            effect.Parameters["WaterHeight"].SetValue(WaterHeight);
 
             effect.Techniques[0].Passes[0].Apply();
 

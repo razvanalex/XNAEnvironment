@@ -39,6 +39,8 @@ namespace Engine
         const float waterHeight = 5.0f;
         RenderTarget2D refractionTarg;
 
+        public float WaterHeight = 0;
+
         public Water(ContentManager content, GraphicsDevice graphics,
             Vector3 position, Vector2 size, float WaveLength, float WaveHeight, float WaveSpeed, Vector3 LightDirection, Vector3 LightColor, float SunFactor)
         {
@@ -60,7 +62,7 @@ namespace Engine
             waterEffect.Parameters["LightDirection"].SetValue(Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)));
             waterEffect.Parameters["LightColor"].SetValue(LightColor);
             waterEffect.Parameters["SunFactor"].SetValue(SunFactor);
-
+            waterEffect.Parameters["WaterHeight"].SetValue(WaterHeight);
             refractionTarg = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
             
             reflectionTarg = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
@@ -142,9 +144,9 @@ namespace Engine
 
         public void PreDraw(Camera.Camera camera, GameTime gameTime)
         {
-            renderReflection(camera);
             renderRefraction(camera);
             renderReflection(camera);
+            renderRefraction(camera);
 
             waterEffect.Parameters["Time"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
         }

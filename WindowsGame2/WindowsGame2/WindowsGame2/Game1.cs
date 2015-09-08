@@ -48,8 +48,8 @@ namespace WindowsGame2
         Water water;
         float WaveLength = 0.003f;
         float WaveHeight = 0.06f;
-        float WaveSpeed = 0.02f;
-        Vector3 WaterPos = new Vector3(0, 600, 0);
+        float WaveSpeed = -0.02f;
+        Vector3 WaterPos = new Vector3(0, 470, 0);
         Vector2 WaterSize = new Vector2(30000, 30000);
         #endregion
 
@@ -92,7 +92,7 @@ namespace WindowsGame2
         Vector3[][] RotationTree = new Vector3[noTypeOfTrees][];
 
         //Thread t1;
-        float THeight = 2500;
+        float THeight = 3500;
 
         //Instancing
 
@@ -200,11 +200,13 @@ namespace WindowsGame2
             spriteFont = Content.Load<SpriteFont>("SpriteFont1");
 
             #region Terrain
-            terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, 100, LightDirection, LightColor, GraphicsDevice, Content);
+            terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 100, LightDirection, LightColor, GraphicsDevice, Content);
             TerrainTextures();
+            terrain.WaterHeight = WaterPos.Y;
             #endregion
 
             water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);//65
+            water.WaterHeight = WaterPos.Y;
             #region BillBoards
             Random rnd = new Random();
             Random rotRND = new Random();
@@ -222,9 +224,9 @@ namespace WindowsGame2
                 TreeMap[tree].GetData<Color>(TreePixels[tree]);
             }
 
-            noTree[0] = 2500; //firs
-            noTree[1] = 2500; //lindens
-            noTree[2] = 2500; //palms
+            noTree[0] = 2000; //firs
+            noTree[1] = 5000; //lindens
+            noTree[2] = 1000; //palms
 
             int noTotalBillBoards = 0;
 
@@ -240,6 +242,7 @@ namespace WindowsGame2
                 {
                     float x = rnd.Next(-256 * 25, 256 * 25);
                     float z = rnd.Next(-256 * 25, 256 * 25);
+
                     float RotX = rotRND.Next(0, 64);
 
                     int xCoord = (int)(x / 25) + 256;
@@ -255,8 +258,18 @@ namespace WindowsGame2
                     }                      
 
                     float y = terrain.GetHeightAtPosition(x, z, out steepness);
+                   
+                    //Check trees collision
+                    bool Check = true;
+                    for (int t = 0; t < tree; t++)
+                        for (int j = 0; j < i; j++)
+                        {
+                            //if (PositionTree[t][j] == new Vector3(x, y, z))
+                           //     Check = false;
+                           // else Check = true;
+                        }
 
-                    if ((int)((float)rnd.NextDouble() * texVal * 10) == 1)
+                    if ((int)((float)rnd.NextDouble() * texVal * 10) == 1 && Check)
                     {
                         PositionTree[tree][i] = new Vector3(x, y, z);
                         RotationTree[tree][i] = new Vector3(RotX, 0, 0);
@@ -341,25 +354,28 @@ namespace WindowsGame2
         public void TerrainTextures()
         {
             //TexturesMaps
-            terrain.TexturesMaps[0] = Content.Load<Texture2D>("textures//Terrain//grass//grassMap");
-            terrain.TexturesMaps[1] = Content.Load<Texture2D>("textures//Terrain//rock//rockMap");
-            terrain.TexturesMaps[2] = Content.Load<Texture2D>("textures//Terrain//sand//sandMap");
-            terrain.TexturesMaps[3] = Content.Load<Texture2D>("textures//Terrain//snow//snowMap");
-            terrain.TexturesMaps[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//rocks_sandMap");
+            terrain.TexturesMaps[0] = Content.Load<Texture2D>("textures//Terrain//grass//GrassMap");
+            terrain.TexturesMaps[1] = Content.Load<Texture2D>("textures//Terrain//rock//RockMap");
+            terrain.TexturesMaps[2] = Content.Load<Texture2D>("textures//Terrain//sand//SandMap");
+            terrain.TexturesMaps[3] = Content.Load<Texture2D>("textures//Terrain//snow//SnowMap");
+            terrain.TexturesMaps[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//Rocks_SandMap");
+            terrain.TexturesMaps[5] = Content.Load<Texture2D>("textures//Terrain//beach_sand//Beach_SandMap");
             //Textures
             terrain.Textures[0] = Content.Load<Texture2D>("textures//Terrain//grass//grass");
             terrain.Textures[1] = Content.Load<Texture2D>("textures//Terrain//rock//rock");
             terrain.Textures[2] = Content.Load<Texture2D>("textures//Terrain//sand//sand");
             terrain.Textures[3] = Content.Load<Texture2D>("textures//Terrain//snow//snow");
             terrain.Textures[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//rocks_sand");
+            terrain.Textures[5] = Content.Load<Texture2D>("textures//Terrain//beach_sand//beach_sand");
             //Detail Texture
             terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
             //Tiling
             terrain.textureTiling[0] = 1000;
-            terrain.textureTiling[1] = 1000;
+            terrain.textureTiling[1] = 100;
             terrain.textureTiling[2] = 100;
             terrain.textureTiling[3] = 1000;
             terrain.textureTiling[4] = 1000;
+            terrain.textureTiling[5] = 500;
         }
 
         protected override void Update(GameTime gameTime)
@@ -402,13 +418,13 @@ namespace WindowsGame2
             if (keyState.IsKeyDown(Keys.PageUp))
             {
                 THeight += 10;
-                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
+                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
                 TerrainTextures();
             }
             else if (keyState.IsKeyDown(Keys.PageDown))
             {
                 THeight -= 10;
-                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
+                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
                 TerrainTextures();
             }
 
