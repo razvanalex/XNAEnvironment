@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Globalization;
 using System.Threading;
+using System.ComponentModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -15,6 +16,8 @@ using Microsoft.Xna.Framework.Media;
 using Engine;
 using Engine.Camera;
 using Engine.Sky;
+using Engine.Terrain;
+using Engine.Particles;
 
 namespace WindowsGame2
 {
@@ -23,7 +26,9 @@ namespace WindowsGame2
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        List<Models> models = new List<Models>();
+        Components components;
+
+        List<Models> models = new List<Models>();       
 
         //Camera
         Camera camera;
@@ -62,10 +67,10 @@ namespace WindowsGame2
         SpriteFont spriteFont;
 
         //Terrain
+     //   SmallTerrain smallTerrain;
         Terrain terrain;
-
         Effect effect;
-
+        QuadTree Qtree;
         #region Blur
         //Blur   
         RenderCapture renderCapture;
@@ -84,15 +89,15 @@ namespace WindowsGame2
 
         float deltaX = 0, deltaY = 0;
 
-        const int noTypeOfTrees = 3;
+        public const int noTypeOfTrees = 3;
         List<Billboards>[] trees = new List<Billboards>[noTypeOfTrees];
         float steepness;
         int[] noTree = new int[noTypeOfTrees];
         Vector3[][] PositionTree = new Vector3[noTypeOfTrees][];
         Vector3[][] RotationTree = new Vector3[noTypeOfTrees][];
-
+        private BackgroundWorker worker;
         //Thread t1;
-        float THeight = 3500;
+        public static float THeight = 3500;
 
         //Instancing
 
@@ -101,9 +106,9 @@ namespace WindowsGame2
         Matrix[][][] instancedModelBones = new Matrix[noTypeOfTrees][][];
 
         //Sun
-        Vector3 LightDirection = Vector3.Normalize(new Vector3(-1, -0.1f, 0.3f));
-        Vector3 LightColor = new Vector3(0, 0, 0);
-        Vector3 AmbinetColor;
+        public Vector3 LightDirection = Vector3.Normalize(new Vector3(-1, -0.1f, 0.3f));
+        public Vector3 LightColor = new Vector3(0, 0, 0);
+        public Vector3 AmbientColor;
 
         LensFlareComponent lensFlare;
 
@@ -130,6 +135,10 @@ namespace WindowsGame2
         double distance;
         float timer = 0;
 
+        Fire fire;
+        Rain rain;
+        int RainState = 0;
+
         private enum Status
         {
             Manual = 0,
@@ -145,7 +154,8 @@ namespace WindowsGame2
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
 
-            // graphics.IsFullScreen = true;
+            InitializeThread();
+            InitializeTerrain();
         }
 
         protected override void Initialize()
@@ -153,7 +163,6 @@ namespace WindowsGame2
             // TODO: Add your initialization logic here
             Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
             lastMouseState = Mouse.GetState();
-            camera = new FreeCamera(new Vector3(150, 75, 180), MathHelper.PiOver2 - 0.3f, 0, 1f, 1000000.0f, GraphicsDevice);
 
             IsFixedTimeStep = false;
 
@@ -170,8 +179,8 @@ namespace WindowsGame2
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-          //  models.Add(new Models(Content.Load<Model>("models//ALan Tree//AlanTree"), new Vector3(0, 0, 0), new Vector3(0), new Vector3(5f), GraphicsDevice));//new Vector3(60, WaterPos.Y - 100f, 150)
-
+         //  models.Add(new Models(Content.Load<Model>("models//model1"), new Vector3(0, 0/, 0), new Vector3(0), new Vector3(500f), GraphicsDevice));//new Vector3(60, WaterPos.Y - 100f, 150)
+           
             #region Sky
 
             //Old Sky
@@ -182,27 +191,31 @@ namespace WindowsGame2
             // Set skydome parameters here
             sky.Theta = 2.4f;// (float)Math.PI / 2.0f - 0.3f;
             sky.Parameters.NumSamples = 10;
-            TIME = random.Next(5, 15);
+            TIME = random.Next(1, 2); // 510
             //TIME = 1;
-            AmbinetColor = lensFlare.AmbientColor;
-
-            weather = SkyDome.Weather.Clear;
+            weather = SkyDome.Weather.Rain;
             sky.WeatherChange(ref weather);
 
             #endregion
 
-            //Effect cubeMapEffect = Content.Load<Effect>("shaders//AlphaBlending");
-           // cubeMapEffect.Parameters["LightDirection"].SetValue(LightDirection);
-            //     CubeMapReflectMaterial cubeMat = new CubeMapReflectMaterial(Content.Load<TextureCube>("textures//SkyBoxTex"));
-           // models[0].SetModelEffect(cubeMapEffect, true);
+            Effect cubeMapEffect = Content.Load<Effect>("Effects//AlphaBlending");
+             cubeMapEffect.Parameters["LightDirection"].SetValue(LightDirection);
+             CubeMapReflectMaterial cubeMat = new CubeMapReflectMaterial(Content.Load<TextureCube>("textures//Skybox//SkyBoxTex"));
+             //models[0].SetModelEffect(cubeMapEffect, true);
             //    models[0].SetModelMaterial(cubeMat);           
 
             spriteFont = Content.Load<SpriteFont>("SpriteFont1");
 
             #region Terrain
-            terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 100, LightDirection, LightColor, GraphicsDevice, Content);
-            TerrainTextures();
-            terrain.WaterHeight = WaterPos.Y;
+           //  smallTerrain = new SmallTerrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 100, LightDirection, LightColor, GraphicsDevice, Content);
+            camera = new FreeCamera(new Vector3(10000, 2100, 10000), MathHelper.PiOver2 - 0.2f, -MathHelper.PiOver4, 1f, 1000000.0f, GraphicsDevice);
+
+            AmbientColor = lensFlare.AmbientColor;
+
+            components = new Components(GraphicsDevice);
+            components.InitializeTerrin(Qtree, (FreeCamera)camera, terrain, WaterPos, Content);
+
+            worker.RunWorkerAsync();
             #endregion
 
             water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);//65
@@ -216,15 +229,15 @@ namespace WindowsGame2
             TreeMap[0] = Content.Load<Texture2D>("models//Trees//Fir//Fir_TreeMAP");
             TreeMap[1] = Content.Load<Texture2D>("models//Trees//Linden//Linden_TreeMAP");
             TreeMap[2] = Content.Load<Texture2D>("models//Trees//Palms//Palm_TreeMAP");
-            
-            Color[][] TreePixels = new Color[noTypeOfTrees][];         
+
+            Color[][] TreePixels = new Color[noTypeOfTrees][];
             for (int tree = 0; tree < noTypeOfTrees; tree++)
-            { 
+            {
                 TreePixels[tree] = new Color[TreeMap[tree].Width * TreeMap[tree].Height];
                 TreeMap[tree].GetData<Color>(TreePixels[tree]);
             }
 
-            noTree[0] = 2000; //firs
+            noTree[0] = 3000; //firs
             noTree[1] = 5000; //lindens
             noTree[2] = 1000; //palms
 
@@ -249,25 +262,25 @@ namespace WindowsGame2
                     int zCoord = (int)(z / 25) + 256;
 
                     float texVal;
-                    switch(tree)
+                    switch (tree)
                     {
                         case 0: texVal = TreePixels[tree][zCoord * 512 + xCoord].R / 255f; break;
                         case 1: texVal = TreePixels[tree][zCoord * 512 + xCoord].R / 255f; break;
                         case 2: texVal = TreePixels[tree][zCoord * 512 + xCoord].R / 255f; break;
                         default: texVal = 0; break;
-                    }                      
+                    }
 
-                    float y = terrain.GetHeightAtPosition(x, z, out steepness);
-                   
+                    float y = Qtree.GetHeight(x, z);
+
                     //Check trees collision
                     bool Check = true;
-                    for (int t = 0; t < tree; t++)
-                        for (int j = 0; j < i; j++)
-                        {
-                            //if (PositionTree[t][j] == new Vector3(x, y, z))
-                           //     Check = false;
-                           // else Check = true;
-                        }
+                    /*   for (int treeCHECK = 0; treeCHECK <= tree; treeCHECK++)
+                           for (int index = 0; index < noTree[treeCHECK]; index++)
+                           {
+                               if (PositionTree[treeCHECK][index] == new Vector3(x, y, z))
+                                   Check = false;
+                               else Check = true;
+                           }*/
 
                     if ((int)((float)rnd.NextDouble() * texVal * 10) == 1 && Check)
                     {
@@ -297,12 +310,12 @@ namespace WindowsGame2
 
             for (int tree = 0; tree < noTypeOfTrees; tree++)
                 instancedModelBones[tree] = new Matrix[3][];
-           
+
             for (int tree = 0; tree < noTypeOfTrees; tree++)
                 instanceTransforms[tree] = new Matrix[3][];
-            
+
             for (int tree = 0; tree < noTypeOfTrees; tree++)
-                for (int i = 0; i < 3; i++ )
+                for (int i = 0; i < 3; i++)
                     instancedModelBones[tree][i] = new Matrix[instancedModel[tree][i].Bones.Count];
 
             for (int tree = 0; tree < noTypeOfTrees; tree++)
@@ -310,15 +323,18 @@ namespace WindowsGame2
                     instancedModel[tree][i].CopyAbsoluteBoneTransformsTo(instancedModelBones[tree][i]);
 
             #endregion
-
-            for (int tree = 0; tree < noTypeOfTrees; tree++) 
+            for (int tree = 0; tree < noTypeOfTrees; tree++)
                 trees[tree] = new List<Billboards>();
 
             for (int tree = 0; tree < noTypeOfTrees; tree++)
                 for (int i = 0; i < noTree[tree]; i++)
-                    trees[tree].Add(new Billboards(Content, instancedModel[tree][2], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], PositionTree[tree][i], RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor,AmbinetColor, GraphicsDevice));
-
+                    trees[tree].Add(new Billboards(Content, instancedModel[tree][2], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], PositionTree[tree][i], RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor, AmbientColor, GraphicsDevice));
             #endregion
+          
+            fire = new Fire(this);
+            fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
+
+            rain = new Rain(this, ((FreeCamera)camera).Position, true, GraphicsDevice);
 
             //Effect shadowEffect = Content.Load<Effect>("shaders//VSM");
             // models[0].SetModelEffect(shadowEffect, true);
@@ -335,7 +351,6 @@ namespace WindowsGame2
             renderer.DoShadowMapping = true;
             renderer.ShadowMult = 0.3f;
             */
-
             renderCapture = new RenderCapture(GraphicsDevice);
             postprocessor = new GaussianBlur(GraphicsDevice, Content, 2f);
 
@@ -350,37 +365,42 @@ namespace WindowsGame2
         {
             // TODO: Unload any non ContentManager content here
         }
-
-        public void TerrainTextures()
+        private void InitializeTerrain()
         {
-            //TexturesMaps
-            terrain.TexturesMaps[0] = Content.Load<Texture2D>("textures//Terrain//grass//GrassMap");
-            terrain.TexturesMaps[1] = Content.Load<Texture2D>("textures//Terrain//rock//RockMap");
-            terrain.TexturesMaps[2] = Content.Load<Texture2D>("textures//Terrain//sand//SandMap");
-            terrain.TexturesMaps[3] = Content.Load<Texture2D>("textures//Terrain//snow//SnowMap");
-            terrain.TexturesMaps[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//Rocks_SandMap");
-            terrain.TexturesMaps[5] = Content.Load<Texture2D>("textures//Terrain//beach_sand//Beach_SandMap");
-            //Textures
-            terrain.Textures[0] = Content.Load<Texture2D>("textures//Terrain//grass//grass");
-            terrain.Textures[1] = Content.Load<Texture2D>("textures//Terrain//rock//rock");
-            terrain.Textures[2] = Content.Load<Texture2D>("textures//Terrain//sand//sand");
-            terrain.Textures[3] = Content.Load<Texture2D>("textures//Terrain//snow//snow");
-            terrain.Textures[4] = Content.Load<Texture2D>("textures//Terrain//rocks_sand//rocks_sand");
-            terrain.Textures[5] = Content.Load<Texture2D>("textures//Terrain//beach_sand//beach_sand");
-            //Detail Texture
-            terrain.DetailTexture = Content.Load<Texture2D>("textures//Terrain//noise_texture");
-            //Tiling
-            terrain.textureTiling[0] = 1000;
-            terrain.textureTiling[1] = 100;
-            terrain.textureTiling[2] = 100;
-            terrain.textureTiling[3] = 1000;
-            terrain.textureTiling[4] = 1000;
-            terrain.textureTiling[5] = 500;
+            //create terrain object
+            this.terrain = new Terrain();
+            //set the depth of the tree
+            byte treeDepth = 8;
+            //set the scale of the terrain
+            float scale = 0.39f;
+            //set the size of the terrain part represented by the root quad tree node.
+            int landSize = (int)(32768 * scale);
+            //create a new quadtree with the specified depth, land size and at location (0,0)
+            Qtree = new QuadTree(treeDepth, landSize, scale, new Vector2(-landSize / 2, -landSize / 2));
+
+            this.terrain.QuadTrees.Add(Qtree);
+        }
+        private void InitializeThread()
+        {
+            worker = new BackgroundWorker();
+            worker.DoWork += new DoWorkEventHandler(worker_DoWork);
+            worker.WorkerSupportsCancellation = true;
+        }
+        void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            while (!worker.CancellationPending)
+            {
+                terrain.Update(null);
+            }
         }
 
         protected override void Update(GameTime gameTime)
         {
+            fire.Update(camera);
+            rain.Update(camera);
 
+            //  Qtree.Childs[0].CameraPosition = ((FreeCamera)camera).Position;
+            //Fire();
             // Allows the game to exit
             if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) || (Keyboard.GetState().IsKeyDown(Keys.Q)) || (Keyboard.GetState().IsKeyDown(Keys.Escape)))
                 this.Exit();
@@ -392,7 +412,7 @@ namespace WindowsGame2
                 timer++;
                 if (timer == 1)
                     Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-                updateCamera(gameTime);
+                components.updateCamera(gameTime, deltaX, deltaY, (FreeCamera)camera, lastMouseState);
                 IsMouseVisible = false;
             }
             else
@@ -418,14 +438,14 @@ namespace WindowsGame2
             if (keyState.IsKeyDown(Keys.PageUp))
             {
                 THeight += 10;
-                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
-                TerrainTextures();
+                 // smallTerrain = new SmallTerrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
+                components.TerrainTextures(Qtree, Content);
             }
             else if (keyState.IsKeyDown(Keys.PageDown))
             {
                 THeight -= 10;
-                terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
-                TerrainTextures();
+                //  smallTerrain = new SmallTerrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 1, new Vector3(1, -1, 0), LightColor, GraphicsDevice, Content);
+                components.TerrainTextures(Qtree, Content);
             }
 
 
@@ -461,6 +481,7 @@ namespace WindowsGame2
                 WaterState = 4;
             else if (keyState.IsKeyDown(Keys.NumPad5))
                 WaterState = 5;
+            
 
             if (WaterState != oldWaterState)
                 switch (WaterState)
@@ -507,19 +528,20 @@ namespace WindowsGame2
 
             lensFlare.Light_anim = sky.Theta;
             LightDirection = Vector3.Negate(Vector3.Reflect(lensFlare.LightDirection, Vector3.Up));
-            LightColor = Vector3.Normalize(lensFlare.LightColor) * 2;
-            AmbinetColor = lensFlare.AmbientColor;
-       
+            LightColor = lensFlare.LightColor;
+            AmbientColor = lensFlare.AmbientColor;
+            LightColor = Vector3.Lerp(LightColor, AmbientColor, sky.Gr);
+            SKY(gameTime);
             //  Thread t1 = new Thread(delegate()
-           // {
+            // {
             water = new Water(Content, GraphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, lensFlare.SunFactor);
             //terrain = new Terrain(Content.Load<Texture2D>("textures//Terrain//Terain"), 100f, THeight, Content.Load<Texture2D>("textures//Terrain//grass"), 1, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, GraphicsDevice, Content);
-          //  });
-           // t1.Start();          
-            
+            //  });
+            // t1.Start();          
+
             for (int tree = 0; tree < noTypeOfTrees; tree++)
-                trees[tree][0] = new Billboards(Content, instancedModel[tree][2], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], PositionTree[tree][0], RotationTree[tree][0], new Vector3(0.1f), LightDirection, LightColor,AmbinetColor, GraphicsDevice);
-            
+                trees[tree][0] = new Billboards(Content, instancedModel[tree][2], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], PositionTree[tree][0], RotationTree[tree][0], new Vector3(0.1f), LightDirection, LightColor, AmbientColor, GraphicsDevice);
+
             for (int tree = 0; tree < noTypeOfTrees; tree++)
                 no_1[tree] = no_2[tree] = no_3[tree] = no_4[tree] = 0;
 
@@ -537,27 +559,25 @@ namespace WindowsGame2
                     distance = Math.Sqrt(Math.Pow(((FreeCamera)camera).Position.X - trees[tree][i].position.X, 2) + Math.Pow(((FreeCamera)camera).Position.Y - trees[tree][i].position.Y, 2) + Math.Pow(((FreeCamera)camera).Position.Z - trees[tree][i].position.Z, 2));
                     if (distance < 100)
                     {
-                        trees[tree][i] = new Billboards(Content, instancedModel[tree][0], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], new Vector3(PositionTree[tree][i].X, terrain.GetHeightAtPosition(PositionTree[tree][i].X, PositionTree[tree][i].Z, out steepness), PositionTree[tree][i].Z), RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor, AmbinetColor, GraphicsDevice);
+                        trees[tree][i] = new Billboards(Content, instancedModel[tree][0], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], new Vector3(PositionTree[tree][i].X, Qtree.GetHeight(PositionTree[tree][i].X, PositionTree[tree][i].Z), PositionTree[tree][i].Z), RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor, AmbientColor, GraphicsDevice);
                         no_1[tree]++; visible_tree[tree, 0][i] = true;
                     }
                     else if (distance >= 100 && distance <= 1000)
                     {
-                        trees[tree][i] = new Billboards(Content, instancedModel[tree][1], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], new Vector3(PositionTree[tree][i].X, terrain.GetHeightAtPosition(PositionTree[tree][i].X, PositionTree[tree][i].Z, out steepness), PositionTree[tree][i].Z), RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor, AmbinetColor, GraphicsDevice);
+                        trees[tree][i] = new Billboards(Content, instancedModel[tree][1], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], new Vector3(PositionTree[tree][i].X, Qtree.GetHeight(PositionTree[tree][i].X, PositionTree[tree][i].Z), PositionTree[tree][i].Z), RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor, AmbientColor, GraphicsDevice);
                         no_2[tree]++; visible_tree[tree, 1][i] = true;
                     }
                     else if (distance > 1000 && distance <= 2000)
                     {
-                        trees[tree][i] = new Billboards(Content, instancedModel[tree][2], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], new Vector3(PositionTree[tree][i].X, terrain.GetHeightAtPosition(PositionTree[tree][i].X, PositionTree[tree][i].Z, out steepness), PositionTree[tree][i].Z), RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor,AmbinetColor, GraphicsDevice);
+                        trees[tree][i] = new Billboards(Content, instancedModel[tree][2], instancedModel[tree], instancedModelBones[tree], instanceTransforms[tree], new Vector3(PositionTree[tree][i].X, Qtree.GetHeight(PositionTree[tree][i].X, PositionTree[tree][i].Z), PositionTree[tree][i].Z), RotationTree[tree][i], new Vector3(0.1f), LightDirection, LightColor, AmbientColor, GraphicsDevice);
                         no_3[tree]++; visible_tree[tree, 2][i] = true;
                     }
                     else if (distance > 2000)
                     {
                         no_4[tree]++; visible_tree[tree, 3][i] = true;
-                    }                
-                }
-                        
-            SKY(gameTime);
-            
+                    }
+                }         
+
             for (int tree = 0; tree < noTypeOfTrees; tree++)
                 no_t[tree] = no_1[tree] + no_2[tree] + no_3[tree] + no_4[tree];
 
@@ -594,134 +614,8 @@ namespace WindowsGame2
             base.Update(gameTime);
         }
 
-        void Weather()
-        {
-            Time += 0.001f;
-            if (Time >= TIME)
-            {
-                sky.prevWeather = weather;
-                Time = 0;
-                random = new Random();
-                TIME = random.Next(8, 16);
-                weather = SkyDome.Weather.SomeClouds;
-            }
-            sky.WeatherChange(ref weather);
-            Console.WriteLine("Time=" + Time);
-            Console.WriteLine("TIME =" + TIME);
-            Console.WriteLine("Weather = " + weather);
-        }
-
-        void SKY(GameTime gameTime)
-        {
-            sky.Update(gameTime);
-            Weather();
-
-            float step = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            if ((keyState.IsKeyDown(Keys.Space) && !previousKeyState.IsKeyDown(Keys.Space)) ||
-                (GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed &&
-                previousPadState.Buttons.A == ButtonState.Released))
-            {
-                stat++;
-                if ((int)stat == 3)
-                    stat = Status.Manual;
-            }
-
-            terrain.lightDirection = lensFlare.LightDirection;
-            terrain.lightColor = lensFlare.LightColor;
-            switch (stat)
-            {
-                case Status.Manual:
-                    sky.RealTime = false;
-                    if (keyState.IsKeyDown(Keys.Down) || GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed)
-                        sky.Theta -= 0.4f * step;
-                    if (keyState.IsKeyDown(Keys.Up) || GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed)
-                        sky.Theta += 0.4f * step;
-                    if (sky.Theta > (float)Math.PI * 2.0f)
-                        sky.Theta = sky.Theta - (float)Math.PI * 2.0f;
-                    if (sky.Theta < 0.0f)
-                        sky.Theta = (float)Math.PI * 2.0f + sky.Theta;
-                    break;
-                case Status.Automatic:
-                    sky.RealTime = false;
-                    sky.Theta += 0.001f * step;
-                    if (sky.Theta > (float)Math.PI * 2.0f)
-                        sky.Theta = sky.Theta - (float)Math.PI * 2.0f;
-                    break;
-                case Status.ActualTime:
-                    sky.RealTime = true;
-                    if (stat != prevStat)
-                        sky.ApplyChanges();
-                    break;
-            }
-
-            previousKeyState = keyState;
-            previousPadState = GamePad.GetState(PlayerIndex.One);
-            prevStat = stat;
-        }
-
-        void RemoveWaterModels()
-        {
-            for (int i = 0; i < 5; i++)
-            {
-                water.Objects.Remove(terrain);
-                foreach (Models model in models)
-                { water.Objects.Remove(model); }
-                water.Objects.Remove(trees[0][0]);
-                water.Objects.Remove(trees[1][0]);
-                water.Objects.Remove(trees[2][0]);
-            }
-        }
-
-        void LowWater()
-        {
-            water.Objects.Add(sky);
-        }
-        void MediumWater()
-        {
-            water.Objects.Add(sky);
-            water.Objects.Add(terrain);
-        }
-        void HighWater()
-        {
-            water.Objects.Add(sky);
-            water.Objects.Add(terrain);
-            foreach (Models model in models)
-                water.Objects.Add(model);
-            water.Objects.Add(trees[0][0]);
-            water.Objects.Add(trees[1][0]);
-            water.Objects.Add(trees[2][0]);
-        }
-
-        void updateCamera(GameTime gameTime)
-        {
-            MouseState mouseState = Mouse.GetState();
-            KeyboardState keyState = Keyboard.GetState();
-
-            deltaX += (float)lastMouseState.X - (float)mouseState.X;
-            deltaY += (float)lastMouseState.Y - (float)mouseState.Y;
-
-            ((FreeCamera)camera).Rotate(deltaX * .01f, deltaY * .01f);
-            Vector3 translation = Vector3.Zero;
-
-            if (keyState.IsKeyDown(Keys.W)) translation += Vector3.Forward;
-            if (keyState.IsKeyDown(Keys.S)) translation += Vector3.Backward;
-            if (keyState.IsKeyDown(Keys.A)) translation += Vector3.Left;
-            if (keyState.IsKeyDown(Keys.D)) translation += Vector3.Right;
-            if (keyState.IsKeyDown(Keys.LeftShift))
-                translation *= 3f * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            else translation *= 0.3f * (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            ((FreeCamera)camera).Move(translation);
-
-            camera.Update();
-            lastMouseState = mouseState;
-            Mouse.SetPosition(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2);
-        }
-
-
-        //ScreenShot
         int Count = 0;
-        public void ScreenShot()
+          public void ScreenShot()
         {
 #if WINDOWS
             int w = GraphicsDevice.PresentationParameters.BackBufferWidth;
@@ -758,6 +652,120 @@ namespace WindowsGame2
     throw new NotSupportedException();
 #endif
         }
+      
+        Random rndW;
+        void Weather()
+        {
+            Time += 0.001f;
+            if (Time >= TIME)
+            {
+                sky.prevWeather = weather;
+                Time = 0;
+                random = new Random();
+                TIME = random.Next(6, 10);
+
+                if (sky.prevWeather == SkyDome.Weather.Rain)
+                    weather = SkyDome.Weather.MoreClouds;
+                else if (sky.prevWeather == SkyDome.Weather.Clear)
+                    weather = SkyDome.Weather.SomeClouds;
+                else if (sky.prevWeather == SkyDome.Weather.Clouds)
+                {
+                    rndW = new Random();
+                    int Ch = rndW.Next(1, 3);
+                    if (Ch == 1)
+                        weather = SkyDome.Weather.MoreClouds;
+                    else if (Ch == 2)
+                        weather = SkyDome.Weather.SomeClouds;
+                }
+            }
+            sky.WeatherChange(ref weather);
+            Console.WriteLine("Time=" + Time);
+            Console.WriteLine("TIME =" + TIME);
+            Console.WriteLine("Weather = " + weather);
+            Console.WriteLine("PrevWeather = " + sky.prevWeather);
+        }
+
+        void SKY(GameTime gameTime)
+        {
+            sky.Update(gameTime);
+            Weather();
+
+            float step = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if ((keyState.IsKeyDown(Keys.Space) && !previousKeyState.IsKeyDown(Keys.Space)) ||
+                (GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed &&
+                previousPadState.Buttons.A == ButtonState.Released))
+            {
+                stat++;
+                if ((int)stat == 3)
+                    stat = Status.Manual;
+            }
+
+            Qtree.lightDirection = Vector3.Reflect(LightDirection, Vector3.Up);
+            Qtree.lightColor = LightColor;
+            switch (stat)
+            {
+                case Status.Manual:
+                    sky.RealTime = false;
+                    if (keyState.IsKeyDown(Keys.Down) || GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed)
+                        sky.Theta -= 0.4f * step;
+                    if (keyState.IsKeyDown(Keys.Up) || GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed)
+                        sky.Theta += 0.4f * step;
+                    if (sky.Theta > (float)Math.PI * 2.0f)
+                        sky.Theta = sky.Theta - (float)Math.PI * 2.0f;
+                    if (sky.Theta < 0.0f)
+                        sky.Theta = (float)Math.PI * 2.0f + sky.Theta;
+                    break;
+                case Status.Automatic:
+                    sky.RealTime = false;
+                    sky.Theta += 0.001f * step;
+                    if (sky.Theta > (float)Math.PI * 2.0f)
+                        sky.Theta = sky.Theta - (float)Math.PI * 2.0f;
+                    break;
+                case Status.ActualTime:
+                    sky.RealTime = true;
+                    if (stat != prevStat)
+                        sky.ApplyChanges();
+                    break;
+            }
+
+            previousKeyState = keyState;
+            previousPadState = GamePad.GetState(PlayerIndex.One);
+            prevStat = stat;
+        }
+
+        void RemoveWaterModels()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                water.Objects.Remove(Qtree);
+                foreach (Models model in models)
+                { water.Objects.Remove(model); }
+                water.Objects.Remove(trees[0][0]);
+                water.Objects.Remove(trees[1][0]);
+                water.Objects.Remove(trees[2][0]);
+            }
+        }
+
+        void LowWater()
+        {
+            water.Objects.Add(sky);
+        }
+        void MediumWater()
+        {
+            water.Objects.Add(sky);
+            water.Objects.Add(Qtree);
+        }
+        void HighWater()
+        {
+            water.Objects.Add(sky);
+            water.Objects.Add(Qtree);
+            foreach (Models model in models)
+                water.Objects.Add(model);
+            water.Objects.Add(trees[0][0]);
+            water.Objects.Add(trees[1][0]);
+            water.Objects.Add(trees[2][0]);
+        }    
 
         protected override void Draw(GameTime gameTime)
         {
@@ -770,9 +778,7 @@ namespace WindowsGame2
             if (blur)
             {
                 #region BLUR
-
-                // sky.PreDraw(gameTime);
-                // water.PreDraw(camera, gameTime);
+                water.PreDraw(camera, gameTime);
                 depthCapture.Begin();
 
                 // Clear to white (max depth)
@@ -785,23 +791,14 @@ namespace WindowsGame2
                     model.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
                     model.RestoreEffects(); // Restore effects
                 }
-                /*
-                              foreach (Billboards tree in trees)
-                                {
-                                    tree.CacheEffects(); // Cache effect
-                                    tree.SetModelEffect(depthEffect, false); // Set depth effect
-                                    GraphicsDevice.BlendState = BlendState.Opaque;
-                                    tree.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
-                                    tree.RestoreEffects(); // Restore effects
 
-                                }*/
-
-                sky.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
-
-                //  terrain.CacheEffects();
-                //  terrain.SetModelEffect(depthEffect, false); 
-                //  terrain.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
-                //  terrain.RestoreEffects();
+               // for (int i = 0; i < noTypeOfTrees; i++)
+              //  {
+                 //   trees[0][0].CacheEffects(); // Cache effect
+                  //  trees[0][0].SetModelEffect(depthEffect, false); // Set depth effect
+                  //  trees[0][0].Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
+                  //  trees[0][0].RestoreEffects(); // Restore effects
+              //  }
 
                 // Finish rendering to depth map
                 depthCapture.End();
@@ -813,8 +810,12 @@ namespace WindowsGame2
 
                 // sky.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
                 // Draw all models         
-                if (terrain_)
+                 if (terrain_)
+                    //smallTerrain.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
                     terrain.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
+
+                lensFlare.View = camera.View;
+                lensFlare.Projection = camera.Projection;
 
                 // Draw all of the models
                 GraphicsDevice.BlendState = BlendState.AlphaBlend;
@@ -854,16 +855,15 @@ namespace WindowsGame2
                             instanceTransforms[tree][2][n3[tree]] = trees[tree][i].Transform; n3[tree]++;
                         }
                     }
-
-                ((Billboards)trees[0][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
-                ((Billboards)trees[1][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
-                ((Billboards)trees[2][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
+                
+                for (int tree = 0; tree < noTypeOfTrees; tree++)
+                    ((Billboards)trees[tree][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
                 rs = new RasterizerState();
                 rs.CullMode = CullMode.CullCounterClockwiseFace;
                 GraphicsDevice.RasterizerState = rs;
 
-                //   water.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
+                water.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
                 GraphicsDevice.BlendState = BlendState.Opaque;
 
@@ -893,11 +893,9 @@ namespace WindowsGame2
                 water.PreDraw(camera, gameTime);
                 rs.CullMode = CullMode.None;
                 GraphicsDevice.RasterizerState = rs;
-                sky.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
                 GraphicsDevice.Clear(Color.CornflowerBlue);
                 sky.PreDraw(gameTime);
-
                 sky.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
                 for (int tree = 0; tree < noTypeOfTrees; tree++)
@@ -906,11 +904,11 @@ namespace WindowsGame2
                     Array.Resize(ref instanceTransforms[tree][1], no_2[tree]);
                     Array.Resize(ref instanceTransforms[tree][2], no_3[tree]);
                 }
-              
+
                 int[] n1 = new int[noTypeOfTrees];
                 int[] n2 = new int[noTypeOfTrees];
                 int[] n3 = new int[noTypeOfTrees];
-             
+
                 for (int tree = 0; tree < noTypeOfTrees; tree++)
                     n1[tree] = n2[tree] = n3[tree] = 0;
 
@@ -931,9 +929,8 @@ namespace WindowsGame2
                         }
                     }
 
-                ((Billboards)trees[0][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
-                ((Billboards)trees[1][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
-                ((Billboards)trees[2][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
+                for (int tree = 0; tree < noTypeOfTrees; tree++)
+                    ((Billboards)trees[tree][0]).Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
                 water.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
@@ -941,13 +938,17 @@ namespace WindowsGame2
                 foreach (Models model in models)
                     model.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
+                if (terrain_)
+                    // smallTerrain.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
+                    terrain.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
+
+                fire.Draw(camera);
+                rain.Draw(camera);
+
                 rs = new RasterizerState();
                 rs.CullMode = CullMode.CullCounterClockwiseFace;
                 GraphicsDevice.RasterizerState = rs;
                 GraphicsDevice.BlendState = BlendState.Opaque;
-
-                if (terrain_)
-                    terrain.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
                 lensFlare.View = camera.View;
                 lensFlare.Projection = camera.Projection;
@@ -958,7 +959,7 @@ namespace WindowsGame2
             frameCounter++;
             spriteBatch.Begin();
             spriteBatch.DrawString(spriteFont, "FPS: " + frameRate, new Vector2(20, 20), Color.Black);
-            spriteBatch.DrawString(spriteFont, "Light_anim: " + lensFlare.LightColor.ToString(), new Vector2(20, 40), Color.Black);
+            spriteBatch.DrawString(spriteFont, "Cam Position: " + ((FreeCamera)camera).Position.ToString(), new Vector2(20, 40), Color.Black);
             spriteBatch.End();
 
             base.Draw(gameTime);

@@ -3,3 +3,8 @@ C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\InstancedMode
 C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\InstancedModelPipeline\obj\x86\Debug\InstancedModelPipeline.csprojResolveAssemblyReference.cache
 C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\InstancedModelPipeline\obj\x86\Debug\InstancedModelPipeline.dll
 C:\Users\Razvan\Documents\Visual Studio 2013\Projects\WindowsGame2\InstancedModelPipeline\obj\x86\Debug\InstancedModelPipeline.pdb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\bin\x86\Debug\InstancedModelPipeline.dll
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\bin\x86\Debug\InstancedModelPipeline.pdb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\obj\x86\Debug\InstancedModelPipeline.csprojResolveAssemblyReference.cache
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\obj\x86\Debug\InstancedModelPipeline.dll
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\obj\x86\Debug\InstancedModelPipeline.pdb

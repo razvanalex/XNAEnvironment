@@ -91,7 +91,7 @@ float noise(float2 P)
 
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
-	 //if (ClipPlaneEnabled)
+	// if (ClipPlaneEnabled)
 	// 	clip(dot(float4(input.WorldPosition, 1), ClipPlane));
 
 	float n = noise(input.TexCoord + time);  

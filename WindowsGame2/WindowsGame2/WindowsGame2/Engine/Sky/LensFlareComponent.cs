@@ -161,7 +161,7 @@ namespace Engine.Sky
                 if (SunFactor <= 0f) SunFactor = 0f;
                 
                 LightColor = new Vector3(r, g, b);
-                AmbientColor = new Vector3(a);
+                AmbientColor = new Vector3(a, a, a);
             }
             else
             {

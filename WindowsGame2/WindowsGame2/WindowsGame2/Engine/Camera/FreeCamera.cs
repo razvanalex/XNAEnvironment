@@ -14,11 +14,24 @@ namespace Engine.Camera
 
     public class FreeCamera : Camera
     {
+        private static FreeCamera camera;
+        public static FreeCamera DefaultCamera
+        {
+            get
+            {
+                return FreeCamera.camera;
+            }
+            set
+            {
+                FreeCamera.camera = value;
+            }
+        }
         public float Yaw { get; set; }
         public float Pitch { get; set; }
 
         public Vector3 Position { get; set; }
         public Vector3 Target { get; set; }
+
 
         private Vector3 translation;
         public float nearPlane { get; set; }
@@ -32,7 +45,7 @@ namespace Engine.Camera
             this.Pitch = Pitch;
             this.farPlane = farPlane;
             this.nearPlane = nearPlane;
-
+            
             translation = Vector3.Zero;
         }
 
@@ -51,6 +64,43 @@ namespace Engine.Camera
             this.nearPlane = nearPlane;
         }
 
+        Vector3 up;
+        Vector3 forward;
+        Vector3 right;
+        public Vector3 Forward
+        {
+            get
+            {
+                return forward;
+            }
+            set
+            {
+                forward = value;
+            }
+        }
+        public Vector3 Up
+        {
+            get
+            {
+                return up;
+            }
+            set
+            {
+                up = value;
+            }
+        }
+        public Vector3 Right
+        {
+            get
+            {
+                return right;
+            }
+            set
+            {
+               right = value;
+            }
+        }
+
         public override void Update()
         {
             Matrix rotation = Matrix.CreateFromYawPitchRoll(Yaw, Pitch, 0);
@@ -59,13 +109,13 @@ namespace Engine.Camera
             Position += translation;
             translation = Vector3.Zero;
 
-            Vector3 forward = Vector3.Transform(Vector3.Forward, rotation);
-            Target = Position + forward;
+            forward = Vector3.Transform(Vector3.Forward, rotation);
+            Target = Position + forward;           
 
-            Vector3 up = Vector3.Transform(Vector3.Up, rotation);
-
+            up = Vector3.Transform(Vector3.Up, rotation);
             View = Matrix.CreateLookAt(Position, Target, up);
 
+            right = Vector3.Cross(-forward, up);
             base.Update();
         }
     }

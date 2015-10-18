@@ -35,6 +35,9 @@ Texture txRayleigh;
 float4 ClipPlane;
 bool ClipPlaneEnabled = false;
 
+float4 SunColor;
+float gr = 1;
+
 sampler2D rayleighSampler = sampler_state
 {
 	Texture = <txRayleigh>;
@@ -141,24 +144,28 @@ float3 HDR( float3 LDR)
 float4 PS( PS_INPUT input) : COLOR0
 {
 	if (ClipPlaneEnabled)
-		clip(dot(float4(input.WorldPosition, -1), ClipPlane));
+	clip(dot(float4(input.WorldPosition, -1), ClipPlane));
 
-	float fCos = dot( v3SunDir, input.Tex1 ) / length( input.Tex1 );
+	float fCos = dot(v3SunDir, input.Tex1) / length(input.Tex1);
 	float fCos2 = fCos * fCos;
-	
-	float3 v3RayleighSamples = tex2D( rayleighSampler, input.Tex0 );
-	float3 v3MieSamples = tex2D( mieSampler, input.Tex0.xy );
+
+	float3 v3RayleighSamples = tex2D(rayleighSampler, input.Tex0);
+	float3 v3MieSamples = tex2D(mieSampler, input.Tex0.xy);
 
 	float3 Color;
 	Color.rgb = getRayleighPhase(fCos2) * v3RayleighSamples.rgb + getMiePhase(fCos, fCos2) * v3MieSamples.rgb;
-	Color.rgb = HDR( Color.rgb );
-	
+	Color.rgb = HDR(Color.rgb);
+
 	// Hack Sky Night Color
-	Color.rgb += max(0,(1 - Color.rgb)) * float3( 0.05, 0.05, 0.1 ); 
+	Color.rgb += max(0, (1 - Color.rgb)) * float3(0.05, 0.05, 0.1);
 
-	return float4( Color.rgb, 1 ) + tex2D(starSampler, input.Tex0) * starIntensity;
+	float4 sunColor = float4(SunColor.r, SunColor.g, SunColor.b, SunColor.a);
+	return lerp(float4(Color.rgb + tex2D(starSampler, input.Tex0) * starIntensity, 1), sunColor, gr);
 }
-
+float fade(float t) {
+	// return t*t*(3.0-2.0*t);
+	return t*t*t*(t*(t*6.0 - 15.0) + 10.0);
+}
 float HitOuterSphere( float3 O, float3 Dir ) 
 {
 	float3 L = -O;

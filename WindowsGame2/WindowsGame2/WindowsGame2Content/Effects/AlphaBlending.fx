@@ -24,7 +24,7 @@ sampler BasicTextureSampler = sampler_state {
 
 bool TextureEnabled = false;
 float3 DiffuseColor = float3(1, 1, 1);
-float3 AmbientColor = float3(0.1, 0.1, 0.1);
+float3 AmbientColor;
 float3 LightDirection = float3(1, 1, 1);
 float3 LightColor = float3(0.9, 0.9, 0.9);
 float SpecularPower = 200;

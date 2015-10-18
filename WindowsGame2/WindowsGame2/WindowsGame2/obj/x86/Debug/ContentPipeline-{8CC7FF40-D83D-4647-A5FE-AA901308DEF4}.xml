@@ -11,7 +11,7 @@
       <Time>2015-07-22T18:56:03.0578551+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\model1_0.xml</Key>
-        <Value>2015-09-06T19:04:50.4811089+03:00</Value>
+        <Value>2015-10-16T19:16:15.2048459+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -24,7 +24,7 @@
       <Time>2015-01-09T19:17:34.6026512+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\skySphere_0.xml</Key>
-        <Value>2015-09-06T19:04:50.8511095+03:00</Value>
+        <Value>2015-10-16T19:16:15.5438653+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -37,7 +37,7 @@
       <Time>2015-01-09T20:41:54.8702705+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\plane_0.xml</Key>
-        <Value>2015-09-06T19:04:50.9111095+03:00</Value>
+        <Value>2015-10-16T19:16:15.6098691+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -53,7 +53,7 @@
       <Time>2015-09-01T17:44:58.9825957+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\Fir_Tree_0.xml</Key>
-        <Value>2015-09-06T19:04:51.6211105+03:00</Value>
+        <Value>2015-10-16T19:16:16.2699068+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Fir_Tree\rinde5_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -73,7 +73,7 @@
       <Time>2015-09-01T17:07:36.8323521+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\FarFir_Tree_0.xml</Key>
-        <Value>2015-09-06T19:04:52.653116+03:00</Value>
+        <Value>2015-10-16T19:16:17.4399737+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\FarFir_Tree\rinde5_moos_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -90,7 +90,7 @@
       <Time>2015-04-13T15:45:27.4039134+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Null_fbx_0.xml</Key>
-        <Value>2015-09-06T19:04:53.4771246+03:00</Value>
+        <Value>2015-10-16T19:16:18.3810276+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -106,7 +106,7 @@
       <Time>2015-09-01T22:49:26.4328702+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Far_FarLinden_0.xml</Key>
-        <Value>2015-09-06T19:04:53.5471247+03:00</Value>
+        <Value>2015-10-16T19:16:18.459032+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -121,7 +121,7 @@
       <Time>2015-07-21T22:00:49.7393848+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\PPLightMesh_0.xml</Key>
-        <Value>2015-09-06T19:04:54.4481272+03:00</Value>
+        <Value>2015-10-16T19:16:19.2860793+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -134,7 +134,7 @@
       <Time>2015-09-01T17:50:35.0698188+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Linden_0.xml</Key>
-        <Value>2015-09-06T19:04:55.4291325+03:00</Value>
+        <Value>2015-10-16T19:16:20.2031318+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\BroadleafBark_0.xnb</Request>
@@ -153,7 +153,7 @@
       <Time>2015-09-01T19:36:28.1861963+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\Far_FarFir_Tree_0.xml</Key>
-        <Value>2015-09-06T19:04:56.5611364+03:00</Value>
+        <Value>2015-10-16T19:16:21.3151954+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Far_FarFir_Tree\M_4ABIPIN0_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -171,7 +171,7 @@
       <Time>2015-09-01T22:46:24.3930746+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Palms\Palm_0.xml</Key>
-        <Value>2015-09-06T19:04:57.033145+03:00</Value>
+        <Value>2015-10-16T19:16:21.8212243+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm\pinetreebark1_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\InstancedModel.xnb</Request>
@@ -268,7 +268,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Effects\AlphaBlending.xnb</Output>
-      <Time>2015-07-22T22:46:45.4305936+03:00</Time>
+      <Time>2015-09-25T18:38:44.1010507+03:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Fir\InstancedModel.fx</Source>
@@ -343,7 +343,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Effects\Sky\scatter.xnb</Output>
-      <Time>2015-08-26T19:14:07.3009993+03:00</Time>
+      <Time>2015-09-26T16:39:59.3692904+03:00</Time>
     </Item>
     <Item>
       <Source>Effects\Sky\SNoise.fx</Source>
@@ -352,7 +352,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Effects\Sky\SNoise.xnb</Output>
-      <Time>2015-08-10T21:03:52.3851531+03:00</Time>
+      <Time>2015-09-26T17:49:02.0362374+03:00</Time>
     </Item>
     <Item>
       <Source>Effects\Sky\Textured.fx</Source>
@@ -389,6 +389,15 @@
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\InstancedModel.xnb</Output>
       <Time>2015-09-01T22:40:18.9121703+03:00</Time>
+    </Item>
+    <Item>
+      <Source>Effects\ParticleEffect.fx</Source>
+      <Name>Effects\ParticleEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Effects\ParticleEffect.xnb</Output>
+      <Time>2015-10-17T21:07:34.1804104+03:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Linden\Linden\BroadleafBark.tga</Source>
@@ -632,6 +641,228 @@
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm\pinetreebark1.xnb</Output>
       <Time>2015-09-01T22:36:40.5636858+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\terrain.png</Source>
+      <Name>textures\Terrain\terrain</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\terrain.xnb</Output>
+      <Time>2015-09-12T10:11:54.4548621+03:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Trees\Fir\Fir_TreeMAP.bmp</Source>
+      <Name>models\Trees\Fir\Fir_TreeMAP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Fir_TreeMAP.xnb</Output>
+      <Time>2015-09-08T22:04:40.7615669+03:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Trees\Linden\Linden_TreeMAP.bmp</Source>
+      <Name>models\Trees\Linden\Linden_TreeMAP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden_TreeMAP.xnb</Output>
+      <Time>2015-09-08T22:17:54.541235+03:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Trees\Palms\Palm_TreeMAP.bmp</Source>
+      <Name>models\Trees\Palms\Palm_TreeMAP</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm_TreeMAP.xnb</Output>
+      <Time>2015-09-08T22:16:42.1319177+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\grass\grass.png</Source>
+      <Name>textures\Terrain\grass\grass</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\grass\grass.xnb</Output>
+      <Time>2006-10-06T06:46:46+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\grass\GrassMap.png</Source>
+      <Name>textures\Terrain\grass\GrassMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\grass\GrassMap.xnb</Output>
+      <Time>2015-09-08T21:56:32.0967644+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\rock\rock.png</Source>
+      <Name>textures\Terrain\rock\rock</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rock\rock.xnb</Output>
+      <Time>2007-08-06T20:01:06+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\rock\RockMap.png</Source>
+      <Name>textures\Terrain\rock\RockMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rock\RockMap.xnb</Output>
+      <Time>2015-09-08T21:56:57.3204104+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\rocks_sand\Rocks_SandMap.png</Source>
+      <Name>textures\Terrain\rocks_sand\Rocks_SandMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rocks_sand\Rocks_SandMap.xnb</Output>
+      <Time>2015-09-08T21:55:08.5262127+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\rocks_sand\rocks_sand.png</Source>
+      <Name>textures\Terrain\rocks_sand\rocks_sand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rocks_sand\rocks_sand.xnb</Output>
+      <Time>2006-10-02T20:02:20+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\sand\sand.png</Source>
+      <Name>textures\Terrain\sand\sand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\sand\sand.xnb</Output>
+      <Time>2015-09-06T18:16:49.8355213+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\sand\SandMap.png</Source>
+      <Name>textures\Terrain\sand\SandMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\sand\SandMap.xnb</Output>
+      <Time>2015-09-08T21:55:37.5798659+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\snow\snow.bmp</Source>
+      <Name>textures\Terrain\snow\snow</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\snow\snow.xnb</Output>
+      <Time>2015-09-06T18:16:49.8485221+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\snow\SnowMap.png</Source>
+      <Name>textures\Terrain\snow\SnowMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\snow\SnowMap.xnb</Output>
+      <Time>2015-09-08T21:55:59.1687039+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\beach_sand\Beach_SandMap.png</Source>
+      <Name>textures\Terrain\beach_sand\Beach_SandMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\beach_sand\Beach_SandMap.xnb</Output>
+      <Time>2015-09-08T21:56:17.6607383+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\beach_sand\beach_sand.bmp</Source>
+      <Name>textures\Terrain\beach_sand\beach_sand</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\beach_sand\beach_sand.xnb</Output>
+      <Time>2015-09-06T18:16:49.8265208+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\terrain513.png</Source>
+      <Name>textures\Terrain\terrain513</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\terrain513.xnb</Output>
+      <Time>2015-09-12T14:20:10.4749898+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Terrain\terrain1025.png</Source>
+      <Name>textures\Terrain\terrain1025</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateMipmaps">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\terrain1025.xnb</Output>
+      <Time>2015-09-12T14:42:28.4287278+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Particles\fire.png</Source>
+      <Name>textures\Particles\fire</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Particles\fire.xnb</Output>
+      <Time>2015-10-10T15:31:42.3467741+03:00</Time>
+    </Item>
+    <Item>
+      <Source>textures\Particles\smoke.png</Source>
+      <Name>textures\Particles\smoke</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Particles\smoke.xnb</Output>
+      <Time>2015-10-10T15:31:42.3623741+03:00</Time>
     </Item>
     <Item>
       <Source>SpriteFont1.spritefont</Source>
@@ -912,187 +1143,22 @@
       <Time>2015-09-01T22:36:40.5456847+03:00</Time>
     </Item>
     <Item>
-      <Source>models\Trees\Fir\Fir_TreeMAP.bmp</Source>
-      <Name>models\Trees\Fir\Fir_TreeMAP</Name>
+      <Source>textures\Particles\rain.png</Source>
+      <Name>textures\Particles\rain</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Fir_TreeMAP.xnb</Output>
-      <Time>2015-09-08T22:04:40.7615669+03:00</Time>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Particles\rain.xnb</Output>
+      <Time>2015-10-18T17:29:33.0576885+03:00</Time>
     </Item>
     <Item>
-      <Source>models\Trees\Linden\Linden_TreeMAP.bmp</Source>
-      <Name>models\Trees\Linden\Linden_TreeMAP</Name>
+      <Source>textures\Particles\snow.png</Source>
+      <Name>textures\Particles\snow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden_TreeMAP.xnb</Output>
-      <Time>2015-09-08T22:17:54.541235+03:00</Time>
-    </Item>
-    <Item>
-      <Source>models\Trees\Palms\Palm_TreeMAP.bmp</Source>
-      <Name>models\Trees\Palms\Palm_TreeMAP</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm_TreeMAP.xnb</Output>
-      <Time>2015-09-08T22:16:42.1319177+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\terrain.png</Source>
-      <Name>textures\Terrain\terrain</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\terrain.xnb</Output>
-      <Time>2015-09-08T20:53:29.9036601+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\grass\grass.png</Source>
-      <Name>textures\Terrain\grass\grass</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\grass\grass.xnb</Output>
-      <Time>2006-10-06T06:46:46+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\grass\GrassMap.png</Source>
-      <Name>textures\Terrain\grass\GrassMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\grass\GrassMap.xnb</Output>
-      <Time>2015-09-08T21:56:32.0967644+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\rock\rock.png</Source>
-      <Name>textures\Terrain\rock\rock</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rock\rock.xnb</Output>
-      <Time>2007-08-06T20:01:06+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\rock\RockMap.png</Source>
-      <Name>textures\Terrain\rock\RockMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rock\RockMap.xnb</Output>
-      <Time>2015-09-08T21:56:57.3204104+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\rocks_sand\Rocks_SandMap.png</Source>
-      <Name>textures\Terrain\rocks_sand\Rocks_SandMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rocks_sand\Rocks_SandMap.xnb</Output>
-      <Time>2015-09-08T21:55:08.5262127+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\rocks_sand\rocks_sand.png</Source>
-      <Name>textures\Terrain\rocks_sand\rocks_sand</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\rocks_sand\rocks_sand.xnb</Output>
-      <Time>2006-10-02T20:02:20+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\sand\sand.png</Source>
-      <Name>textures\Terrain\sand\sand</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\sand\sand.xnb</Output>
-      <Time>2015-09-06T18:16:49.8355213+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\sand\SandMap.png</Source>
-      <Name>textures\Terrain\sand\SandMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\sand\SandMap.xnb</Output>
-      <Time>2015-09-08T21:55:37.5798659+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\snow\snow.bmp</Source>
-      <Name>textures\Terrain\snow\snow</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\snow\snow.xnb</Output>
-      <Time>2015-09-06T18:16:49.8485221+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\snow\SnowMap.png</Source>
-      <Name>textures\Terrain\snow\SnowMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\snow\SnowMap.xnb</Output>
-      <Time>2015-09-08T21:55:59.1687039+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\beach_sand\Beach_SandMap.png</Source>
-      <Name>textures\Terrain\beach_sand\Beach_SandMap</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\beach_sand\Beach_SandMap.xnb</Output>
-      <Time>2015-09-08T21:56:17.6607383+03:00</Time>
-    </Item>
-    <Item>
-      <Source>textures\Terrain\beach_sand\beach_sand.bmp</Source>
-      <Name>textures\Terrain\beach_sand\beach_sand</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-      <Parameters>
-        <Data Key="GenerateMipmaps">True</Data>
-      </Parameters>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Terrain\beach_sand\beach_sand.xnb</Output>
-      <Time>2015-09-06T18:16:49.8265208+03:00</Time>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Particles\snow.xnb</Output>
+      <Time>2015-10-18T17:44:51.2692072+03:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -1133,7 +1199,7 @@
       </Assembly>
       <Assembly>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\bin\x86\Debug\InstancedModelPipeline.dll</Key>
-        <Value>2015-09-02T17:02:52.759074+03:00</Value>
+        <Value>2015-10-16T19:16:08.4272816+03:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>

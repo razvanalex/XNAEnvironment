@@ -163,7 +163,7 @@ namespace Engine
         Game game;
         LensFlareComponent lensFlare;
         Camera.Camera camera;
-        Terrain terrain;
+        SmallTerrain terrain;
         SkyDome sky;
         List<Models> models;
         GraphicsDevice graphicsDevice;
@@ -177,7 +177,7 @@ namespace Engine
         float WaveSpeed = 0.02f;
         int Water_Graph, oldWater_Graph, WaterState, oldWaterState;
 
-        public DrawWater(Game game, Camera.Camera Camera, Vector3 LightDirection, Vector3 LightColor, Terrain terrain, SkyDome sky, List<Models> models, LensFlareComponent lensFlare, GraphicsDevice graphicsDevice)
+        public DrawWater(Game game, Camera.Camera Camera, Vector3 LightDirection, Vector3 LightColor, SmallTerrain terrain, SkyDome sky, List<Models> models, LensFlareComponent lensFlare, GraphicsDevice graphicsDevice)
             : base(game)
         {
             this.camera = Camera;

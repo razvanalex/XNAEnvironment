@@ -27,6 +27,8 @@ namespace WindowsGame2
 
         // List of models, lights, and the camera
         public List<Models> Models { get; set; }
+        public List<Billboards> trees { get; set; }
+
         public List<PPPointLight> Lights { get; set; }
         public Camera Camera { get; set; }
 
@@ -132,6 +134,9 @@ namespace WindowsGame2
                 model.RestoreEffects();
             }
 
+            //trees[0].CacheEffects();
+
+
             // Un-set the render targets
             graphicsDevice.SetRenderTargets(null);
         }
@@ -160,6 +165,8 @@ namespace WindowsGame2
                 model.Draw(shadowView, shadowProjection, ShadowLightPosition);
                 model.RestoreEffects();
             }
+
+           // trees[0].CacheEffects();
 
             // Un-set the render targets
             graphicsDevice.SetRenderTarget(null);

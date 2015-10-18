@@ -91,7 +91,7 @@ namespace Engine.Sky
         /// <summary>
         /// Gets the Sun color
         /// </summary>
-        public Vector4 SunColor { get { return sunColor; } }
+        public Vector4 SunColor { get { return sunColor; } set { sunColor = value; } }
 
         /// <summary>
         /// Gets/Sets InverseCloudVelocity value
@@ -113,6 +113,7 @@ namespace Engine.Sky
         /// </summary>
         public float NumTiles { get { return numTiles; } set { numTiles = value; } }
 
+        public float Gr;
         #endregion
 
         #region Contructor
@@ -168,7 +169,7 @@ namespace Engine.Sky
             CloudCover = -0.1f;
             CloudSharpness = 0.5f;
             numTiles = 16.0f;
-
+            sunColor = this.GetSunColor(-this.fTheta, 2);
            // base.Initialize();
         }
         #endregion
@@ -202,11 +203,13 @@ namespace Engine.Sky
             Clouds = 2,
             MoreClouds = 3,
             Rain = 4,
-            Thunder = 5
+            MoreRain = 5,
+            Thunder = 6
         }
         public Weather prevWeather;
         public void WeatherChange(ref Weather weather)
         {
+            sunColor = this.GetSunColor(-this.fTheta, 2);
             switch (weather)
             {
                 case Weather.Clear:
@@ -214,10 +217,12 @@ namespace Engine.Sky
                     numTiles = 16f;
                     CloudCover = -1f;
                     CloudSharpness = 1f;
+                    Gr = 0;
                     break;
                 case Weather.SomeClouds:
                     inverseCloudVelocity = 64.0f;
                     numTiles = 16.0f;
+                    Gr = 0;
                     if (prevWeather == Weather.Clear)
                     {
                         CloudCover -= 0.0001f;
@@ -233,8 +238,6 @@ namespace Engine.Sky
                     {
                         CloudCover -= 0.0002f;
                         CloudSharpness += 0.0001f;
-                        Console.WriteLine(CloudCover);
-                        Console.WriteLine(CloudSharpness);
                         if (CloudCover < -1)
                             CloudCover = -1;
                         if (CloudSharpness > 1)
@@ -242,22 +245,52 @@ namespace Engine.Sky
                         if (CloudCover == -1 && CloudSharpness == 1)
                             weather = Weather.Clear;
                     }
-               /*     else if(prevWeather == Weather.SomeClouds)
-                    {
-                        if (CloudCover == -0.1f && CloudSharpness == 0.5f)
-                            weather = Weather.Clouds;
-                        else if (CloudCover == -1 && CloudSharpness == 1)
-                            weather = Weather.Clear;
-                        else weather = Weather.Clouds;
-                    }*/
                     break;
                 case Weather.Clouds:
+                    Gr = 0;
                     inverseCloudVelocity = 64.0f;
                     CloudCover = -0.1f;
                     CloudSharpness = 0.5f;
                     numTiles = 16.0f;
                     break;
-                case Weather.Rain: break;
+                case Weather.MoreClouds:
+                    if (prevWeather == Weather.Clouds)
+                    {
+                        inverseCloudVelocity -= 0.01f;
+                        Gr += 0.0005f;
+                        CloudCover += 0.001f;
+                        CloudSharpness = 0.5f;
+                        numTiles = 16.0f;
+
+                        if (inverseCloudVelocity < 4) inverseCloudVelocity = 4;
+                        if (Gr > 0.9f) Gr = 0.9f;
+                        if (CloudCover > 4f) CloudCover = 4f;
+                        if (CloudCover == 4 && Gr == 0.9 && inverseCloudVelocity == 4)
+                            weather = Weather.Rain;
+                    }
+                    else if (prevWeather == Weather.Rain)
+                    {
+                        inverseCloudVelocity += 0.01f;
+                        Gr -= 0.0005f;
+                        CloudCover -= 0.001f;
+                        CloudSharpness = 0.5f;
+                        numTiles = 16.0f;                     
+                        if (inverseCloudVelocity >= 64) inverseCloudVelocity = 64;
+                        if (Gr <= 0f) Gr = 0f;
+                        if (CloudCover <= -0.1f) CloudCover = -0.1f;
+                        Console.WriteLine("CloudCover " + CloudCover + " Gr = " + Gr + " inverseCloudVelocity = " + inverseCloudVelocity);
+                        if (CloudCover == -0.1f && Gr == 0f && inverseCloudVelocity == 64)
+                            weather = Weather.Clouds;
+                    }
+                    break;
+                case Weather.Rain:
+                    Gr = 0.9f;
+                    inverseCloudVelocity = 4.0f;                    
+                    CloudCover = 4f;
+                    CloudSharpness = 0.5f;
+                    numTiles = 16.0f;
+                    break;
+                case Weather.MoreRain: break;
                 case Weather.Thunder: break;
             }
         }
@@ -295,9 +328,7 @@ namespace Engine.Sky
             Matrix World = Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, CameraPosition.Z);
 
             if (previousTheta != fTheta || previousPhi != fPhi)
-                UpdateMieRayleighTextures();
-
-            this.sunColor = this.GetSunColor(-this.fTheta, 2);
+                UpdateMieRayleighTextures();            
 
             game.GraphicsDevice.Clear(new Color(0.10980f, 0.30196f, 0.49412f));//sunColor
 
@@ -319,6 +350,8 @@ namespace Engine.Sky
                 -parameters.LightDirection.Y, -parameters.LightDirection.Z));
             scatterEffect.Parameters["NumSamples"].SetValue(parameters.NumSamples);
             scatterEffect.Parameters["fExposure"].SetValue(parameters.Exposure);
+            scatterEffect.Parameters["SunColor"].SetValue(sunColor);
+            scatterEffect.Parameters["gr"].SetValue(this.Gr);
             scatterEffect.Parameters["StarsTex"].SetValue(starsTex);
             if (fTheta < Math.PI / 2.0f || fTheta > 3.0f * Math.PI / 2.0f)
                 scatterEffect.Parameters["starIntensity"].SetValue((float)Math.Abs(
@@ -443,7 +476,7 @@ namespace Engine.Sky
             noiseEffect.Parameters["View"].SetValue(View);
             noiseEffect.Parameters["Projection"].SetValue(Projection);
             noiseEffect.Parameters["permTexture"].SetValue(this.permTex);
-            noiseEffect.Parameters["SunColor"].SetValue(this.sunColor);
+            noiseEffect.Parameters["SunColor"].SetValue(sunColor);
             noiseEffect.Parameters["numTiles"].SetValue(numTiles);
             noiseEffect.Parameters["CloudCover"].SetValue(cloudCover);
             noiseEffect.Parameters["CloudSharpness"].SetValue(cloudSharpness);
