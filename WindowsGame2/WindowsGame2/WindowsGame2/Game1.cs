@@ -397,7 +397,8 @@ namespace WindowsGame2
         protected override void Update(GameTime gameTime)
         {
             fire.Update(camera);
-            rain.Update(camera);
+            if (rain != null)
+                rain.Update(camera);
 
             //  Qtree.Childs[0].CameraPosition = ((FreeCamera)camera).Position;
             //Fire();
@@ -406,6 +407,19 @@ namespace WindowsGame2
                 this.Exit();
             oldKeyState = keyState;
             keyState = Keyboard.GetState();
+
+            if ((keyState.IsKeyDown(Keys.D0) && !previousKeyState.IsKeyDown(Keys.D0)))
+            {
+                rain = new Rain(this, ((FreeCamera)camera).Position, true, GraphicsDevice);
+            }
+            if ((keyState.IsKeyDown(Keys.D9) && !previousKeyState.IsKeyDown(Keys.D9)))
+            {
+                rain = new Rain(this, ((FreeCamera)camera).Position, false, GraphicsDevice);
+            }
+            if ((keyState.IsKeyDown(Keys.D8) && !previousKeyState.IsKeyDown(Keys.D8)))
+            {
+                rain = null;
+            }  
 
             if (Keyboard.GetState().IsKeyUp(Keys.LeftControl))
             {
@@ -943,7 +957,8 @@ namespace WindowsGame2
                     terrain.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Position);
 
                 fire.Draw(camera);
-                rain.Draw(camera);
+                if(rain != null)
+                    rain.Draw(camera);
 
                 rs = new RasterizerState();
                 rs.CullMode = CullMode.CullCounterClockwiseFace;
