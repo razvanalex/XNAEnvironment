@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-
+using Engine.Water;
 
 namespace Engine.Sky
 {
@@ -27,6 +27,10 @@ namespace Engine.Sky
             model.SetModelEffect(effect, false);
 
             this.graphics = graphicsDevice;
+        }
+        public void Draw(Camera.Camera camera, GraphicsDevice graphicsDevice, Texture2D lightBuffer)
+        {
+
         }
         public void Draw(Matrix View, Matrix Projection, Vector3 CameraPosition)
         {

@@ -14,6 +14,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <PlatformTarget>x86</PlatformTarget>
@@ -22,7 +23,6 @@
     <RootNamespace>WindowsGame2Content</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.EffectImporter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.FBXImporter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Xna.Framework.Content.Pipeline.TextureImporter, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
@@ -34,7 +34,7 @@
     <Compile Include="models\model1.fbx">
       <Name>model1</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>LightPrePassProcessor</Processor>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -88,21 +88,10 @@
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
     </Compile>
-    <Compile Include="models\Trees\Linden\Far_FarLinden.fbx">
-      <Name>Far_FarLinden</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>InstancedModelProcessor</Processor>
-      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
-    </Compile>
     <Compile Include="models\PPLightMesh.fbx">
       <Name>PPLightMesh</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
-    </Compile>
-    <Compile Include="models\Trees\Linden\Linden.fbx">
-      <Name>Linden</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>InstancedModelProcessor</Processor>
     </Compile>
     <Compile Include="models\Trees\Linden\Linden\BroadleafBark.tga">
       <Name>BroadleafBark</Name>
@@ -175,6 +164,49 @@
       <Name>PPShared</Name>
       <Importer>EffectImporter</Importer>
     </Compile>
+    <Compile Include="models\Trees\Linden\Linden.fbx">
+      <Name>Linden</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>InstancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="models\Trees\Linden\FarLinden.fbx">
+      <Name>FarLinden</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>InstancedModelProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
+    </Compile>
+    <Compile Include="models\Trees\Linden\leaves.fbx">
+      <Name>leaves</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>InstancedModelProcessor</Processor>
+    </Compile>
+    <Compile Include="models\Trees\Linden\Far_FarLinden.fbx">
+      <Name>Far_FarLinden</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>InstancedModelProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
+    </Compile>
+    <Compile Include="models\Trees\Palms\Far_FarPalm.FBX">
+      <Name>Far_FarPalm</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>InstancedModelProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
+    </Compile>
+    <Compile Include="textures\lightTexture.tga">
+      <Name>lightTexture</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="models\cone.fbx">
+      <Name>cone</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="models\sphere.fbx">
+      <Name>sphere</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>ModelProcessor</Processor>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="textures\Water\waves.png">
@@ -233,6 +265,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\..\Desktop\New Folder\LightPrePassProcessor\LightPrePassProcessor.csproj">
+      <Project>{a9ed55a5-f9f1-440f-a461-f59cf7e262ce}</Project>
+      <Name>LightPrePassProcessor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\InstancedModelPipeline\InstancedModelPipeline.csproj">
       <Project>{1e0c98d6-41d3-4c90-a607-1e608fb87e21}</Project>
       <Name>InstancedModelPipeline</Name>
@@ -563,6 +599,79 @@
       <Name>snow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="models\Trees\Linden\Linden\2.png">
+      <Name>2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_GenerateMipmaps>True</ProcessorParameters_GenerateMipmaps>
+      <ProcessorParameters_ResizeToPowerOfTwo>True</ProcessorParameters_ResizeToPowerOfTwo>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="models\Trees\Linden\Linden\_3.jpg">
+      <Name>_3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="models\Trees\Linden\Far_FarLinden\VeryLowLinden.png">
+      <Name>VeryLowLinden</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="models\Trees\Palms\Palm\VeryLowPalm.png">
+      <Name>VeryLowPalm</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="textures\Terrain\BasicTerrain\heightmap.png">
+      <Name>heightmap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="textures\Terrain\BasicTerrain\Ground.png">
+      <Name>Ground</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="textures\Terrain\BasicTerrain\GroundMap.png">
+      <Name>GroundMap</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="shaders\ClearGBuffer.fx">
+      <Name>ClearGBuffer</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="shaders\LightingLPP.fx">
+      <Name>LightingLPP</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="shaders\LPPMainEffect.fx">
+      <Name>LPPMainEffect</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
+    </Compile>
+    <Compile Include="shaders\ReconstructDepth.fx">
+      <Name>ReconstructDepth</Name>
+      <Importer>EffectImporter</Importer>
+      <Processor>EffectProcessor</Processor>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

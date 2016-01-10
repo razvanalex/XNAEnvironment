@@ -1,6 +1,7 @@
+float4x4 World;
 float4x4 View;
 float4x4 Projection;
-
+ 
 float3 LightDirection = float3(1, -1, 0);
 float3 LightColor = float3(1, 1, 1);
 float3 AmbientColor = float3(-0.2, -0.2, -0.2);
@@ -141,12 +142,12 @@ struct VertexShaderOutput
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 {
 	VertexShaderOutput output;
-
-	output.Position = mul(input.Position, mul(View, Projection));
+	
+	output.Position = mul(input.Position, mul(World, mul(View, Projection)));
 	output.Normal = input.Normal;
 	output.UV = input.UV;
 	output.Depth = output.Position.z;
-	output.WorldPosition = input.Position;
+	output.WorldPosition = mul(input.Position, World);
 	output.Height = input.Position.y;
 	return output;
 }
@@ -154,12 +155,12 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	if (ClipPlaneEnabled)
-	clip(dot(float4(input.WorldPosition, 1), ClipPlane));
+		clip(dot(float4(input.WorldPosition, 1), ClipPlane));
 
 	float3 light = AmbientColor;
-	float3 lightDir = normalize(LightDirection);
-	float3 normal = normalize(input.Normal);
-	light = clamp(light + 0.4f, 0, 1);
+		float3 lightDir = normalize(LightDirection);
+		float3 normal = normalize(input.Normal);
+		light = clamp(light + 0.4f, 0, 1);
 	light += saturate(dot(lightDir, normal)) * LightColor;
 
 	float3 Tex[NoOfTextures], TexMaps[NoOfTextures];
@@ -174,10 +175,16 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	for (int i = 0; i < NoOfTextures; i++)
 		dif -= TexMaps[i].r;
 
-	float3 output = clamp(dif, 0, 1);
+	float3 output = saturate(dif);
 
 	for (int i = 0; i < NoOfTextures; i++)
+	{
 		output += TexMaps[i].r * Tex[i];
+	//	for (int j = i + 1; j < NoOfTextures; j++)
+	//		if (TexMaps[i].r != TexMaps[j].r)
+	//			output /= 2;
+	
+	}
 	
 	float bBlendDist;
 	float bBlendWidth;
@@ -188,8 +195,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 	if (CameraPosition.y > WaterHeight)
 	{
-		if (input.Height < WaterHeight && input.WorldPosition.y < WaterHeight)
-		{
+	if (input.Height < WaterHeight && input.WorldPosition.y < WaterHeight)
+	{
 			detailDistance = 500;
 
 			float BlendDist = WaterHeight - 100;
@@ -221,9 +228,9 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 			output = lerp(output, WaterColor, hBlendFactor);
 			output = lerp(output, WaterColor, Gtime);
 		}
-		else output *= saturate(light);
+		 output *= saturate(light);
 	}
-	if (CameraPosition.y < WaterHeight)
+	else if (CameraPosition.y < WaterHeight)
 	{
 		if (input.WorldPosition.y < WaterHeight)
 		{

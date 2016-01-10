@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Engine.Terrain.Collections.Generic;
-
+using Engine.Water;
 namespace Engine.Terrain
 {
 
@@ -14,7 +14,7 @@ namespace Engine.Terrain
         #region Fields
 
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-        public Vector<VertexPositionNormalTexture> Vertices;
+        public Vector<VertexPositionNormalTextureTangentBinormal> Vertices;
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         public Vector<int> Indices;
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
@@ -53,6 +53,9 @@ namespace Engine.Terrain
         private float[,] _heightData;
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private int _minimalDepth;
+        public Effect _effect;
+        protected static QuadRenderer _quadRenderer;
+
         public const int NoOfTextures = 6;
         public float[] textureTiling = new float[NoOfTextures];
         Vector3 cameraPosition;
@@ -105,6 +108,45 @@ namespace Engine.Terrain
             get
             {
                 return this._minimalDepth;
+            }
+        }
+
+        private Matrix transform;
+        private BoundingSphere boundingSphere;
+        public Matrix Transform
+        {
+            get
+            {
+                Matrix _scale, _rotation, _position;
+                _scale = Matrix.CreateScale(Scale);
+                _rotation = Matrix.CreateFromYawPitchRoll(0, 0, 0);
+                _position = Matrix.CreateTranslation(new Vector3(0));
+
+               // Matrix.Multiply(ref _scale, ref _rotation, out transform);
+                Matrix.Multiply(ref _rotation, ref _position, out transform);
+
+                return transform;
+            }
+            set { transform = value; }
+        }
+        private void buildBoundingSphere()
+        {
+            BoundingSphere sphere = new BoundingSphere(Vector3.Zero, 0);
+            // Merge all the model's built in bounding spheres
+            BoundingSphere transformed = BoundingSphere.Transform(Transform);
+            sphere = BoundingSphere.CreateMerged(sphere, transformed);
+            this.boundingSphere = sphere;
+        }
+
+        public BoundingSphere BoundingSphere
+        {
+            get
+            {
+                // No need for rotation, as this is a sphere
+                Matrix worldTransform = Matrix.CreateScale(Scale) * Matrix.CreateTranslation(new Vector3(0));
+                BoundingSphere transformed = boundingSphere;
+                transformed = transformed.Transform(worldTransform);
+                return transformed;
             }
         }
 
@@ -202,6 +244,14 @@ namespace Engine.Terrain
             }
         }
 
+        public Effect ShadowEffect
+        {
+            get
+            {
+                return this._effect;
+            }
+        }
+
         public GraphicsDevice Device
         {
             get
@@ -278,8 +328,9 @@ namespace Engine.Terrain
             this._heightFieldSpace = (float)(size / System.Math.Pow(2, depth-1));
             this._disposeDatas = new Vector<BuffersData>();
             this._lastLoadedDatas = new Vector<BuffersData>();
-            this.Vertices = new Vector<VertexPositionNormalTexture>(1000);
+            this.Vertices = new Vector<VertexPositionNormalTextureTangentBinormal>(1000);
             this.Indices = new Vector<int>(1000);
+            buildBoundingSphere();
         }
 
         #endregion
@@ -289,6 +340,8 @@ namespace Engine.Terrain
 
         public void Initialize()
         {
+            _quadRenderer = new QuadRenderer();
+            
             this.Childs[0] = new QuadNode(null, NodeChild.NorthEast);
             this.Childs[0].Location = this.Location;
             this.Childs[0].ParentTree = this;
@@ -385,8 +438,8 @@ namespace Engine.Terrain
                 VertexBuffer vertexBuffer;
 
 
-                vertexBuffer = new VertexBuffer(this.Device, typeof(VertexPositionNormalTexture), Vertices.Count, BufferUsage.WriteOnly);
-                vertexBuffer.SetData<VertexPositionNormalTexture>(Vertices.ToArray());
+                vertexBuffer = new VertexBuffer(this.Device, typeof(VertexPositionNormalTextureTangentBinormal), Vertices.Count, BufferUsage.WriteOnly);
+                vertexBuffer.SetData<VertexPositionNormalTextureTangentBinormal>(Vertices.ToArray());
 
                 indexBuffer = new IndexBuffer(this.Device, typeof(int), Indices.Count, BufferUsage.WriteOnly);
                 indexBuffer.SetData<int>(Indices.ToArray());
@@ -401,14 +454,12 @@ namespace Engine.Terrain
             }
          }
 
-        public void Draw(Matrix View, Matrix Projection, Vector3 CameraPosition)
-        {
-            cameraPosition = CameraPosition;
+        private void SetVertecesIndices()
+        {           
             if (_lastLoadedDatas.Count > 0)
             {
                 this._disposeDatas.Add(this._currentBufferData);
                 this._currentBufferData = _lastLoadedDatas[0];
-                //this.Device.Vertices[0].SetSource(this._currentBufferData.VertexBuffer, 0, VertexPositionNormalTexture.SizeInBytes);
                 this.Device.SetVertexBuffer(this._currentBufferData.VertexBuffer);
                 this.Device.Indices = this._currentBufferData.IndexBuffer;
                 _lastLoadedDatas.RemoveAt(0);
@@ -418,7 +469,13 @@ namespace Engine.Terrain
                 this.Device.SetVertexBuffer(this._currentBufferData.VertexBuffer);
                 this.Device.Indices = this._currentBufferData.IndexBuffer;
             }
+        }
+        public void Draw(Matrix View, Matrix Projection, Vector3 CameraPosition)
+        {
+            cameraPosition = CameraPosition;
+            SetVertecesIndices();
 
+            effect.Parameters["World"].SetValue(Transform);
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
 
@@ -439,11 +496,92 @@ namespace Engine.Terrain
             effect.Parameters["WaterHeight"].SetValue(WaterHeight);
 
             RasterizerState rs = new RasterizerState();
-            rs.CullMode = CullMode.CullClockwiseFace;
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            Device.RasterizerState = rs;
+          
+            this.Effect.CurrentTechnique.Passes[0].Apply();
+            this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+        }
+
+        public void Draw(Camera.Camera camera, GraphicsDevice graphicsDevice, Texture2D lightBuffer)
+        {
+            SetVertecesIndices();
+
+            Effect effect = _effect;
+            effect.CurrentTechnique = effect.Techniques[3];
+
+            effect.Parameters["LightBuffer"].SetValue(lightBuffer);
+            effect.Parameters["LightBufferPixelSize"].SetValue(new Vector2(0.5f / lightBuffer.Width, 0.5f / lightBuffer.Height));
+
+            effect.Parameters["World"].SetValue(Transform);
+            effect.Parameters["WorldView"].SetValue(Transform * camera.View);
+            effect.Parameters["WorldViewProjection"].SetValue(Transform * camera.View * camera.Projection);
+            effect.Parameters["View"].SetValue(camera.View);
+            effect.Parameters["Projection"].SetValue(camera.Projection);
+
+            effect.Parameters["LightColor"].SetValue(lightColor);
+            effect.Parameters["TextureTiling"].SetValue(textureTiling);
+
+            for (int i = 1; i <= NoOfTextures; i++)
+            {
+                effect.Parameters[("Texture" + i).ToString()].SetValue(Textures[i - 1]);
+                effect.Parameters[("TexturesMaps" + i).ToString()].SetValue(TexturesMaps[i - 1]);
+            }
+
+            effect.Parameters["DetailTexture"].SetValue(DetailTexture);
+            effect.Parameters["DetailDistance"].SetValue(DetailDistance);
+            effect.Parameters["DetailTextureTiling"].SetValue(DetailTextureTiling);
+            effect.Parameters["CameraPosition"].SetValue(camera.Transform.Translation);
+            effect.Parameters["WaterHeight"].SetValue(WaterHeight);
+            effect.CurrentTechnique.Passes[0].Apply();
+        
+            RasterizerState rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
             rs.FillMode = FillMode.Solid;
             Device.RasterizerState = rs;
 
-            this.Effect.CurrentTechnique.Passes[0].Apply();
+            this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+        }
+      
+
+        public void RenderToGBuffer(Camera.Camera camera, GraphicsDevice graphicsDevice)
+        {
+            SetVertecesIndices();
+
+            Effect effect = _effect;
+            effect.CurrentTechnique = effect.Techniques[0];
+            //our first pass is responsible for rendering into GBuffer
+            effect.Parameters["World"].SetValue(Transform);
+            effect.Parameters["View"].SetValue(camera.View);
+            effect.Parameters["Projection"].SetValue(camera.Projection);
+            effect.Parameters["WorldView"].SetValue(Transform * camera.View);
+            effect.Parameters["WorldViewProjection"].SetValue(Transform * camera.View * camera.Projection);
+            effect.Parameters["FarClip"].SetValue(camera.FarPlane);
+            effect.CurrentTechnique.Passes[0].Apply();
+            RasterizerState  rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            graphicsDevice.RasterizerState = rs;
+            this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+        }
+
+        public void RenderShadowMap(ref Matrix viewProj, GraphicsDevice graphicsDevice)
+        {
+            SetVertecesIndices();
+            Effect effect = _effect;
+
+            //render to shadow map
+            effect.CurrentTechnique = effect.Techniques[2];
+            effect.Parameters["World"].SetValue(Transform);
+            effect.Parameters["LightViewProj"].SetValue(viewProj);
+            effect.Parameters["TextureEnabled"].SetValue(false);
+
+            effect.CurrentTechnique.Passes[0].Apply();
+            RasterizerState rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            graphicsDevice.RasterizerState = rs;
             this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
         }
 
@@ -476,8 +614,8 @@ namespace Engine.Terrain
         {
             int left, top;
 
-            left = (int)(X - this.Size / 2) / (int)this.Scale;
-            top = (int)(Z - this.Size / 2) / (int)this.Scale;
+            left = (int)((X - this.Size / 2) / this.Scale);
+            top = (int)((Z - this.Size / 2) / this.Scale);
 
             float xNormalized = ((X - this.Size / 2) % this.Scale) / this.Scale;
             float zNormalized = ((Z - this.Size / 2) % this.Scale) / this.Scale;
@@ -525,14 +663,12 @@ namespace Engine.Terrain
                 _heightData[left, top + 1],
                 _heightData[left + 1, top + 1], xNormalized);
 
-            topHeight *= 2f; 
-            bottomHeight *= 2f;
-
             float height = MathHelper.Lerp(topHeight, bottomHeight, zNormalized);
 
             height *= this.Scale;
-            return height+100;
+            return height * 1.575f;
         }
+     
 
         public float GetHeightAT(float x, float y)
         {
@@ -615,7 +751,5 @@ namespace Engine.Terrain
         }
 
         #endregion
-
     }
-
 }

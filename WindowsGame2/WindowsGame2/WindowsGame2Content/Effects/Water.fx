@@ -17,11 +17,10 @@ float4  WaterColor = float4(0.5f, 0.79f, 0.75f, 1.0f);
 float4  WaterColor2 = float4(0.10980f, 0.30196f, 0.49412f, 1.0f);
 float SunFactor = 0.5;
 
-float WaveLength;// = 0.6;
-float WaveHeight;// = 0.2;
+float WaveLength;
+float WaveHeight;
 float Time = 0;
-float WaveSpeed;// = 0.04f;
-//float WaveSpeed1 = WaveSpeed;
+float WaveSpeed;
 
 /*LOW
 sampler2D reflectionSampler = sampler_state {
@@ -80,7 +79,6 @@ sampler2D waterNormalSampler1 = sampler_state {
 struct VertexShaderInput
 {
 	float4 Position : POSITION0;
-	//water
 	float2 UV : TEXCOORD0;
 };
 struct VertexShaderOutput
@@ -101,8 +99,6 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.NormalMapPosition = input.UV / WaveLength;
 	output.NormalMapPosition.x -= Time * WaveSpeed;
 
-//	output.NormalMapPosition.y = output.NormalMapPosition.x;
-
 	output.NormalMapPosition1 = input.UV / WaveLength;
 	output.NormalMapPosition1.y -= Time * WaveSpeed * 2;
 
@@ -116,7 +112,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 	output.WorldPosition = mul(input.Position, World);
 
 	output.Depth = -CameraPosition.y;
-//	output.Position3D = mul(input.Position, mul(World, mul(View, Projection)));
+
 	return output;
 }
 
@@ -124,8 +120,6 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 {
 	float2 reflectionUV = postProjToScreen(input.ReflectionPosition) + halfPixel();
 	float2 refractedUV = postProjToScreen(input.RefractedPosition) + halfPixel();
-
-	//float4 normal = tex2D(waterNormalSampler, input.NormalMapPosition) * 2 - 1;
 
 	float3 normal0 = tex2D(waterNormalSampler, input.NormalMapPosition);
 	float3 normal1 = tex2D(waterNormalSampler1, input.NormalMapPosition1);
@@ -139,15 +133,6 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 
 	float4 reflection = tex2D(reflectionSampler, reflectionUV + UVOffset);
 	float4 refraction = tex2D(refractionSampler, refractedUV + UVOffset);
-	/*
-	float FogNear = 100;
-	float FogFar = 10;
-	float4 FogColor = WaterColor;
-
-	float fog = saturate((input.Position3D - FogNear) / (FogNear - FogFar));
-
-	reflection = lerp(FogColor, reflection, fog);
-	*/
 
 	float3 viewDirection = normalize(CameraPosition - input.WorldPosition);
 	float3 reflectionVector = normalize(reflect(viewDirection, normal.bgr));
@@ -163,7 +148,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	
 	float specular = pow(saturate(dot(reflectionVector, float3(-LightDirection.x, LightDirection.y, -LightDirection.z))), sunPower);
 
-	float3 sunLight = sunFactor * specular * float4(LightColor, 1);
+	float3 sunLight = sunFactor * specular * LightColor;
 
 	float frasnelTerm = saturate(dot(viewDirection, normal.rgb));
 
@@ -174,20 +159,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	float BlendWidth = 100;
 
 	//Gradient for XY plane
-	float dBlendDist = 25;
-	float dBlendWidth= 100;
-
+	float dBlendDist = 150;
+	float dBlendWidth = 500;
 	float dBlendFactor = saturate((pow((pow((input.WorldPosition.z - CameraPosition.z), 2) + pow((input.WorldPosition.x - CameraPosition.x), 2)), 0.5) - dBlendDist) / (dBlendWidth - dBlendDist));
 
 	if (CameraPosition.y < WaterHeight)
 	{
-		color.rgb = WaterColor*lerp(refraction, reflection, 0) + sunLight;
-		color.rgb = lerp(color.rgb, WaterColor2.rgb, clamp(((input.Depth - BlendDist) / BlendWidth), 0, 1));
+		color.rgb = WaterColor * refraction + sunLight;
+		color.rgb = lerp(color.rgb, WaterColor2.rgb, saturate(((input.Depth - BlendDist) / BlendWidth)));
 		color.rgb = lerp(color.rgb, WaterColor2.rgb, dBlendFactor);
 	}
 	else
 	{
-		color.rgb = lerp(WaterColor * reflection, WaterColor * refraction, frasnelTerm) + sunLight;// *float4(1.0f, 0.8f, 0.4f, 1.0f);		
+		color.rgb = WaterColor * lerp(reflection, refraction, frasnelTerm) + sunLight;
 	}
 
 	return color;

@@ -624,6 +624,13 @@ namespace Engine.Terrain
                 new Vector3(xWhole, heightXWholeZ, z)).Normal
                 ;
             normal.Normalize();
+          
+            //tangent of the current quad
+            Vector3 tangent = new Vector3(x, heightXZWhole, zWhole) - new Vector3(xWhole, heightXWholeZWhole, zWhole);
+            tangent.Normalize();
+
+            //binormal of the current quad
+            Vector3 binormal = Vector3.Cross(tangent, normal);
 
             //first compute the 4 egdes of the current square
             //here we know all : position and height.
@@ -662,11 +669,11 @@ namespace Engine.Terrain
                     }
 
                     //only the sides can be new
-                    this.CenterVertex = new TerrainVertex(new VertexPositionNormalTexture(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, zHalf), zHalf), normal, GetTextureCoordinates(xHalf, zHalf)));
-                    this.WestVertex = (this.WestNeighbor != null ? this.WestNeighbor.EastVertex : new TerrainVertex(new VertexPositionNormalTexture(new Vector3(x, this.ParentTree.GetHeight(x, zHalf), zHalf), normal, GetTextureCoordinates(x, zHalf))));
-                    this.NorthVertex = (this.NorthNeighbor != null ? this.NorthNeighbor.SouthVertex : new TerrainVertex(new VertexPositionNormalTexture(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, zWhole), zWhole), normal, GetTextureCoordinates(xHalf, zWhole))));
-                    this.EastVertex = (this.EastNeighbor != null ? this.EastNeighbor.WestVertex : new TerrainVertex(new VertexPositionNormalTexture(new Vector3(xWhole, this.ParentTree.GetHeight(xWhole, zHalf), zHalf), normal, GetTextureCoordinates(xWhole, zHalf))));
-                    this.SouthVertex = (this.SouthNeighbor != null ? this.SouthNeighbor.NorthVertex : new TerrainVertex(new VertexPositionNormalTexture(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, z), z), normal, GetTextureCoordinates(xHalf, z))));
+                    this.CenterVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, zHalf), zHalf), normal, GetTextureCoordinates(xHalf, zHalf), tangent, binormal));
+                    this.WestVertex = (this.WestNeighbor != null ? this.WestNeighbor.EastVertex : new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(new Vector3(x, this.ParentTree.GetHeight(x, zHalf), zHalf), normal, GetTextureCoordinates(x, zHalf), tangent, binormal)));
+                    this.NorthVertex = (this.NorthNeighbor != null ? this.NorthNeighbor.SouthVertex : new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, zWhole), zWhole), normal, GetTextureCoordinates(xHalf, zWhole), tangent, binormal)));
+                    this.EastVertex = (this.EastNeighbor != null ? this.EastNeighbor.WestVertex : new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(new Vector3(xWhole, this.ParentTree.GetHeight(xWhole, zHalf), zHalf), normal, GetTextureCoordinates(xWhole, zHalf), tangent, binormal)));
+                    this.SouthVertex = (this.SouthNeighbor != null ? this.SouthNeighbor.NorthVertex : new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, z), z), normal, GetTextureCoordinates(xHalf, z), tangent, binormal)));
                 }
                 else //this occurs only on depth = 0
                 {
@@ -680,15 +687,15 @@ namespace Engine.Terrain
                     Vector3 east = new Vector3(xWhole, this.ParentTree.GetHeight(xWhole, zHalf), zHalf);
                     Vector3 south = new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, z), z);
 
-                    this.NorthWestVertex = new TerrainVertex(new VertexPositionNormalTexture(northWest, normal, GetTextureCoordinates(x, zWhole)));
-                    this.NorthEastVertex = new TerrainVertex(new VertexPositionNormalTexture(northEast, normal, GetTextureCoordinates(xWhole, zWhole)));
-                    this.SouthEastVertex = new TerrainVertex(new VertexPositionNormalTexture(southEast, normal, GetTextureCoordinates(xWhole, z)));
-                    this.SouthWestVertex = new TerrainVertex(new VertexPositionNormalTexture(southWest, normal, GetTextureCoordinates(x, z)));
-                    this.CenterVertex = new TerrainVertex(new VertexPositionNormalTexture(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, zHalf), zHalf), normal, GetTextureCoordinates(xHalf, zHalf)));
-                    this.WestVertex = new TerrainVertex(new VertexPositionNormalTexture(west, normal, GetTextureCoordinates(x, zHalf)));
-                    this.NorthVertex = new TerrainVertex(new VertexPositionNormalTexture(north, normal, GetTextureCoordinates(xHalf, zWhole)));
-                    this.EastVertex = new TerrainVertex(new VertexPositionNormalTexture(east, normal, GetTextureCoordinates(xWhole, zHalf)));
-                    this.SouthVertex = new TerrainVertex(new VertexPositionNormalTexture(south, normal, GetTextureCoordinates(xHalf, z)));
+                    this.NorthWestVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(northWest, normal, GetTextureCoordinates(x, zWhole), tangent, binormal));
+                    this.NorthEastVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(northEast, normal, GetTextureCoordinates(xWhole, zWhole), tangent, binormal));
+                    this.SouthEastVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(southEast, normal, GetTextureCoordinates(xWhole, z), tangent, binormal));
+                    this.SouthWestVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(southWest, normal, GetTextureCoordinates(x, z), tangent, binormal));
+                    this.CenterVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(new Vector3(xHalf, this.ParentTree.GetHeight(xHalf, zHalf), zHalf), normal, GetTextureCoordinates(xHalf, zHalf), tangent, binormal));
+                    this.WestVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(west, normal, GetTextureCoordinates(x, zHalf), tangent, binormal));
+                    this.NorthVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(north, normal, GetTextureCoordinates(xHalf, zWhole), tangent, binormal));
+                    this.EastVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(east, normal, GetTextureCoordinates(xWhole, zHalf), tangent, binormal));
+                    this.SouthVertex = new TerrainVertex(new VertexPositionNormalTextureTangentBinormal(south, normal, GetTextureCoordinates(xHalf, z), tangent, binormal));
                 }
             }
             //At te beginning the four edges are enabled
@@ -1004,7 +1011,7 @@ namespace Engine.Terrain
 
         private void FillWithVertex(NodeVertex position)
         {
-            VertexPositionNormalTexture vertexValue = this.Vertices[(int)position].Value;
+            VertexPositionNormalTextureTangentBinormal vertexValue = this.Vertices[(int)position].Value;
             TerrainVertex vertex = this.Vertices[(int)position];
 
             if (this.ParentTree.ProcessIterationId != vertex.LastUsedIteration)
@@ -1030,7 +1037,7 @@ namespace Engine.Terrain
             {
                 terrainPrimitive.Indice3 = vertex.BufferIndice;
                 currentIndice = 0;
-                terrainPrimitive.SetNormal(this.ParentTree.Vertices);
+                terrainPrimitive.SetNormalTangentBinormal(this.ParentTree.Vertices);
             }
           
         }
@@ -1171,10 +1178,10 @@ namespace Engine.Terrain
         private void CheckVertexAt(NodeVertex position, NodeContent flag, NodeSideVertex side)
         {
             if (this.IsDisabled(flag)//if the flag is not enabled
-                && VertexTest(this.Vertices[(int)position].Value.Position, side, Camera.FreeCamera.DefaultCamera.Position))//and the vertex can be enabled...
+                && VertexTest(this.Vertices[(int)position].Value.Position, side, Camera.Camera.DefaultCamera.Transform.Translation))//and the vertex can be enabled...
                 this.EnableVertex(flag, position);
             else if (this.IsEnabled(flag)//if the flag is enabled
-                && !VertexTest(this.Vertices[(int)position].Value.Position, side, Camera.FreeCamera.DefaultCamera.Position))//and the vertex have to be disabled...
+                && !VertexTest(this.Vertices[(int)position].Value.Position, side, Camera.Camera.DefaultCamera.Transform.Translation))//and the vertex have to be disabled...
                 this.DisableVertex(flag, position);
         }
 
@@ -1187,12 +1194,12 @@ namespace Engine.Terrain
         private void CheckChildAt(NodeChild position, NodeContent flag, float dotprod, BoundingBox childBox)
         {
             if (this.IsDisabled(flag)//if the flag is not enabled
-                && ChildTest(dotprod, childBox, Camera.FreeCamera.DefaultCamera.Position))//and the child bounding box show that the child have to be enabled
+                && ChildTest(dotprod, childBox, Camera.Camera.DefaultCamera.Transform.Translation))//and the child bounding box show that the child have to be enabled
                 this.AddChild(position, flag);
             else if (this.IsEnabled(flag)//if the flag is enabled
                 && this.Childs[(int)position].IsLeaf() //and the child have not childs
                 && this.Childs[(int)position].HaveNoEdge() // and the child have no side edges
-                && !ChildTest(dotprod, childBox, Camera.FreeCamera.DefaultCamera.Position)) ////and the child bounding box show that the child have to be disabled
+                && !ChildTest(dotprod, childBox, Camera.Camera.DefaultCamera.Transform.Translation)) ////and the child bounding box show that the child have to be disabled
                 this.RemoveChild(position, flag);
         }
 

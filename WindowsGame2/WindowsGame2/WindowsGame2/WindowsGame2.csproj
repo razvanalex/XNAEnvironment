@@ -88,18 +88,27 @@
     <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Engine\Billboards.cs" />
+    <Compile Include="Engine\Billboards\BillboardsClass.cs" />
+    <Compile Include="Engine\Billboards\BillboardsSystem.cs" />
+    <Compile Include="Engine\Billboards\Billboard.cs" />
     <Compile Include="Engine\Camera\Camera.cs" />
     <Compile Include="Engine\Components.cs" />
+    <Compile Include="Engine\Helper.cs" />
     <Compile Include="Engine\Particles\Fire\Fire.cs" />
     <Compile Include="Engine\Particles\Fire\FireSystem.cs" />
     <Compile Include="Engine\Particles\Rain\RainSystem.cs" />
     <Compile Include="Engine\Particles\Rain\Rain.cs" />
+    <Compile Include="Engine\Screens\BasicWorld.cs" />
+    <Compile Include="Engine\Screens\TestWorld.cs" />
+    <Compile Include="Engine\Lighting PrePass\Light.cs" />
+    <Compile Include="Engine\Lighting PrePass\Renderer.cs" />
+    <Compile Include="Engine\Lighting PrePass\ShadowRenderer.cs" />
     <Compile Include="Engine\Shaders\DepthOfField.cs" />
     <Compile Include="Engine\Camera\FreeCamera.cs" />
     <Compile Include="Engine\Camera\TargetCamera.cs" />
     <Compile Include="Engine\Particles\ParticleVertex.cs" />
     <Compile Include="Engine\Particles\ParticleSystem.cs" />
+    <Compile Include="Engine\Sky\SkyDome.cs" />
     <Compile Include="Engine\Terrain\BuffersData.cs" />
     <Compile Include="Engine\Terrain\NodeChild.cs" />
     <Compile Include="Engine\Terrain\NodeContent.cs" />
@@ -114,19 +123,20 @@
     <Compile Include="Engine\Terrain\Vector.cs" />
     <Compile Include="Engine\Shaders\GaussianBlur.cs" />
     <Compile Include="Engine\Sky\LensFlareComponent.cs" />
-    <Compile Include="Engine\Models.cs" />
+    <Compile Include="Engine\Models\Models.cs" />
     <Compile Include="Engine\Shaders\PostProcessor.cs" />
-    <Compile Include="PPPointLight.cs" />
-    <Compile Include="PrelightingRenderer.cs" />
+    <Compile Include="Engine\Water\Water.cs" />
+    <Compile Include="Engine\Shaders\PPPointLight.cs" />
+    <Compile Include="Engine\Shaders\PrelightingRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Engine\Sky\QuadRenderComponent.cs" />
     <Compile Include="Engine\Sky\SkyBox.cs" />
-    <Compile Include="Engine\Sky\SkyDome.cs" />
+    <Compile Include="Engine\Sky\SkyDomeSystem.cs" />
     <Compile Include="Engine\Sky\SkyDomeParameters.cs" />
-    <Compile Include="Engine\SmallTerrain.cs" />
-    <Compile Include="Engine\Water.cs" />
+    <Compile Include="Engine\Terrain\SmallTerrain.cs" />
+    <Compile Include="Engine\Water\WaterSystem.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

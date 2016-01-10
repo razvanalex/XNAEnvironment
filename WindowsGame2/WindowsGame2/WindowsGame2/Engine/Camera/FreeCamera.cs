@@ -14,28 +14,15 @@ namespace Engine.Camera
 
     public class FreeCamera : Camera
     {
-        private static FreeCamera camera;
-        public static FreeCamera DefaultCamera
-        {
-            get
-            {
-                return FreeCamera.camera;
-            }
-            set
-            {
-                FreeCamera.camera = value;
-            }
-        }
         public float Yaw { get; set; }
         public float Pitch { get; set; }
 
         public Vector3 Position { get; set; }
         public Vector3 Target { get; set; }
 
-
         private Vector3 translation;
-        public float nearPlane { get; set; }
-        public float farPlane { get; set; }
+        public override float NearPlane { get; set; }
+        public override float FarPlane { get; set; }
 
         public FreeCamera(Vector3 Position, float Yaw, float Pitch, float nearPlane, float farPlane, GraphicsDevice graphicsDevide)
             : base(graphicsDevide, nearPlane, farPlane)
@@ -43,8 +30,8 @@ namespace Engine.Camera
             this.Position = Position;
             this.Yaw = Yaw;
             this.Pitch = Pitch;
-            this.farPlane = farPlane;
-            this.nearPlane = nearPlane;
+            this.FarPlane = farPlane;
+            this.NearPlane = nearPlane;
             
             translation = Vector3.Zero;
         }
@@ -54,14 +41,10 @@ namespace Engine.Camera
             this.Yaw += YawChange;
             this.Pitch += PitchChange;
         }
+
         public void Move(Vector3 Translation)
         {
             this.translation += Translation;
-        }
-
-        public void NearPlaneSet(float nearPlane)
-        {
-            this.nearPlane = nearPlane;
         }
 
         Vector3 up;

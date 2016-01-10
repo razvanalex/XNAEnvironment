@@ -203,7 +203,7 @@ namespace Engine.Particles
         }
 
 
-        public void DrawHardwareInstancing(Matrix[] instances, Camera.FreeCamera camera, Vector3 LightDirection)
+        public void DrawHardwareInstancing(Matrix[] instances, Camera.Camera camera, Vector3 LightDirection)
         {
             if (instances.Length == 0)
                 return;
@@ -235,8 +235,8 @@ namespace Engine.Particles
             effect.Parameters["Lifespan"].SetValue(lifespan);
             effect.Parameters["Wind"].SetValue(wind);
             effect.Parameters["Size"].SetValue(particleSize / 2f);
-            effect.Parameters["Up"].SetValue(camera.Up);
-            effect.Parameters["Side"].SetValue(camera.Right);
+            effect.Parameters["Up"].SetValue(camera.Transform.Up);
+            effect.Parameters["Side"].SetValue(camera.Transform.Right);
             effect.Parameters["FadeInTime"].SetValue(fadeInTime);
             
             // Enable blending render states

@@ -100,10 +100,10 @@ namespace Engine.Particles
 
         public void Draw(Matrix[] instanceTransformsPS, Matrix[] instanceTransformsSM, Camera.Camera camera)
         {
-            //ps.DrawHardwareInstancing(instanceTransformsPS, ((FreeCamera)camera), Position);
-            //smoke.DrawHardwareInstancing(instanceTransformsSM, ((FreeCamera)camera), Position);         
-            ps.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Up, ((FreeCamera)camera).Right);
-            smoke.Draw(camera.View, camera.Projection, ((FreeCamera)camera).Up, ((FreeCamera)camera).Right);
+         //   ps.DrawHardwareInstancing(instanceTransformsPS, ((FreeCamera)camera), Position);
+         //   smoke.DrawHardwareInstancing(instanceTransformsSM, ((FreeCamera)camera), Position);         
+            ps.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
+            smoke.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
         }
 
     }

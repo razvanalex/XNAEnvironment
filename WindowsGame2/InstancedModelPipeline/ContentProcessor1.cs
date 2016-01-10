@@ -20,7 +20,7 @@ namespace InstancedModelPipeline
         public override ModelContent Process(NodeContent input, ContentProcessorContext context)
         {
             rootIdentity = input.Identity;
-
+            GenerateTangentFrames = true;
             return base.Process(input, context);
         }
 

@@ -26,8 +26,15 @@ namespace Engine.Particles
         float lifeSpan;
         Vector3 wind;
         float FadeInTime;
-
+        public static float density = 10;
         bool snow;
+
+        Matrix transformR;
+
+        public Matrix TransformR
+        {
+            get { return transformR; }
+        }
 
         public RainSystem(Game game, Vector3 Position, Vector2 scale, int nParticle,
             Vector2 ParticleSize, float lifeSpan, Vector3 wind, float FadeInTime, bool snow)
@@ -56,7 +63,7 @@ namespace Engine.Particles
                 min.Z + (float)r.NextDouble() * (max.Z - min.Z));
         }
 
-        void Generateparticle(int density)
+        void Generateparticle()
         {
             for (int i = 1; i <= density; i++)
             {
@@ -82,7 +89,7 @@ namespace Engine.Particles
 
         public void Update(Camera.Camera camera)
         {
-            Generateparticle(10);
+            Generateparticle();
             rp.Update();
           
         }
@@ -98,10 +105,10 @@ namespace Engine.Particles
             Matrix.Multiply(ref transform, ref _position, out transform);
         }
 
-        public void Draw(Matrix[] instanceTransformsPS, Matrix[] instanceTransformsSM, Camera.Camera camera)
+        public void Draw(Matrix[] instanceTransformsPS, Camera.Camera camera)
         {
-            rp.Draw(camera.View, camera.Projection, new Vector3(0, 1, 0), ((FreeCamera)camera).Right);
-
+            rp.Draw(camera.View, camera.Projection, new Vector3(0, 1, 0), camera.Transform.Right);
+            //rp.DrawHardwareInstancing(instanceTransformsPS, ((FreeCamera)camera), Position);
         }
 
     }

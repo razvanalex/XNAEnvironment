@@ -18,9 +18,9 @@ namespace Engine.Particles
         Game game;
 
         GraphicsDevice graphicsDevice;
+        public float density;
 
-        Matrix[] instanceTransformsSM;
-        Matrix[] instanceTransformsPS;
+        Matrix[] instanceTransformsR;     
 
         bool snow;
 
@@ -38,11 +38,12 @@ namespace Engine.Particles
         public void Update(Camera.Camera camera)
         {
             if(!snow)
-                RainParticle[0].Position = new Vector3(0, 500, 0) + ((Camera.FreeCamera)camera).Position;
-            else RainParticle[0].Position = new Vector3(0, 300, 0) + ((Camera.FreeCamera)camera).Position; 
+                RainParticle[0].Position = new Vector3(0, 500, 0) + camera.Transform.Translation;
+            else RainParticle[0].Position = new Vector3(0, 300, 0) + camera.Transform.Translation; 
             foreach (RainSystem rain in RainParticle)
             {            
                 rain.Update(camera);
+                RainSystem.density = density;
             }
         }
 
@@ -51,9 +52,16 @@ namespace Engine.Particles
             RasterizerState rs = new RasterizerState();
             rs.CullMode = CullMode.None;
             graphicsDevice.RasterizerState = rs;
-       
+
+            Array.Resize(ref instanceTransformsR, RainParticle.Count);
+
+            for (int i = 0; i < RainParticle.Count; i++)
+            {
+                instanceTransformsR[i] = RainParticle[i].TransformR;
+            }
+
             foreach (RainSystem rain in RainParticle)
-                rain.Draw(instanceTransformsPS, instanceTransformsSM, camera);
+                rain.Draw(instanceTransformsR, camera);
 
             rs = new RasterizerState();
             rs.CullMode = CullMode.CullCounterClockwiseFace;

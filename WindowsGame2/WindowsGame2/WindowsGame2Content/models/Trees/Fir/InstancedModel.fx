@@ -12,11 +12,15 @@ float AlphaTestValue = 0.5f;
 
 bool TextureEnabled = false;
 float3 DiffuseLight = float3(1, 1, 1);
-float3 AmbientLight = float3(-0.2, -0.2, -0.2);
-float3 LightDirection = float3(2, -5, 0);
+float3 AmbientLight = float3(1, 1, 1);
+float3 LightDirection = float3(0, -1, 0);
 float3 LightColor = float3(1, 1, 1);
 float SpecularPower = 1;
 float3 SpecularColor = float3(1, 1, 1);
+
+float2 Size;
+float3 Up;
+float3 Side;
 
 float4 ClipPlane;
 bool ClipPlaneEnabled = false;
@@ -56,12 +60,16 @@ VertexShaderOutput VertexShaderCommon(VertexShaderInput input, float4x4 instance
 	VertexShaderOutput output;
 
 	// Apply the world and camera matrices to compute the output position.
-	float4 worldPosition = mul(input.Position, instanceTransform);
-	output.WorldPosition = worldPosition;
-	
-	float4 viewPosition = mul(worldPosition, View);
-	output.Position = mul(viewPosition, Projection);
-	
+	float4 position = input.Position;
+		float2 offset = float2((input.UV.x - 0.5f) * 2.0f, -(input.UV.y - 0.5f) * 2.0f);
+		float3 rotation = Size.x * offset.x * Side + Size.y * offset.y * Up;
+
+		float4 worldPosition = mul(position, instanceTransform);
+		output.WorldPosition = worldPosition;
+	worldPosition.xyz += rotation;
+	float4 viewPosition = mul(worldPosition.xyzw, View);
+		output.Position = mul(viewPosition, Projection);
+
 	output.UV = input.UV;
 	output.Normal = mul(input.Normal, World);
 	output.ViewDirection = worldPosition - CameraPosition;
@@ -93,22 +101,22 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	// Start with ambient lighting
 	float3 lighting = AmbientLight;
 		float3 lightDir = normalize(float3(LightDirection.x, -LightDirection.y, LightDirection.z));
-	float3 normal = normalize(input.Normal);
-	// Add lambertian lighting
-	lighting = clamp(lighting + 0.4f, 0, 1);
+		float3 normal = normalize(input.Normal);
+		// Add lambertian lighting
+		lighting = clamp(lighting + 0.4f, 0, 1);
 	lighting += saturate(dot(lightDir, normal)) * LightColor;
 
 	float3 refl = reflect(lightDir, normal);
-	float3 view = normalize(input.ViewDirection);
+		float3 view = normalize(input.ViewDirection);
 
-	// Add specular highlights
-	lighting += pow(saturate(dot(refl, view)), SpecularPower) * LightColor;
+		// Add specular highlights
+		lighting += pow(saturate(dot(refl, view)), SpecularPower) * LightColor;
 	if (AlphaTest)
 		clip((alpha.a - AlphaTestValue) * (AlphaTestGreater ? 1 : -1));
 
 	// Calculate final color
 	float3 output = saturate(lighting) * color;
-	return float4(output, 1);
+		return float4(output, 1);
 }
 
 

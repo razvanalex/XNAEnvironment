@@ -8,16 +8,6 @@
     </Identity>
     <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
     <Children>
-      <Child>
-        <Name>Model</Name>
-        <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
-        <Children>
-          <Child>
-            <Name>Fir_Tree1</Name>
-            <Transform>1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1</Transform>
-          </Child>
-        </Children>
-      </Child>
       <Child Type="Graphics:MeshContent">
         <Name>Plane_Node</Name>
         <Transform>307.864227 0 0 0 0 1.26329437E-15 -20.6311626 0 0 359.582825 2.2018098E-14 0 28.79697 358.905731 0 1</Transform>
@@ -105,6 +95,6 @@
     </Resource>
   </Resources>
   <ExternalReferences>
-    <ExternalReference ID="#External1" TargetType="Graphics:TextureContent">..\..\..\..\..\..\..\WindowsGame2Content\models\Trees\Linden\Far_FarLinden\LindenTexture.png</ExternalReference>
+    <ExternalReference ID="#External1" TargetType="Graphics:TextureContent">..\..\..\..\..\..\..\WindowsGame2Content\models\Trees\Linden\Far_FarLinden\VeryLowLinden.png</ExternalReference>
   </ExternalReferences>
 </XnaContent>

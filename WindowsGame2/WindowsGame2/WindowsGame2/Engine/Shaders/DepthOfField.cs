@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
 
-namespace WindowsGame2
+namespace Engine.Shaders
 {
     public class DepthOfField : PostProcessor
     {

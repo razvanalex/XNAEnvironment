@@ -19,7 +19,7 @@ namespace Engine.Terrain
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
         private Vector<QuadNode> _references;
         [System.Diagnostics.DebuggerBrowsable(System.Diagnostics.DebuggerBrowsableState.Never)]
-        private VertexPositionNormalTexture _value;
+        private VertexPositionNormalTextureTangentBinormal _value;
 
         #endregion
 
@@ -71,7 +71,7 @@ namespace Engine.Terrain
         /// <summary>
         /// <para>Gets or sets the back vertex value.</para>
         /// </summary>
-        public VertexPositionNormalTexture Value
+        public VertexPositionNormalTextureTangentBinormal Value
         {
             get
             {
@@ -103,7 +103,7 @@ namespace Engine.Terrain
         /// <para>Instanciate a new <see cref="TerrainVertex"/>.</para>
         /// </summary>
         /// <param name="value"></param>
-        public TerrainVertex(VertexPositionNormalTexture value)
+        public TerrainVertex(VertexPositionNormalTextureTangentBinormal value)
         {
             this._bufferIndice = 0;
             this._lastUsedIteration = -1;

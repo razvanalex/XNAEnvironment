@@ -38,6 +38,8 @@ bool ClipPlaneEnabled = false;
 float4 SunColor;
 float gr = 1;
 
+float3 CameraPos;
+
 sampler2D rayleighSampler = sampler_state
 {
 	Texture = <txRayleigh>;
@@ -144,7 +146,7 @@ float3 HDR( float3 LDR)
 float4 PS( PS_INPUT input) : COLOR0
 {
 	if (ClipPlaneEnabled)
-	clip(dot(float4(input.WorldPosition, -1), ClipPlane));
+		clip(dot(float4(input.WorldPosition, -1), ClipPlane));
 
 	float fCos = dot(v3SunDir, input.Tex1) / length(input.Tex1);
 	float fCos2 = fCos * fCos;
