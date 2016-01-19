@@ -1,0 +1,5 @@
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\LightPrePassProcessor\bin\x86\Debug\LightPrePassProcessor.dll
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\LightPrePassProcessor\bin\x86\Debug\LightPrePassProcessor.pdb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\LightPrePassProcessor\obj\x86\Debug\LightPrePassProcessor.csprojResolveAssemblyReference.cache
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\LightPrePassProcessor\obj\x86\Debug\LightPrePassProcessor.dll
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\LightPrePassProcessor\obj\x86\Debug\LightPrePassProcessor.pdb
