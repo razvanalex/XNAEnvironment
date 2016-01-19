@@ -36,6 +36,8 @@ namespace Engine
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
+        public Vector3 LightColor;
+        public Vector3 AmbientColor;
 
         public Model Model { get; private set; }
 
@@ -286,6 +288,17 @@ namespace Engine
                     effect.Parameters["World"].SetValue(Transform);
                     effect.Parameters["WorldView"].SetValue(Transform * camera.View);
                     effect.Parameters["WorldViewProjection"].SetValue(Transform * camera.View * camera.Projection);
+                    effect.Parameters["AmbientColor"].SetValue(AmbientColor);
+                    effect.Parameters["LightColor"].SetValue(LightColor);
+
+                    if (((MeshTag)subMesh.Tag) != null)
+                        if (((MeshTag)subMesh.Tag).Texture != null)
+                        {
+                            effect.Parameters["TextureEnabled"].SetValue(true);
+                            effect.Parameters["Texture"].SetValue(((MeshTag)subMesh.Tag).Texture);
+                        }
+                        else effect.Parameters["TextureEnabled"].SetValue(false);
+                    
                     effect.CurrentTechnique.Passes[0].Apply();
 
                     graphicsDevice.SetVertexBuffer(subMesh.VertexBuffer, subMesh.VertexOffset);

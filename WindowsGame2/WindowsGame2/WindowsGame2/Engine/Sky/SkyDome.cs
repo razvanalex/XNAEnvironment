@@ -49,22 +49,17 @@ namespace Engine.Sky
         Status stat, prevStat;
 
         object Terrain;
-        Vector3 LightColor;
-        Vector3 LightDirection;
 
         public float Theta;
         public float Gr;
         Game game;
 
-        public SkyDome(Game game, Vector3 LightColor, Vector3 LightDirection,
-            bool LowSky, Camera.Camera camera, GraphicsDevice graphicsDevice)
+        public SkyDome(Game game, bool LowSky, Camera.Camera camera, GraphicsDevice graphicsDevice)
         {
             this.graphicsDevice = graphicsDevice;
             this.camera = camera;
             this.LowSky = LowSky;
             this.game = game;
-            this.LightColor = LightColor;
-            this.LightDirection = LightDirection;
             
             Initialize();
         }
@@ -91,7 +86,7 @@ namespace Engine.Sky
             }
         }
 
-        public void Update(GameTime gameTime, Vector3 LightDirection, Vector3 LightColor)
+        public void Update(GameTime gameTime)
         {
             oldKeyState = keyState;
             keyState = Keyboard.GetState();
@@ -111,8 +106,6 @@ namespace Engine.Sky
             {
                 rain = null;
             }
-            this.LightColor = LightColor;
-            this.LightDirection = LightDirection;
 
             if (!LowSky)
             {
@@ -190,6 +183,7 @@ namespace Engine.Sky
         void SKY(GameTime gameTime)
         {
             sky.Update(gameTime);
+
             Weather();
 
             float step = (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -205,15 +199,16 @@ namespace Engine.Sky
 
             if (Terrain is QuadTree)
             {
-                ((QuadTree)Terrain).lightDirection = Vector3.Reflect(LightDirection, Vector3.Up);
-                ((QuadTree)Terrain).lightColor = LightColor;
+                ((QuadTree)Terrain).LightDirection = new Vector3(sky.Parameters.LightDirection.X, sky.Parameters.LightDirection.Y, sky.Parameters.LightDirection.Z);
+                ((QuadTree)Terrain).LightColor = new Vector3(sky.Parameters.LightColor.X, sky.Parameters.LightColor.Y, sky.Parameters.LightColor.Z);
+                ((QuadTree)Terrain).AmbientColor = new Vector3(sky.Parameters.AmbientColor.X, sky.Parameters.AmbientColor.Y, sky.Parameters.AmbientColor.Z);
             }
             if (Terrain is SmallTerrain)
             {
-                ((SmallTerrain)Terrain).lightDirection = Vector3.Reflect(LightDirection, Vector3.Up);
-                ((SmallTerrain)Terrain).lightColor = LightColor;
+                ((SmallTerrain)Terrain).lightDirection = new Vector3(sky.Parameters.LightDirection.X, sky.Parameters.LightDirection.Y, sky.Parameters.LightDirection.Z);
+                ((SmallTerrain)Terrain).lightColor = new Vector3(sky.Parameters.LightColor.X, sky.Parameters.LightColor.Y, sky.Parameters.LightColor.Z);
             }
-            
+
             switch (stat)
             {
                 case Status.Manual:

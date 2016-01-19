@@ -265,13 +265,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\..\Desktop\New Folder\LightPrePassProcessor\LightPrePassProcessor.csproj">
-      <Project>{a9ed55a5-f9f1-440f-a461-f59cf7e262ce}</Project>
-      <Name>LightPrePassProcessor</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\InstancedModelPipeline\InstancedModelPipeline.csproj">
       <Project>{1e0c98d6-41d3-4c90-a607-1e608fb87e21}</Project>
       <Name>InstancedModelPipeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\LightPrePassProcessor\LightPrePassProcessor.csproj">
+      <Project>{e0685950-cc5b-4f09-8471-22d23970569a}</Project>
+      <Name>LightPrePassProcessor</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

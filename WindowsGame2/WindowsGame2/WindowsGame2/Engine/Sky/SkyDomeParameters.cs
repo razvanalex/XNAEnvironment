@@ -35,7 +35,7 @@ namespace Engine.Sky
 
         public Vector4 LightColor { get { return lightColor; } set { lightColor = value; } }
 
-        public Vector4 LightColorAmbient { get { return lightColorAmbient; } set { lightColorAmbient = value; } }
+        public Vector4 AmbientColor { get { return lightColorAmbient; } set { lightColorAmbient = value; } }
 
         public float FogDensity { get { return fDensity; } set { fDensity = value; } }
 

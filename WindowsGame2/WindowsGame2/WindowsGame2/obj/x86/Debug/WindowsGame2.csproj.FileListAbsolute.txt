@@ -299,7 +299,6 @@ C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\Window
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\2.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\leaves.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\BroadleafBark_0.xnb
-C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\2_0.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\FarLinden.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\VeryLowLinden.xnb
@@ -314,7 +313,8 @@ C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\Window
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LightingLPP.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\ReconstructDepth.xnb
-C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\lightTexture.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\cone.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\sphere.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb

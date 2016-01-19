@@ -36,6 +36,8 @@ namespace Engine.Billboards
         Model instancedModel1;
         Matrix[] instancedModelBones1;
 
+        Vector3 UpLight;// = Vector3.Zero;
+        Vector3 RightLight;// = Vector3.Zero;
         Vector3 LightDirection;// = Vector3.Zero;
         Vector3 LightColor;// = Vector3.Zero;
         Vector3 AmbientColor;// = Vector3.Zero;
@@ -43,10 +45,19 @@ namespace Engine.Billboards
         Vector3[] PositionL = new Vector3[30];
         Camera.Camera camera;
 
-        object Terrain;
+        object Terrain, Sky;
         int[] no;
         int no_t;
         bool[][] visible_tree;
+        private bool[] visible_leaves;
+
+        public bool[] LeavesAreVisible
+        {
+            get
+            {
+                return visible_leaves;
+            }
+        }
 
         //public variables
         public Vector3[] Position;
@@ -82,7 +93,7 @@ namespace Engine.Billboards
 
                 float texVal = TreePixels[zCoord * 512 + xCoord].R / 255f;
                 float y = 0;
-               
+
                 float fix = 2.5f;
                 x *= Scale.X * fix;
                 z *= Scale.Z * fix;
@@ -127,6 +138,7 @@ namespace Engine.Billboards
             PositionL = new Vector3[NoLeaves];
             no = new int[LOD + 1];
             visible_tree = new bool[LOD + 1][];
+            visible_leaves = new bool[NoTrees];
 
             for (int i = 0; i < LOD; i++)
                 instancedModel[i] = Trunck[i];
@@ -139,7 +151,7 @@ namespace Engine.Billboards
         /// </summary>
         /// <param name="Trunck">Main tree model and also trunck model for maximum detail.</param>
         /// <param name="Leaves">Use false if you don't want to use leaves model.</param>
-        public void LoadData(Model[] Trunck, bool Leaves) 
+        public void LoadData(Model[] Trunck, bool Leaves)
         {
             LOD = Trunck.Length;
 
@@ -153,9 +165,10 @@ namespace Engine.Billboards
             instanceTransforms1 = new Matrix[NoTrees][];
             Position = new Vector3[NoTrees];
             Rotation = new Vector3[NoTrees];
-            PositionL = new Vector3[NoLeaves];
+            PositionL = new Vector3[0];
             no = new int[LOD + 1];
             visible_tree = new bool[LOD + 1][];
+            visible_leaves = new bool[0];
 
             for (int i = 0; i < LOD; i++)
                 instancedModel[i] = Trunck[i];
@@ -217,6 +230,13 @@ namespace Engine.Billboards
 
                 for (int tree = 0; tree < NoTrees; tree++)
                     leaves[tree] = new List<BillboardsSystem>();
+
+                for (int tree = 0; tree < NoTrees; tree++)
+                    for (int leave = 0; leave < NoLeaves; leave++)
+                        leaves[tree].Add(new BillboardsSystem(content, BillboardsSystem.BillboardMode.Spherical,
+                                            instancedModel1, instancedModelBones1, instanceTransforms1[tree],
+                                            Position[tree] + PositionL[leave] * Scale, Rotation[tree],
+                                            ScaleL, LightDirection, LightColor, AmbientColor, graphicsDevice));
             }
         }
         public void generateTags()
@@ -229,19 +249,21 @@ namespace Engine.Billboards
                 for (int i = 0; i < NoTrees; i++)
                     if (leaves[i].Count != 0)
                         for (int j = 0; j < NoLeaves; j++)
-                                leaves[i][j].generateTags();
+                            leaves[i][j].generateTags();
         }
         public void Update(GameTime gameTime)
         {
             UpdateLOD();
             for (int lod = 0; lod < LOD; lod++)
                 for (int i = 0; i < no[lod]; i++)
-                    trunck[lod][i].Update(gameTime);
+                    if (visible_tree[lod][i])
+                        trunck[lod][i].Update(gameTime);
+
             if (Leaves)
                 for (int i = 0; i < NoTrees; i++)
-                    if (leaves[i].Count != 0)
+                    if (visible_leaves[i])
                         for (int j = 0; j < NoLeaves; j++)
-                            leaves[i][j].Update(gameTime);                        
+                            leaves[i][j].Update(gameTime);
         }
         public void UpdateLight(Vector3 LightDirection, Vector3 LightColor, Vector3 AmbientColor)
         {
@@ -258,7 +280,7 @@ namespace Engine.Billboards
                 }
             if (Leaves)
                 for (int i = 0; i < NoTrees; i++)
-                    if (leaves[i].Count != 0)
+                    if (visible_leaves[i])
                         for (int j = 0; j < NoLeaves; j++)
                         {
                             leaves[i][j].LightDirection = LightDirection;
@@ -266,14 +288,20 @@ namespace Engine.Billboards
                             leaves[i][j].AmbientColor = AmbientColor;
                         }
         }
+        public void GenerateSunVectors(float pitch)
+        {
+            RightLight = Vector3.Forward;
+            UpLight = Vector3.Cross(-LightDirection, RightLight);//new Vector3(LightDirection.X * (float)Math.Sin(pitch), LightDirection.Y * (float)Math.Cos(pitch), LightDirection.Z);     
+        }
+
         public void GetData(object[] obj)
         {
             foreach (object o in obj)
             {
                 if (o is QuadTree)
-                    Terrain = o;
+                    Terrain = ((QuadTree)o);
                 if (o is SmallTerrain)
-                    Terrain = o;
+                    Terrain = ((SmallTerrain)o);
             }
         }
         void UpdateLOD()
@@ -283,8 +311,13 @@ namespace Engine.Billboards
                 no[i] = 0;
                 visible_tree[i] = new bool[NoTrees];
                 for (int j = 0; j < NoTrees; j++)
+                {
                     visible_tree[i][j] = false;
+                    if (Leaves && i == 0)
+                        visible_leaves[j] = false;
+                }
             }
+
 
             for (int tree = 0; tree < NoTrees; tree++)
             {
@@ -304,11 +337,15 @@ namespace Engine.Billboards
                                             new Vector3(Position[tree].X, Heigth, Position[tree].Z), Rotation[tree],
                                             Scale, LightDirection, LightColor, AmbientColor, graphicsDevice);
                     if (Leaves)
+                    {
                         for (int leave = 0; leave < NoLeaves; leave++)
-                            leaves[tree].Add(new BillboardsSystem(content, BillboardsSystem.BillboardMode.Spherical,
+                            leaves[tree][leave] = new BillboardsSystem(content, BillboardsSystem.BillboardMode.Spherical,
                                                 instancedModel1, instancedModelBones1, instanceTransforms1[tree],
                                                 Position[tree] + PositionL[leave] * Scale, Rotation[tree],
-                                                ScaleL, LightDirection, LightColor, AmbientColor, graphicsDevice));
+                                                ScaleL, LightDirection, LightColor, AmbientColor, graphicsDevice);
+                        visible_leaves[tree] = true;
+                    }
+
                     visible_tree[lod][no[lod]] = true;
                     no[lod]++;
                 }
@@ -319,9 +356,7 @@ namespace Engine.Billboards
                                             instancedModel[lod], instancedModelBones[lod], instanceTransforms[lod],
                                             new Vector3(Position[tree].X, Heigth, Position[tree].Z), Rotation[tree],
                                             Scale, LightDirection, LightColor, AmbientColor, graphicsDevice);
-                    if (Leaves)
-                        if (leaves[tree].Count != 0)
-                            leaves[tree].Clear();
+
                     visible_tree[lod][no[lod]] = true;
                     no[lod]++;
                 }
@@ -332,18 +367,13 @@ namespace Engine.Billboards
                                             instancedModel[lod], instancedModelBones[lod], instanceTransforms[lod],
                                             new Vector3(Position[tree].X, Heigth, Position[tree].Z), Rotation[tree],
                                             Scale, LightDirection, LightColor, AmbientColor, graphicsDevice);
-                    if (Leaves)
-                        if (leaves[tree].Count != 0)
-                            leaves[tree].Clear();
+
                     visible_tree[lod][no[lod]] = true;
                     no[lod]++;
                 }
                 else if (distance > 5000)
                 {
                     lod = 3;
-                    if (Leaves)
-                        if (leaves[tree].Count != 0)
-                            leaves[tree].Clear();
                     no[lod]++;
                 }
             }
@@ -375,10 +405,11 @@ namespace Engine.Billboards
 
             if (Leaves)
                 for (int i = 0; i < NoTrees; i++)
-                    if (leaves[i].Count != 0)
+                    if (visible_leaves[i])
                     {
                         Array.Resize(ref instanceTransforms1[i], NoLeaves);
                         leaves[i][0].UpdateCamUpRightVector(camera.Transform.Up, camera.Transform.Right);
+                        leaves[i][0].UpdateLightUpRightVector(Vector3.Cross(Vector3.Normalize(LightDirection), Vector3.Forward), Vector3.Forward);
                         for (int j = 0; j < NoLeaves; j++)
                             instanceTransforms1[i][j] = leaves[i][j].Transform;
                     }
@@ -395,7 +426,7 @@ namespace Engine.Billboards
             if (Leaves)
                 for (int i = 0; i < NoTrees; i++)
                 {
-                    if (leaves[i].Count != 0)
+                    if (visible_leaves[i])
                         for (int j = 0; j < NoLeaves; j++)
                         {
                             leaves[i][j].UpdateTransformationMatrix(instanceTransforms1[i]);

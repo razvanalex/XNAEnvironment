@@ -59,8 +59,10 @@ namespace Engine.Terrain
         public const int NoOfTextures = 6;
         public float[] textureTiling = new float[NoOfTextures];
         Vector3 cameraPosition;
-        public Vector3 lightDirection { get; set; }
-        public Vector3 lightColor { get; set; }
+
+        public Vector3 LightDirection { get; set; }
+        public Vector3 LightColor { get; set; }
+        public Vector3 AmbientColor { get; set; }
 
         public Texture2D[] Textures = new Texture2D[NoOfTextures];
         public Texture2D[] TexturesMaps = new Texture2D[NoOfTextures];
@@ -479,8 +481,8 @@ namespace Engine.Terrain
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
 
-            effect.Parameters["LightDirection"].SetValue(lightDirection);
-            effect.Parameters["LightColor"].SetValue(lightColor);
+            effect.Parameters["LightDirection"].SetValue(LightDirection);
+            effect.Parameters["LightColor"].SetValue(LightColor);
             effect.Parameters["TextureTiling"].SetValue(textureTiling);
 
             for (int i = 1; i <= NoOfTextures; i++)
@@ -519,8 +521,11 @@ namespace Engine.Terrain
             effect.Parameters["WorldViewProjection"].SetValue(Transform * camera.View * camera.Projection);
             effect.Parameters["View"].SetValue(camera.View);
             effect.Parameters["Projection"].SetValue(camera.Projection);
+           
+            effect.Parameters["AmbientColor"].SetValue(LightColor);
+            effect.Parameters["LightColor"].SetValue(LightColor);
+            effect.Parameters["AmbientColor"].SetValue(AmbientColor);
 
-            effect.Parameters["LightColor"].SetValue(lightColor);
             effect.Parameters["TextureTiling"].SetValue(textureTiling);
 
             for (int i = 1; i <= NoOfTextures; i++)

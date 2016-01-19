@@ -2,21 +2,6 @@
 <XnaContent xmlns:Pipeline="Microsoft.Xna.Framework.Content.Pipeline" xmlns:Framework="Microsoft.Xna.Framework" xmlns:Processors="Microsoft.Xna.Framework.Content.Pipeline.Processors">
   <Asset Type="Pipeline:BuildItemCollection">
     <Item>
-      <Source>models\model1.fbx</Source>
-      <Name>models\model1</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>LightPrePassProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\model1.xnb</Output>
-      <Time>2016-01-03T19:48:01.2863368+02:00</Time>
-      <Dependency>
-        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\model1_0.xml</Key>
-        <Value>2016-01-06T18:07:29.2354349+02:00</Value>
-      </Dependency>
-      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
-      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
-    </Item>
-    <Item>
       <Source>models\skySphere.fbx</Source>
       <Name>models\skySphere</Name>
       <Importer>FbxImporter</Importer>
@@ -26,7 +11,7 @@
       <Time>2015-01-09T19:17:34.6026512+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\skySphere_0.xml</Key>
-        <Value>2016-01-06T18:07:30.3424982+02:00</Value>
+        <Value>2016-01-16T15:19:15.4412714+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -39,7 +24,7 @@
       <Time>2015-01-09T20:41:54.8702705+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\plane_0.xml</Key>
-        <Value>2016-01-06T18:07:30.4055018+02:00</Value>
+        <Value>2016-01-16T15:19:15.4952744+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -55,7 +40,7 @@
       <Time>2015-09-01T17:44:58.9825957+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\Fir_Tree_0.xml</Key>
-        <Value>2016-01-06T18:07:31.1585449+02:00</Value>
+        <Value>2016-01-16T15:19:16.2863197+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Fir_Tree\rinde5_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -75,7 +60,7 @@
       <Time>2015-09-01T17:07:36.8323521+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\FarFir_Tree_0.xml</Key>
-        <Value>2016-01-06T18:07:32.4306176+02:00</Value>
+        <Value>2016-01-16T15:19:17.7004006+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\FarFir_Tree\rinde5_moos_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -92,7 +77,7 @@
       <Time>2015-04-13T15:45:27.4039134+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Null_fbx_0.xml</Key>
-        <Value>2016-01-06T18:07:33.3526704+02:00</Value>
+        <Value>2016-01-16T15:19:18.652455+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -105,7 +90,7 @@
       <Time>2015-07-21T22:00:49.7393848+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\PPLightMesh_0.xml</Key>
-        <Value>2016-01-06T18:07:33.4556762+02:00</Value>
+        <Value>2016-01-16T15:19:18.7604612+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -121,7 +106,7 @@
       <Time>2015-09-01T19:36:28.1861963+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\Far_FarFir_Tree_0.xml</Key>
-        <Value>2016-01-06T18:07:33.5116794+02:00</Value>
+        <Value>2016-01-16T15:19:18.8154643+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Far_FarFir_Tree\M_4ABIPIN0_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -139,7 +124,7 @@
       <Time>2015-09-01T22:46:24.3930746+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Palms\Palm_0.xml</Key>
-        <Value>2016-01-06T18:07:33.9397039+02:00</Value>
+        <Value>2016-01-16T15:19:19.3754964+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm\pinetreebark1_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\InstancedModel.xnb</Request>
@@ -152,10 +137,10 @@
       <Processor>InstancedModelProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden.xnb</Output>
-      <Time>2015-12-22T15:48:48.7472633+02:00</Time>
+      <Time>2016-01-15T16:39:26.2284892+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Linden_0.xml</Key>
-        <Value>2016-01-06T18:07:34.6007417+02:00</Value>
+        <Value>2016-01-16T15:19:20.050535+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\BroadleafBark_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -170,10 +155,10 @@
       </Parameters>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\FarLinden.xnb</Output>
-      <Time>2015-12-22T14:22:46.5862664+02:00</Time>
+      <Time>2016-01-15T14:55:53.9281659+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\FarLinden_0.xml</Key>
-        <Value>2016-01-06T18:07:35.44379+02:00</Value>
+        <Value>2016-01-16T15:19:20.9335855+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -185,10 +170,10 @@
       <Processor>InstancedModelProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\leaves.xnb</Output>
-      <Time>2015-12-22T14:50:29.8846939+02:00</Time>
+      <Time>2016-01-15T16:22:55.3848162+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\leaves_0.xml</Key>
-        <Value>2016-01-06T18:07:36.2498361+02:00</Value>
+        <Value>2016-01-16T15:19:21.7806339+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\2_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -203,10 +188,10 @@
       </Parameters>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden.xnb</Output>
-      <Time>2015-12-22T20:05:04.8506222+02:00</Time>
+      <Time>2016-01-15T14:50:44.9824953+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Far_FarLinden_0.xml</Key>
-        <Value>2016-01-06T18:07:36.5168513+02:00</Value>
+        <Value>2016-01-16T15:19:22.1446548+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\VeryLowLinden_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -224,7 +209,7 @@
       <Time>2015-12-22T20:26:56.0196198+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Palms\Far_FarPalm_0.xml</Key>
-        <Value>2016-01-06T18:07:37.2048907+02:00</Value>
+        <Value>2016-01-16T15:19:23.0117044+02:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm\VeryLowPalm_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\InstancedModel.xnb</Request>
@@ -239,7 +224,7 @@
       <Time>2016-01-03T15:41:39.8885244+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\cone_0.xml</Key>
-        <Value>2016-01-06T18:07:37.8939301+02:00</Value>
+        <Value>2016-01-16T15:19:23.6917433+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -252,7 +237,7 @@
       <Time>2016-01-03T14:36:57.9214885+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\sphere_0.xml</Key>
-        <Value>2016-01-06T18:07:38.0109368+02:00</Value>
+        <Value>2016-01-16T15:19:23.7497466+02:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -448,7 +433,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Output>
-      <Time>2015-12-22T14:52:15.5073103+02:00</Time>
+      <Time>2016-01-15T18:09:13.3666159+02:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Palms\InstancedModel.fx</Source>
@@ -493,7 +478,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LightingLPP.xnb</Output>
-      <Time>2016-01-05T23:26:26.6225285+02:00</Time>
+      <Time>2016-01-18T23:03:32.2869632+02:00</Time>
     </Item>
     <Item>
       <Source>shaders\LPPMainEffect.fx</Source>
@@ -502,7 +487,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Output>
-      <Time>2016-01-08T20:09:57.3864397+02:00</Time>
+      <Time>2016-01-18T23:11:21.768816+02:00</Time>
     </Item>
     <Item>
       <Source>shaders\ReconstructDepth.fx</Source>
@@ -1086,15 +1071,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\model1_0.xml</Output>
-      <Time>2016-01-03T19:48:01.2863368+02:00</Time>
-    </Item>
-    <Item>
-      <Source>shaders\LPPMainEffect.fx</Source>
-      <Importer>EffectImporter</Importer>
-      <Processor>LightPrePassFXProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Output>
-      <Time>2016-01-08T20:09:57.3864397+02:00</Time>
+      <Time>2016-01-18T20:43:26.6341873+02:00</Time>
     </Item>
     <Item>
       <Source>models\skySphere.fbx</Source>
@@ -1301,7 +1278,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Linden_0.xml</Output>
-      <Time>2015-12-22T15:48:48.7472633+02:00</Time>
+      <Time>2016-01-15T16:39:26.2284892+02:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Linden\Linden\BroadleafBark.jpg</Source>
@@ -1324,7 +1301,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\FarLinden_0.xml</Output>
-      <Time>2015-12-22T14:22:46.5862664+02:00</Time>
+      <Time>2016-01-15T14:55:53.9281659+02:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Linden\Far_FarLinden\LindenTexture.png</Source>
@@ -1347,7 +1324,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\leaves_0.xml</Output>
-      <Time>2015-12-22T14:50:29.8846939+02:00</Time>
+      <Time>2016-01-15T16:22:55.3848162+02:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Linden\Linden\2.png</Source>
@@ -1370,7 +1347,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Far_FarLinden_0.xml</Output>
-      <Time>2015-12-22T20:05:04.8506222+02:00</Time>
+      <Time>2016-01-15T14:50:44.9824953+02:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Linden\Far_FarLinden\VeryLowLinden.png</Source>
@@ -1425,6 +1402,29 @@
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\sphere_0.xml</Output>
       <Time>2016-01-03T14:36:57.9214885+02:00</Time>
     </Item>
+    <Item>
+      <Source>models\model1.fbx</Source>
+      <Name>models\model1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\model1.xnb</Output>
+      <Time>2016-01-18T20:43:26.6341873+02:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\model1_0.xml</Key>
+        <Value>2016-01-18T20:44:39.1253336+02:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>shaders\LPPMainEffect.fx</Source>
+      <Importer>EffectImporter</Importer>
+      <Processor>LightPrePassFXProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Output>
+      <Time>2016-01-18T23:11:21.768816+02:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <ContentProjectGUID>{8CC7FF40-D83D-4647-A5FE-AA901308DEF4}</ContentProjectGUID>
@@ -1463,8 +1463,8 @@
         <Value>2011-09-01T16:22:30+03:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Users\Razvan\Desktop\New Folder\LightPrePassProcessor\bin\x86\Debug\LightPrePassProcessor.dll</Key>
-        <Value>2016-01-05T16:14:25.7889417+02:00</Value>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\LightPrePassProcessor\bin\x86\Debug\LightPrePassProcessor.dll</Key>
+        <Value>2016-01-16T15:19:12.987131+02:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\bin\x86\Debug\InstancedModelPipeline.dll</Key>

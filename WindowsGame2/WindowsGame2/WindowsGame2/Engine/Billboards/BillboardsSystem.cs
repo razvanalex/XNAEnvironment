@@ -29,6 +29,8 @@ namespace Engine.Billboards
 
         Vector3 Up;
         Vector3 Right;
+        Vector3 UpLight;
+        Vector3 RightLight;
 
         public Model model { get; private set; }
         public Vector3 position { get; set; }
@@ -162,6 +164,11 @@ namespace Engine.Billboards
         {
             this.Up = Up;
             this.Right = Right;
+        }
+        public void UpdateLightUpRightVector(Vector3 UpLight, Vector3 RightLight)
+        {
+            this.UpLight = UpLight;
+            this.RightLight = RightLight;
         }
 
         public void UpdateTransformationMatrix(Matrix[] transformation)
@@ -303,6 +310,10 @@ namespace Engine.Billboards
                     }
                     else effect.Parameters["TextureEnabled"].SetValue(false);
 
+                    effect.Parameters["Size"].SetValue(new Vector2(scale.Z, scale.Y) * 10000);
+                    effect.Parameters["Up"].SetValue(mode == BillboardMode.Spherical ? Up : (mode == BillboardMode.None ? Vector3.Zero : Vector3.Up));
+                    effect.Parameters["Side"].SetValue(mode != BillboardMode.None ? Right : Vector3.Zero);
+
                     effect.CurrentTechnique.Passes[0].Apply();
 
                     RasterizerState rs = new RasterizerState();
@@ -385,7 +396,13 @@ namespace Engine.Billboards
                         effect.Parameters["Texture"].SetValue(((MeshTag)meshPart.Tag).Texture);
                     }
                     else effect.Parameters["TextureEnabled"].SetValue(false);
-
+                    //if (effect.Parameters["Size"] != null)
+                    //{
+                        effect.Parameters["Size"].SetValue(new Vector2(scale.Z, scale.Y) * 10000);
+                        effect.Parameters["Up"].SetValue(mode == BillboardMode.Spherical ? Up : (mode == BillboardMode.None ? Vector3.Zero : Vector3.Up));
+                        effect.Parameters["Side"].SetValue(mode != BillboardMode.None ? Right : Vector3.Zero);
+                    //}
+                
                     effect.CurrentTechnique.Passes[0].Apply();
                     graphicsDevice.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, 0, meshPart.NumVertices, meshPart.StartIndex, meshPart.PrimitiveCount, instances.Length);
                 }
@@ -455,6 +472,10 @@ namespace Engine.Billboards
                             effect.Parameters["Texture"].SetValue(((MeshTag)meshPart.Tag).Texture);
                         }
                         else effect.Parameters["TextureEnabled"].SetValue(false);
+
+                    effect.Parameters["Size"].SetValue(new Vector2(scale.Z, scale.Y) * 10000);
+                    effect.Parameters["Up"].SetValue(mode == BillboardMode.Spherical ? UpLight : (mode == BillboardMode.None ? Vector3.Zero : Vector3.Up));
+                    effect.Parameters["Side"].SetValue(mode != BillboardMode.None ? RightLight : Vector3.Zero);
 
                     effect.CurrentTechnique.Passes[0].Apply();
                     graphicsDevice.DrawInstancedPrimitives(PrimitiveType.TriangleList, 0, 0, meshPart.NumVertices, meshPart.StartIndex, meshPart.PrimitiveCount, instances.Length);

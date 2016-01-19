@@ -16,7 +16,6 @@ namespace Engine.Sky
         public Matrix Projection;
 
         public Vector3 LightDirection;// = Vector3.Normalize(new Vector3(-1, -0.1f, 0.3f));
-        public Vector3 LightColor = new Vector3(1);
 
         // Computed by UpdateOcclusion, which projects LightDirection into screenspace.
         Vector2 lightPosition;
@@ -111,70 +110,9 @@ namespace Engine.Sky
             occlusionQuery = new OcclusionQuery(GraphicsDevice);
         }
 
-        public float Light_anim = 1.6f, r = 0, g = 0, b = 0, speed = 0.0005f, a = 0.2f;
-        private float sunFactor = 0;
-        public float SunFactor
-        {
-            get { return sunFactor; }
-            set { sunFactor = value; }
-        }
-
-        public Vector3 AmbientColor;
-        bool sunset = false;
         public override void Update(GameTime gameTime)
         {
-            if (Light_anim >= 2 * MathHelper.Pi)
-                Light_anim = 0;
-
-            LightDirection = new Vector3((float)Math.Sin(Light_anim), (float)Math.Cos(Light_anim), 0);
-
-            if (Light_anim > MathHelper.Pi / 2 + 0.20f && Light_anim < MathHelper.Pi * 3 / 2 - 0.20f)
-            {
-                LightColor = new Vector3(2);
-                AmbientColor = new Vector3(0.2f);
-                sunFactor = 0.5f;
-            }
-            else if ((Light_anim >= (MathHelper.Pi / 2 - 0.20f) && Light_anim <= MathHelper.Pi / 2 + 0.20f) || (Light_anim >= (MathHelper.Pi * 3 / 2 - 0.20f) && Light_anim <= MathHelper.Pi * 3 / 2 + 0.20f))
-            {
-                if ((Light_anim >= (MathHelper.Pi / 2 - 0.20f) && Light_anim <= MathHelper.Pi / 2 + 0.20f)) { sunset = false; }
-                else if ((Light_anim >= (MathHelper.Pi * 3 / 2 - 0.20f) && Light_anim <= MathHelper.Pi * 3 / 2 + 0.20f)) { sunset = true; }
-
-                if (!sunset) //sunrise
-                {
-                    r = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 20;
-                    g = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 15;
-                    b = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 10;
-                    a = ((Light_anim - MathHelper.PiOver2 + 0.10f));
-                    sunFactor = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 2;
-                }
-                else //sunset
-                {
-                    r = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 20;
-                    g = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 15;
-                    b = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 10;
-                    a = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f));
-                    sunFactor = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 1;
-
-                }
-                if (r >= 2) r = 2;
-                if (r <= -0.2f) r = -0.2f;
-                if (g >= 2) g = 2;
-                if (g <= -0.2f) g = -0.2f;
-                if (b >= 2) b = 2;
-                if (b <= -0.2f) b = -0.2f;
-                if (a >= 0.2f) a = 0.2f;
-                if (a <= -0.2f) a = -0.12f;
-                if (sunFactor <= 0f) sunFactor = 0f;
-                
-                LightColor = new Vector3(r, g, b);
-                AmbientColor = new Vector3(a, a, a);
-            }
-            else
-            {
-                LightColor = new Vector3(-0.2f);
-                AmbientColor = new Vector3(-0.2f);
-                sunFactor = 0;
-            }
+           
             base.Update(gameTime);
         }
         public override void Draw(GameTime gameTime)

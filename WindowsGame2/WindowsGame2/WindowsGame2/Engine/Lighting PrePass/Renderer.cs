@@ -270,7 +270,6 @@ namespace Engine.Shaders
         /// <returns></returns>
         public void RenderScene(Camera.Camera camera, GameTime gameTime, List<Light> visibleLights, object[] meshes, object[] IMeshes)
         {
-            
             //compute the frustum corners for this camera
             ComputeFrustumCorners(camera);
 
@@ -283,14 +282,6 @@ namespace Engine.Shaders
 
             //generate all shadow maps
             GenerateShadows(camera, meshes, IMeshes);
-            
-           /* for (int i = 0; i < _lightEntries.Count; i++)
-            {
-                LightEntry lightEntry = _lightEntries[i];
-                Light light = lightEntry.light;
-                if (light.LightType == Light.Type.Directional)
-                    _outputTexture = lightEntry.cascadeShadowMap.Texture;
-            }*/
 
             //first of all, we must bind our GBuffer and reset all states
             GraphicsDevice.SetRenderTargets(_normalBuffer, _depthBuffer);
@@ -306,7 +297,7 @@ namespace Engine.Shaders
 
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-         
+
             //now, render all our objects          
             RenderToGbuffer(camera, meshes);
             RenderToGbufferInstanced(camera, IMeshes);
@@ -339,7 +330,7 @@ namespace Engine.Shaders
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-            
+
             ReconstructShading(camera, gameTime, meshes);
             ReconstructShadingInstanced(camera, gameTime, IMeshes);
         }
@@ -489,7 +480,7 @@ namespace Engine.Shaders
                     ((Models)mesh).Draw(camera, GraphicsDevice, _lightBuffer);
                 if (mesh is Terrain.Terrain)
                     for (int i = 0; i < ((Terrain.Terrain)mesh).QuadTrees.Count; i++)
-                        ((Terrain.Terrain)mesh).QuadTrees[i].Draw(camera, GraphicsDevice, _lightBuffer);            
+                        ((Terrain.Terrain)mesh).QuadTrees[i].Draw(camera, GraphicsDevice, _lightBuffer);
             }
         }
         private void ReconstructShadingInstanced(Camera.Camera camera, GameTime gameTime, object[] InstancedMeshes)
@@ -507,7 +498,7 @@ namespace Engine.Shaders
                     if (((Billboards.Billboard)mesh).Leaves)
                         for (int i = 0; i < ((Billboards.Billboard)mesh).NoTrees; i++)
                         {
-                            if (((Billboards.Billboard)mesh).leaves[i].Count != 0)
+                            if (((Billboards.Billboard)mesh).LeavesAreVisible[i])
                                 for (int j = 0; j < ((Billboards.Billboard)mesh).NoLeaves; j++)
                                 {
                                     ((Billboards.Billboard)mesh).leaves[i][j].UpdateTransformationMatrix(((Billboards.Billboard)mesh).instanceTransforms1[i]);
@@ -520,15 +511,14 @@ namespace Engine.Shaders
         }
         private void RenderLights(Camera.Camera camera)
         {
-             _lighting.Parameters["GBufferPixelSize"].SetValue(new Vector2(0.5f / _width, 0.5f / _height));
-             _lighting.Parameters["DepthBuffer"].SetValue(_depthBuffer);
-             _lighting.Parameters["NormalBuffer"].SetValue(_normalBuffer);
-          
+            _lighting.Parameters["GBufferPixelSize"].SetValue(new Vector2(0.5f / _width, 0.5f / _height));
+            _lighting.Parameters["DepthBuffer"].SetValue(_depthBuffer);
+            _lighting.Parameters["NormalBuffer"].SetValue(_normalBuffer);
+
             //just comment this line if you dont want to reconstruct the zbuffer
             ReconstructZBuffer(camera);
-             
-             _lighting.Parameters["TanAspect"].SetValue(new Vector2(camera.TanFovy * camera.AspentRatio, -camera.TanFovy));
-            
+
+            _lighting.Parameters["TanAspect"].SetValue(new Vector2(camera.TanFovy * camera.AspentRatio, -camera.TanFovy));
 
             for (int i = 0; i < _lightEntries.Count; i++)
             {
@@ -553,22 +543,21 @@ namespace Engine.Shaders
                         if (light.LightType == Light.Type.Point)
                         {
                             //check if the light touches the near plane
-                            BoundingSphere boundingSphereExpanded = light.BoundingSphere;
-                            boundingSphereExpanded.Radius *= 1.375f; //expand it a little, because our mesh is not a perfect sphere
-                            PlaneIntersectionType planeIntersectionType;
-                            camera.Frustum.Near.Intersects(ref boundingSphereExpanded, out planeIntersectionType);
-                            if (planeIntersectionType != PlaneIntersectionType.Back)
-                            {
-                                GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-                                GraphicsDevice.DepthStencilState = _ccwDepthState;
-
-                            }
-                            else
-                            {
-                                GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
-                                GraphicsDevice.DepthStencilState = _cwDepthState;
-                            }
-
+                             BoundingSphere boundingSphereExpanded = light.BoundingSphere;
+                             boundingSphereExpanded.Radius *= 1375f; //expand it a little, because our mesh is not a perfect sphere
+                             PlaneIntersectionType planeIntersectionType;
+                             camera.Frustum.Near.Intersects(ref boundingSphereExpanded, out planeIntersectionType);
+                            // if (planeIntersectionType != PlaneIntersectionType.Intersecting)
+                            // {
+                            //     GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                            //     GraphicsDevice.DepthStencilState = _ccwDepthState;
+                           //  }
+                            // else
+                           //  {
+                                 GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                                 GraphicsDevice.DepthStencilState = _ccwDepthState;
+                            // }
+                            
                             Matrix lightMatrix = Matrix.CreateScale(light.Radius);
                             lightMatrix.Translation = light.BoundingSphere.Center;
 
@@ -583,26 +572,24 @@ namespace Engine.Shaders
                         else
                         {
                             //check if the light touches the far plane
-
                             Plane near = camera.Frustum.Near;
-                            near.D += 3; //give some room because we dont use a perfect-fit mesh for the spot light
+                            near.D = 2000; //give some room because we dont use a perfect-fit mesh for the spot light
                             PlaneIntersectionType planeIntersectionType = near.Intersects(light.Frustum);
-                            if (planeIntersectionType != PlaneIntersectionType.Back)
-                            {
-                                GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-                                GraphicsDevice.DepthStencilState = _ccwDepthState;
-
-                            }
-                            else
-                            {
-                                GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
-                                GraphicsDevice.DepthStencilState = _cwDepthState;
-                            }
+                            /*  if (planeIntersectionType != PlaneIntersectionType.Back)
+                              {
+                                  GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+                                  GraphicsDevice.DepthStencilState = _ccwDepthState;
+                              }
+                              else
+                              {*/
+                            GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
+                            GraphicsDevice.DepthStencilState = _cwDepthState;
+                           // }
 
                             float tan = (float)Math.Tan(MathHelper.ToRadians(light.SpotAngle));
                             Matrix lightMatrix = Matrix.CreateScale(light.Radius * tan, light.Radius * tan, light.Radius);
 
-                            lightMatrix = lightMatrix * light.Transform;
+                            lightMatrix *= light.Transform;
 
                             _lighting.Parameters["WorldViewProjection"].SetValue(lightMatrix * camera.View * camera.Projection);
                             float cosSpotAngle = (float)Math.Cos(MathHelper.ToRadians(light.SpotAngle));
@@ -630,7 +617,6 @@ namespace Engine.Shaders
                             _spotRenderer.RenderMesh(GraphicsDevice);
 
                         }
-
                         break;
                     case Light.Type.Directional:
 
@@ -669,8 +655,8 @@ namespace Engine.Shaders
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
-           
-            } 
+
+            }
         }
 
         private void RenderToGbuffer(Camera.Camera camera, object[] meshes)
@@ -687,10 +673,10 @@ namespace Engine.Shaders
                     for (int i = 0; i < ((Terrain.Terrain)mesh).QuadTrees.Count; i++)
                         ((Terrain.Terrain)mesh).QuadTrees[i].RenderToGBuffer(camera, GraphicsDevice);
                 }
-               //if (mesh is Water.Water)
-               // {
-               //     ((Water.Water)mesh).water.waterMesh.RenderToGBuffer(camera, GraphicsDevice);
-               // }
+                //if (mesh is Water.Water)
+                // {
+                //     ((Water.Water)mesh).water.waterMesh.RenderToGBuffer(camera, GraphicsDevice);
+                // }
             }
         }
 
@@ -709,7 +695,7 @@ namespace Engine.Shaders
                     if (((Billboards.Billboard)mesh).Leaves)
                         for (int i = 0; i < ((Billboards.Billboard)mesh).NoTrees; i++)
                         {
-                            if (((Billboards.Billboard)mesh).leaves[i].Count != 0)
+                            if (((Billboards.Billboard)mesh).LeavesAreVisible[i])
                                 for (int j = 0; j < ((Billboards.Billboard)mesh).NoLeaves; j++)
                                 {
                                     ((Billboards.Billboard)mesh).leaves[i][j].UpdateTransformationMatrix(((Billboards.Billboard)mesh).instanceTransforms1[i]);

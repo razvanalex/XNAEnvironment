@@ -20,7 +20,6 @@ namespace Engine.Shaders
             public Vector2[] LightClipPlanes = new Vector2[NUM_CSM_SPLITS];
         }
 
-
 #if XBOX360
         private const int CASCADE_SHADOW_RESOLUTION = 640;
 #else
@@ -119,8 +118,8 @@ namespace Engine.Shaders
                     {
                         Models m = ((List<Models>)mesh)[index];
                         //cull meshes outside the light volume
-                        if (!frustum.Intersects(m.BoundingSphere))
-                            continue;
+                        //   if (!frustum.Intersects(m.BoundingSphere))
+                        //       continue;
 
                         //render it
                         m.RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
@@ -128,8 +127,8 @@ namespace Engine.Shaders
                 if (mesh is Models)
                 {
                     //cull meshes outside the light volume
-                    if (!frustum.Intersects(((Models)mesh).BoundingSphere))
-                        continue;
+                  //  if (!frustum.Intersects(((Models)mesh).BoundingSphere))
+                  //      continue;
 
                     //render it
                     ((Models)mesh).RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
@@ -139,8 +138,8 @@ namespace Engine.Shaders
                     for (int i = 0; i < ((Terrain.Terrain)mesh).QuadTrees.Count; i++)
                     {
                         //cull meshes outside the light volume
-                        if (!frustum.Intersects(((Terrain.Terrain)mesh).QuadTrees[i].BoundingSphere))
-                            continue;
+                     //   if (!frustum.Intersects(((Terrain.Terrain)mesh).QuadTrees[i].BoundingSphere))
+                     //       continue;
 
                         //render it
                         ((Terrain.Terrain)mesh).QuadTrees[i].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
@@ -160,7 +159,7 @@ namespace Engine.Shaders
                     if (((Billboards.Billboard)mesh).Leaves)
                         for (int i = 0; i < ((Billboards.Billboard)mesh).NoTrees; i++)
                         {
-                            if (((Billboards.Billboard)mesh).leaves[i].Count != 0)
+                            if (((Billboards.Billboard)mesh).LeavesAreVisible[i])
                                 for (int j = 0; j < ((Billboards.Billboard)mesh).NoLeaves; j++)
                                 {
                                     ((Billboards.Billboard)mesh).leaves[i][j].UpdateTransformationMatrix(((Billboards.Billboard)mesh).instanceTransforms1[i]);
@@ -193,7 +192,7 @@ namespace Engine.Shaders
 
             //compute each distance the way you like...
             for (int i = 1; i < splitDepthsTmp.Length - 1; i++)
-                splitDepthsTmp[i] = near + (far - near) * (float)Math.Pow((i / (float)NUM_CSM_SPLITS), 2);
+                splitDepthsTmp[i] = near + (far - near) * (float)Math.Pow((i / (float)NUM_CSM_SPLITS), 3);
 
 
             Viewport splitViewport = new Viewport();
@@ -265,16 +264,16 @@ namespace Engine.Shaders
                         for (int lod = 0; lod < ((Billboards.Billboard)mesh).LOD; lod++)
                             if (((Billboards.Billboard)mesh).instanceTransforms[lod].Length != 0)
                                 ((Billboards.Billboard)mesh).trunck[lod][0].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
-
+                        
                         if (((Billboards.Billboard)mesh).Leaves)
-                            for (int index = 0; index < ((Billboards.Billboard)mesh).NoTrees; index++)
+                            for (int tree = 0; tree < ((Billboards.Billboard)mesh).NoTrees; tree++)
                             {
-                                if (((Billboards.Billboard)mesh).leaves[index].Count != 0)
+                                if (((Billboards.Billboard)mesh).LeavesAreVisible[tree])
                                     for (int j = 0; j < ((Billboards.Billboard)mesh).NoLeaves; j++)
                                     {
-                                        ((Billboards.Billboard)mesh).leaves[index][j].UpdateTransformationMatrix(((Billboards.Billboard)mesh).instanceTransforms1[index]);
+                                        ((Billboards.Billboard)mesh).leaves[tree][j].UpdateTransformationMatrix(((Billboards.Billboard)mesh).instanceTransforms1[tree]);
                                         if (j == 0)
-                                            ((Billboards.Billboard)mesh).leaves[index][j].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
+                                            ((Billboards.Billboard)mesh).leaves[tree][j].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
                                     }
                             }
                     }
@@ -396,7 +395,6 @@ namespace Engine.Shaders
             // The projection is orthographic since we are using a directional light
             Matrix lightProjection = Matrix.CreateOrthographic(boxSize.X, boxSize.Y,
                                                                -boxSize.Z, 0);
-
 
             return lightView * lightProjection;
         }

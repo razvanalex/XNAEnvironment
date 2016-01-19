@@ -31,6 +31,7 @@ namespace Engine.Billboards
         public Vector3 LightDirection;
         public Vector3 LightColor;
         public Vector3 AmbientColor;
+        public float SunPitch = 0;
 
         public Billboard Fir;
         public Billboard Linden;
@@ -49,10 +50,10 @@ namespace Engine.Billboards
         {
             //Generate Firs
             Fir = new Billboard(content, camera, graphicsDevice);
-
+            
             Fir.NoTrees = 1000;
             Fir.Scale = new Vector3(0.5f);
-
+            
             Fir.GetData(new object[] { Terrain });
             Fir.LoadData(new Model[] {  content.Load<Model>("models//Trees//Fir//Fir_Tree"), 
                                         content.Load<Model>("models//Trees//Fir//FarFir_Tree"),
@@ -99,14 +100,17 @@ namespace Engine.Billboards
         {
             //Update Firs          
             Fir.UpdateLight(LightDirection, LightColor, AmbientColor);
-            Fir.Update(gameTime);
+            Fir.GenerateSunVectors(SunPitch);
+            Fir.Update(gameTime);         
 
             //Update Lindens         
             Linden.UpdateLight(LightDirection, LightColor, AmbientColor);
+            Linden.GenerateSunVectors(SunPitch);
             Linden.Update(gameTime);
 
             //Update Palms   
             Palm.UpdateLight(LightDirection, LightColor, AmbientColor);
+            Palm.GenerateSunVectors(SunPitch);
             Palm.Update(gameTime);
         }
 

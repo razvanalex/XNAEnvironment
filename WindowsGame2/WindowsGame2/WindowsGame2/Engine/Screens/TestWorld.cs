@@ -87,7 +87,7 @@ namespace Engine
             spriteBatch = new SpriteBatch(GraphicsDevice); 
             spriteFont = Content.Load<SpriteFont>("SpriteFont1");
             camera = new FreeCamera(new Vector3(0, 200, 0), 0, 0, 1f, 1000000.0f, graphicsDevice);
-            sky = new SkyDome(game, new Vector3(1), new Vector3(1), false, camera, graphicsDevice);
+            sky = new SkyDome(game, false, camera, graphicsDevice);
             lensFlare = new LensFlareComponent(game);
             components = new Components(graphicsDevice);
             game.Components.Add(lensFlare);
@@ -159,11 +159,8 @@ namespace Engine
             }
 
 
-            lensFlare.Light_anim = sky.Theta;
-            LightDirection = Vector3.Negate(Vector3.Reflect(lensFlare.LightDirection, Vector3.Up));
-            AmbientColor = lensFlare.AmbientColor;
-            LightColor = Vector3.Lerp(lensFlare.LightColor, AmbientColor, sky.Gr);
-            sky.Update(gameTime, LightDirection, LightColor);
+
+            sky.Update(gameTime);
             sky.GetData(new object[] { Qtree });
 
             //FPS Counter

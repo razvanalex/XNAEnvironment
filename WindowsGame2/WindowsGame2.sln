@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsGame2Content", "Wind
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InstancedModelPipeline", "InstancedModelPipeline\InstancedModelPipeline.csproj", "{1E0C98D6-41D3-4C90-A607-1E608FB87E21}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightPrePassProcessor", "..\..\..\..\Desktop\New Folder\LightPrePassProcessor\LightPrePassProcessor.csproj", "{A9ED55A5-F9F1-440F-A461-F59CF7E262CE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LightPrePassProcessor", "LightPrePassProcessor\LightPrePassProcessor.csproj", "{E0685950-CC5B-4F09-8471-22D23970569A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,15 +27,12 @@ Global
 		{1E0C98D6-41D3-4C90-A607-1E608FB87E21}.Debug|x86.Build.0 = Debug|x86
 		{1E0C98D6-41D3-4C90-A607-1E608FB87E21}.Release|x86.ActiveCfg = Release|x86
 		{1E0C98D6-41D3-4C90-A607-1E608FB87E21}.Release|x86.Build.0 = Release|x86
-		{A9ED55A5-F9F1-440F-A461-F59CF7E262CE}.Debug|x86.ActiveCfg = Debug|x86
-		{A9ED55A5-F9F1-440F-A461-F59CF7E262CE}.Debug|x86.Build.0 = Debug|x86
-		{A9ED55A5-F9F1-440F-A461-F59CF7E262CE}.Release|x86.ActiveCfg = Debug|x86
-		{A9ED55A5-F9F1-440F-A461-F59CF7E262CE}.Release|x86.Build.0 = Debug|x86
+		{E0685950-CC5B-4F09-8471-22D23970569A}.Debug|x86.ActiveCfg = Debug|x86
+		{E0685950-CC5B-4F09-8471-22D23970569A}.Debug|x86.Build.0 = Debug|x86
+		{E0685950-CC5B-4F09-8471-22D23970569A}.Release|x86.ActiveCfg = Debug|x86
+		{E0685950-CC5B-4F09-8471-22D23970569A}.Release|x86.Build.0 = Debug|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(Performance) = preSolution
-		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

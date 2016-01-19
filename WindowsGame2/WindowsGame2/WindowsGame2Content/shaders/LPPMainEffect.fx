@@ -36,6 +36,10 @@ float4 NormalColor = float4(0.50196, 0.50196, 1, 0.05882);
 float3 AmbientColor = float3(0.5, 0.5, 0.5);
 float3 LightColor;
 
+float2 Size;
+float3 Up;
+float3 Side;
+
 #ifdef ALPHA_MASKED
 float AlphaReference;
 #endif
@@ -95,7 +99,7 @@ sampler2D Sampler = sampler_state
 	MaxAnisotropy = 12;
 	MinFilter = Anisotropic; // Minification Filter
 	MagFilter = Anisotropic; // Magnification Filter
-	MipFilter = Point; // Mip-mapping
+	MipFilter = Linear; // Mip-mapping
 	AddressU = Wrap; // Address Mode for U Coordinates
 	AddressV = Wrap; // Address Mode for V Coordinates
 };
@@ -161,12 +165,19 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
 VertexShaderOutput InstancedVertexShaderFunction(VertexShaderInput input, float4x4 instanceTransform)
 {
 	VertexShaderOutput output;
-
 	float4x4 worldView = mul(instanceTransform, View);
 	float4x4 worldViewProjection = mul(worldView, Projection);
 
 	float3 viewSpacePos = mul(input.Position, worldView);
-	output.Position = mul(input.Position, worldViewProjection);
+	//output.Position = mul(input.Position, worldViewProjection);
+	
+	float2 offset = float2((input.TexCoord.x - 0.5f) * 2.0f, -(input.TexCoord.y - 0.5f) * 2.0f);
+	float3 rotation = Size.x * offset.x * Side + Size.y * offset.y * Up;
+	float4 worldPosition = mul(input.Position, instanceTransform);
+	worldPosition.xyz += rotation;
+	float4 viewPosition = mul(worldPosition.xyzw, View);
+	output.Position = mul(viewPosition, Projection);
+
 	output.TexCoord = input.TexCoord; //pass the texture coordinates further
 
 	//we output our normals/tangents/binormals in viewspace
@@ -240,6 +251,7 @@ ReconstructVertexShaderOutput ReconstructVertexShaderFunction(ReconstructVertexS
     ReconstructVertexShaderOutput output;
 	
     output.Position = mul(input.Position, WorldViewProjection);
+
     output.TexCoord = input.TexCoord; //pass the texture coordinates further
 	output.TexCoordScreenSpace = output.Position;
 
@@ -253,7 +265,14 @@ ReconstructVertexShaderOutput HardwareReconstructVertexShaderFunction(Reconstruc
 	float4x4 worldView = mul(instanceTransform, View);
 	float4x4 worldViewProjection = mul(worldView, Projection);
 
-	output.Position = mul(input.Position, worldViewProjection);
+	float2 offset = float2((input.TexCoord.x - 0.5f) * 2.0f, -(input.TexCoord.y - 0.5f) * 2.0f);
+	float3 rotation = Size.x * offset.x * Side + Size.y * offset.y * Up;
+	float4 worldPosition = mul(input.Position, instanceTransform);
+	worldPosition.xyz += rotation;
+	float4 viewPosition = mul(worldPosition.xyzw, View);
+	output.Position = mul(viewPosition, Projection);
+
+//	output.Position = mul(input.Position, worldViewProjection);
 	output.TexCoord = input.TexCoord; //pass the texture coordinates further
 	output.TexCoordScreenSpace = output.Position;
 	
@@ -269,39 +288,18 @@ ReconstructVertexShaderOutput HardwareInstancingReconstructVertexShaderFunction(
 
 float4 ReconstructPixelShaderFunction(ReconstructVertexShaderOutput input):COLOR0
 {
-	PixelShaderOutput output = (PixelShaderOutput)1;   
+	PixelShaderOutput output = (PixelShaderOutput)1;
+
 	// Find the screen space texture coordinate and offset it
 	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
 
 	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
-	float4 lightColor =  tex2D(lightSampler, screenPos) * LightBufferScaleInv;
+	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
 
 	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-	float3 specular = lightColor.rgb*lightColor.a;
-	//return float4(lightColor.aaa,1);
-	float4 finalColor = float4(DiffuseColor*lightColor.rgb + specular*DefaultSpecular + EmissiveColor, 1);
-	//add a small constant to avoid dark areas
-	finalColor.rgb += DiffuseColor * 0.2f;
-	return finalColor;
-}
-float4 ReconstructPixelShaderFunctionInstance(ReconstructVertexShaderOutput input) :COLOR0
-{
-	PixelShaderOutput output = (PixelShaderOutput)1;
-	// Find the screen space texture coordinate and offset it
-	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
-
-		//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
-		float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
-
-		//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-		float3 specular = lightColor.rgb*lightColor.a;
-		//return float4(lightColor.aaa,1);
-		float3 AmbientLight = AmbientColor;
-		float3 finalColor = AmbientLight * 2;
-		finalColor += (DiffuseColor * lightColor.rgb + specular*DefaultSpecular + EmissiveColor) * 2;
-		//add a small constant to avoid dark areas
-		//finalColor += AmbientLight;
-
+	float3 specular = lightColor.rgb * lightColor.a;
+	float3 finalColor = AmbientColor + LightColor * lightColor.rgb + EmissiveColor;
+	
 	// Texture if necessary
 #if (TextureEnabled == true)
 	float4 alpha = tex2D(Sampler, input.TexCoord);
@@ -312,7 +310,34 @@ float4 ReconstructPixelShaderFunctionInstance(ReconstructVertexShaderOutput inpu
 	if (AlphaTest == true)
 		clip((alpha.a - AlphaTestValue));
 #endif
-		
+
+	return float4(finalColor, 1);
+}
+float4 ReconstructPixelShaderFunctionInstance(ReconstructVertexShaderOutput input) :COLOR0
+{
+	PixelShaderOutput output = (PixelShaderOutput)1;
+
+	// Find the screen space texture coordinate and offset it
+	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) +LightBufferPixelSize;
+
+	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
+	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
+
+	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
+	float3 specular = lightColor.rgb * lightColor.a;
+	float3 finalColor = AmbientColor + LightColor * lightColor.rgb + EmissiveColor;
+
+	// Texture if necessary
+#if (TextureEnabled == true)
+		float4 alpha = tex2D(Sampler, input.TexCoord);
+
+		if (TextureEnabled)
+			finalColor *= alpha;
+
+	if (AlphaTest == true)
+		clip((alpha.a - AlphaTestValue));
+#endif
+
 	return float4(finalColor, 1);
 }
 struct ShadowMapVertexShaderInput
@@ -374,7 +399,13 @@ ShadowMapVertexShaderOutputInstance HardwareOutputShadowVertexShaderFunction(Sha
 {
 	ShadowMapVertexShaderOutputInstance output = (ShadowMapVertexShaderOutputInstance)0;
 	
-	float4 clipPos = mul(input.Position, mul(instanceTransform, LightViewProj));
+	float4 clipPos = mul(input.Position, instanceTransform);
+
+	float2 offset = float2((input.TexCoord.x - 0.5f) * 2.0f, -(input.TexCoord.y - 0.5f) * 2.0f);
+	float3 rotation = Size.x * offset.x * Side + Size.y * offset.y * Up;
+	clipPos.xyz += rotation;
+	clipPos = mul(clipPos, LightViewProj);
+
 	//clamp to the near plane
 	clipPos.z = max(clipPos.z, 0);
 
@@ -628,21 +659,16 @@ float4 TerrainPixelShaderFunction(TerrainVertexShaderOutput input) : COLOR0
 		output += TexMaps[i].r * Tex[i];
 
 	float3 light = AmbientColor;
-	light += LightColor;
-	output *= light;
-	
-	// Find the screen space texture coordinate and offset it
-	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
 
+		// Find the screen space texture coordinate and offset it
+		float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
+	
 	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
 	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
-
+	
 	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-	float3 specular = lightColor.rgb*lightColor.a;
-	//return float4(lightColor.aaa,1);
-	float4 finalColor = float4(DiffuseColor*lightColor.rgb + specular*DefaultSpecular + EmissiveColor, 1);
-	//add a small constant to avoid dark areas
-	finalColor.rgb += DiffuseColor*0.1f;
+	float3 specular = lightColor.rgb * lightColor.a;
+	float3 finalColor = AmbientColor + LightColor * lightColor.rgb + EmissiveColor;
 	
 	float bBlendDist;
 	float bBlendWidth;
@@ -671,9 +697,6 @@ float4 TerrainPixelShaderFunction(TerrainVertexShaderOutput input) : COLOR0
 			float hBlendDist = 5000;
 			float hBlendWidth = 10000;
 
-			//Gradient for Time
-			//float Gtime = normalize(1 - light.r);
-
 			float BlendFactor = saturate((input.WorldPosition.y - BlendDist) / (BlendWidth - BlendDist));
 			float bBlendFactor = saturate(((input.WorldPosition.y - bBlendDist) / (bBlendWidth - bBlendDist)));
 			float dBlendFactor = saturate((pow((pow((input.WorldPosition.z - CameraPosition.z), 2) + pow((input.WorldPosition.x - CameraPosition.x), 2)), 0.5) - dBlendDist) / (dBlendWidth - dBlendDist));
@@ -684,7 +707,6 @@ float4 TerrainPixelShaderFunction(TerrainVertexShaderOutput input) : COLOR0
 			output = lerp(waterColor, output * light, BlendFactor);
 			output = lerp(output, WaterColor, dBlendFactor);
 			output = lerp(output, WaterColor, hBlendFactor);
-		//	output = lerp(output, WaterColor, Gtime);	
 		}
 	}
 	else if (CameraPosition.y < WaterHeight)
@@ -709,7 +731,7 @@ float4 TerrainPixelShaderFunction(TerrainVertexShaderOutput input) : COLOR0
 		float detailAmt = input.Depth / detailDistance;
 	detail = lerp(detail, 1, clamp(detailAmt, 0, 1));
 	
-	return float4(output, 1) *finalColor;
+	return float4(output * finalColor, 1);
 }
 
 

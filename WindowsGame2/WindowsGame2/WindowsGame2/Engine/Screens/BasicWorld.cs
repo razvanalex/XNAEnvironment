@@ -35,7 +35,6 @@ namespace Engine
         Components components;
 
         List<Models> models = new List<Models>();
-        List<Models> models1 = new List<Models>();
 
         //Camera
         Camera.Camera camera;
@@ -83,11 +82,6 @@ namespace Engine
         public static float THeight = 3500;
         BillboardsClass tree;
 
-        //Sun
-        public Vector3 LightDirection = Vector3.Normalize(new Vector3(-1, -0.1f, 0.3f));
-        public Vector3 LightColor = new Vector3(2, 2, 2);
-        public Vector3 AmbientColor = new Vector3(2, 2, 2);
-
         LensFlareComponent lensFlare;
         public GameTime gametime;
 
@@ -104,13 +98,16 @@ namespace Engine
         Fire fire;
         Game game;
 
-        private List<Light> _lights;
-        private List<Light> _visibleLights;
-        private Renderer renderer;
 
-        Texture2D _lightDebugTexture;
+        Vector3 AmbientColor;
+        Vector3 LightColor;
+        Vector3 LightDirection;
+
         //font
         SpriteFont spriteFont;
+        
+        Renderer renderer;
+        LightingClass light;        
 
         //FPS Counter
         int frameRate = 0;
@@ -124,7 +121,9 @@ namespace Engine
             this.Content = Content;
             this.graphicsDevice = graphicsDevice;
             this.graphics = graphics;
-
+            graphics.PreferredBackBufferHeight = 700;
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.ApplyChanges();
             InitializeThread();
             InitializeTerrain();
         }
@@ -144,26 +143,18 @@ namespace Engine
         {
             spriteBatch = new SpriteBatch(graphicsDevice);
 
-            //models.Add(new Models(Content.Load<Model>("models//model1"), new Vector3(1000, 1000, 1000), new Vector3(0), new Vector3(500f), graphicsDevice));//new Vector3(60, WaterPos.Y - 100f, 150)        
-
-
-            Effect cubeMapEffect = Content.Load<Effect>("Effects//AlphaBlending");
-            cubeMapEffect.Parameters["LightDirection"].SetValue(LightDirection);
-            CubeMapReflectMaterial cubeMat = new CubeMapReflectMaterial(Content.Load<TextureCube>("textures//Skybox//SkyBoxTex"));
-
-            //models[0].SetModelEffect(cubeMapEffect, true);
-            //    models[0].SetModelMaterial(cubeMat);           
-
-            #region Terrain
-            //  smallTerrain = new SmallTerrain(Content.Load<Texture2D>("textures//Terrain//terrain"), 100f, THeight, 100, LightDirection, LightColor, graphicsDevice, Content);
-            models.Add(new Models(Content.Load<Model>("models//model1"), new Vector3(0, 3000, 0), Vector3.Zero, new Vector3(20), graphicsDevice));
-            models1.Add(new Models(Content.Load<Model>("models//model1"), new Vector3(0, 3000, 0), Vector3.Zero, new Vector3(10), graphicsDevice));
-
+           // Effect cubeMapEffect = Content.Load<Effect>("Effects//AlphaBlending");
+         //   cubeMapEffect.Parameters["LightDirection"].SetValue(LightDirection);
+         //   CubeMapReflectMaterial cubeMat = new CubeMapReflectMaterial(Content.Load<TextureCube>("textures//Skybox//SkyBoxTex"));    
+ 
             camera = new FreeCamera(new Vector3(0, 5000, 0), 0, 0, 1f, 100000.0f, graphicsDevice);
 
-            AmbientColor = lensFlare.AmbientColor;
+            #region Terrain
+      
+            models.Add(new Models(Content.Load<Model>("models//model1"), new Vector3(0, 0, 0), Vector3.Zero, new Vector3(20), graphicsDevice));       
 
             components = new Components(graphicsDevice);
+            //BasicTerrain//heightmap
             terrain.InitializeTerrin(Qtree, (FreeCamera)camera, terrain, Content.Load<Texture2D>("textures//Terrain//terrain513"), WaterPos, Content, graphicsDevice);
             terrain.TerrainTextures(Qtree,
               new Texture2D[] {
@@ -186,76 +177,49 @@ namespace Engine
 
             #region BillBoards
 
-            tree = new BillboardsClass(Content, camera, graphicsDevice);
-            tree.GetData(new object[] { Qtree });
-            tree.Initialize();
+            //Sky
+            sky = new SkyDome(game, false, camera, graphicsDevice);
 
+            sky.GetData(new object[] { Qtree });
+           
+            UpdateLight();
+
+            tree = new BillboardsClass(Content, camera, graphicsDevice);
+            tree.GetData(new object[] { Qtree, sky });
+            tree.Initialize();
             #endregion
 
             fire = new Fire(game);
             //  fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
             //fire.AddFire(new Vector3(543, Qtree.GetHeight(4000, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
 
-            //Sky
-            sky = new SkyDome(game, LightColor, LightDirection, false, camera, graphicsDevice);
-            sky.GetData(new object[] { Qtree });
-
             //Water
-            water = new Water.Water(WaveLength, WaveHeight, WaveSpeed, WaterPos, WaterSize, Content, graphicsDevice, LightDirection, LightColor, lensFlare.SunFactor);
+            water = new Water.Water(WaveLength, WaveHeight, WaveSpeed, WaterPos, WaterSize, Content, graphicsDevice, LightDirection, LightColor, sky.sky.LightIntensity);
 
             worker.RunWorkerAsync();
 
-            _visibleLights = new List<Light>();
-            _lights = new List<Light>();
-            renderer = new Renderer(GraphicsDevice, Content, 800, 600);
 
-            //add a directional light
-            Light dirLight = new Light();
-            dirLight.LightType = Light.Type.Directional;
-            dirLight.Transform = Matrix.CreateFromYawPitchRoll(-MathHelper.PiOver4, -MathHelper.PiOver4, 0);
-            dirLight.Color = Color.White;
-            dirLight.Intensity = 0.5f;
-            dirLight.ShadowDistance = 10000;
-            dirLight.ShadowDepthBias = 0.01f;
-            dirLight.CastShadows = true;
-            _lights.Add(dirLight);
-            /*
-            //create some point lights
-            const int numLights = 10;
+
+            renderer = new Renderer(graphicsDevice, Content, 800, 600);
+            light = new LightingClass();
+            light.AddDirectionalLight(MathHelper.PiOver2, sky.Theta + MathHelper.PiOver2, 0, new Color(LightColor), sky.sky.Parameters.AmbientColor.W, 15000, 0.005f);
+
             Random random = new Random();
-            for (int i = 0; i < numLights; i++)
-            {
-                Light light = new Light();
-                light.Radius = 10000.0f + 0.5f * (float)random.NextDouble();
-                light.Intensity = 1 + 0.5f * (float)random.NextDouble();
-                light.Color = new Color((float)random.NextDouble() + 0.25f, (float)random.NextDouble() + 0.25f, (float)random.NextDouble() + 0.25f, 1);
+            for (int i = 0; i < 100; i++ )
+                light.AddMovingPointLight(100, 1,
+                    new Color(((float)random.NextDouble() * 2 - 1) * 255, 
+                        ((float)random.NextDouble() * 2 - 1) * 255, 
+                        ((float)random.NextDouble() * 2 - 1) * 255), 
+                    new Vector3(((float)random.NextDouble() * 2 - 1) * 1000,
+                        Qtree.GetHeight(((float)random.NextDouble() * 2-1) * 1000, ((float)random.NextDouble() * 2-1) * 1000) + 50, 
+                        ((float)random.NextDouble() * 2 - 1) * 1000),
+                    new Vector3(((float)random.NextDouble() * 2 - 1) * 1000,
+                        Qtree.GetHeight(((float)random.NextDouble() * 2 - 1) * 1000, ((float)random.NextDouble() * 2-1) * 1000) + 50, 
+                        ((float)random.NextDouble() * 2 - 1) * 1000),
+                    ((float)random.NextDouble() * 2 - 1) * 5);
 
-                _lights.Add(light);
-                const int randomRadiusDistribution = 5000;
-                Vector3 endPoint = new Vector3((float)(random.NextDouble() * 2 - 1) * randomRadiusDistribution, (float)(random.NextDouble() * 0.5f - 0.2f), (float)(random.NextDouble() * 2 - 1) * randomRadiusDistribution);
-                Vector3 startPoint = new Vector3((float)(random.NextDouble() * 2 - 1) * randomRadiusDistribution, 2000, (float)(random.NextDouble() * 2 - 1) * randomRadiusDistribution);
-                light.Transform = Matrix.CreateTranslation(startPoint);
-            }
-            //create some spot lights
-            Light spot;
+            light.AddSpotLight(1000, 1, 30, 5 * MathHelper.PiOver4, -MathHelper.PiOver4, 0, new Color(255, 255, 255), new Vector3(0, 1000, 100), false);
 
-            spot = new Light();
-            spot.LightType = Light.Type.Spot;
-            spot.ShadowDepthBias = 0.0001f;
-            spot.Radius = 80;
-            spot.SpotAngle = 40;
-            spot.Color = new Color(1.0f, 1.0f, 1.0f, 1.0f);
-            spot.CastShadows = true;
-            float dist = 15000f;
-            float h = 40000f;
-            Matrix m;
-            Vector3 pos = new Vector3(-dist, h, -3);
-            m = Matrix.CreateFromYawPitchRoll(5 * MathHelper.PiOver4, -MathHelper.PiOver4, 0);
-            m.Translation = pos;
-            spot.Transform = m;
-            _lights.Add(spot);
-            */
-            _lightDebugTexture = Content.Load<Texture2D>("textures//lightTexture");
             spriteFont = Content.Load<SpriteFont>("SpriteFont1");
 
             renderCapture = new RenderCapture(graphicsDevice);
@@ -266,6 +230,9 @@ namespace Engine
 
             blurCapture = new RenderCapture(graphicsDevice, SurfaceFormat.Color);
             dof = new DepthOfField(graphicsDevice, Content);
+           
+            // Initialize our renderer
+            DebugShapeRenderer.Initialize(GraphicsDevice);
 
             base.LoadContent();
         }
@@ -298,6 +265,13 @@ namespace Engine
             }
         }
 
+        void UpdateLight()
+        {
+            AmbientColor = new Vector3(sky.sky.Parameters.AmbientColor.X, sky.sky.Parameters.AmbientColor.Y, sky.sky.Parameters.AmbientColor.Z);
+            LightDirection = new Vector3(sky.sky.Parameters.LightDirection.X, sky.sky.Parameters.LightDirection.Y, sky.sky.Parameters.LightDirection.Z);
+            LightColor = new Vector3(sky.sky.Parameters.LightColor.X, sky.sky.Parameters.LightColor.Y, sky.sky.Parameters.LightColor.Z);
+
+        }
         public override void Update(GameTime gameTime)
         {
             fire.Update(camera);
@@ -371,19 +345,26 @@ namespace Engine
                 Mouse.SetPosition(graphicsDevice.Viewport.Width / 2, graphicsDevice.Viewport.Height / 2);
                 lastMouseState = Mouse.GetState();
             }
-
-
-            lensFlare.Light_anim = sky.Theta;
-            LightDirection = Vector3.Negate(Vector3.Reflect(lensFlare.LightDirection, Vector3.Up));
-            AmbientColor = lensFlare.AmbientColor;
-            LightColor = Vector3.Lerp(lensFlare.LightColor, AmbientColor, sky.Gr);
-            _lights[0].Transform = Matrix.CreateFromYawPitchRoll(MathHelper.PiOver2, sky.Theta + MathHelper.PiOver2, 0);
+          
+           // LightDirection = Vector3.Negate(Vector3.Reflect(lensFlare.LightDirection, Vector3.Up));
+            //AmbientColor = new Vector3(sky.sky.Parameters.AmbientColor.X, sky.sky.Parameters.AmbientColor.Y, sky.sky.Parameters.AmbientColor.Z);
+           // LightColor = new Vector3(sky.sky.Parameters.LightColor.X, sky.sky.Parameters.LightColor.Y, sky.sky.Parameters.LightColor.Z);
+            
+            UpdateLight();
             tree.LightColor = LightColor;
             tree.AmbientColor = AmbientColor;
             tree.LightDirection = LightDirection;
+            tree.SunPitch = sky.Theta;
             tree.Update(gametime);
 
-            sky.Update(gameTime, LightDirection, LightColor);
+            foreach (Models model in models)
+            {
+                model.LightColor = LightColor;
+                model.AmbientColor = AmbientColor;
+            }
+            light.UpdateMovingPoint(gameTime);
+            light.UpdatDirectionalLight(MathHelper.PiOver2, sky.Theta + MathHelper.PiOver2, 0);
+            sky.Update(gameTime);
             sky.GetData(new object[] { Qtree });
 
            // water.UpdateLight(LightColor, -LightDirection, lensFlare.SunFactor);
@@ -558,35 +539,17 @@ namespace Engine
                 #region NotBlur
                 GraphicsDevice.BlendState = BlendState.Opaque;
                 GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-                graphicsDevice.Clear(Color.CornflowerBlue);
-
-                _visibleLights.Clear();
-                foreach (Light light in _lights)
-                {
-                    if (light.LightType == Light.Type.Directional)
-                    {
-                        _visibleLights.Add(light);
-                    }
-                    else if (light.LightType == Light.Type.Spot)
-                    {
-                        if (camera.Frustum.Intersects(light.Frustum))
-                            _visibleLights.Add(light);
-                    }
-                    else if (light.LightType == Light.Type.Point)
-                    {
-                        if (camera.Frustum.Intersects(light.BoundingSphere))
-                            _visibleLights.Add(light);
-                    }
-                }
+                graphicsDevice.Clear(Color.CornflowerBlue);               
 
                 rs = new RasterizerState();
                 rs.CullMode = CullMode.None;
                 rs.FillMode = FillMode.Solid;
                 graphicsDevice.RasterizerState = rs;
 
-                renderer.RenderScene(((FreeCamera)camera), gameTime, _visibleLights, new object[] { sky, terrain, water }, new object[] { tree.Fir, tree.Linden, tree.Palm });
+                light.SetLights();
+                renderer.RenderScene(((FreeCamera)camera), gameTime, light.visibleLights, new object[] { sky, terrain, models }, new object[] { tree.Fir, tree.Palm, tree.Linden });
                 
-                //tree.Draw(camera.View, camera.Projection, camera.Transform.Translation);
+               // tree.Draw(camera.View, camera.Projection, camera.Transform.Translation);
                 //  water.PreDraw(camera, gameTime);       
                // if (terrain_)
                //     terrain.Draw(camera.View, camera.Projection, camera.Transform.Translation);
@@ -605,15 +568,15 @@ namespace Engine
 
 
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
-                //spriteBatch.Draw(renderer.NormalBuffer, new Rectangle(0, 0, 200, 200), Color.White);
+               // spriteBatch.Draw(renderer.LightBuffer, new Rectangle(0, 0, 200, 200), Color.White);
                 //spriteBatch.Draw(renderer.DepthBuffer, new Rectangle(200, 0, 200, 200), Color.White);
-                // spriteBatch.Draw(renderer._outputTexture, new Rectangle(0, 0, 600, 200), Color.White);            
+               //  spriteBatch.Draw(renderer._outputTexture, new Rectangle(0, 0, 600, 200), Color.White);            
                  spriteBatch.End();
 
                 //FPS
                 frameCounter++;
                 spriteBatch.Begin();
-              //  spriteBatch.DrawString(spriteFont, "FPS: " + frameRate, new Vector2(20, 20), Color.Black);
+                spriteBatch.DrawString(spriteFont, "FPS: " + light.visibleLights.Count.ToString(), new Vector2(20, 20), Color.Black);
                 spriteBatch.End();
 
 
@@ -622,6 +585,8 @@ namespace Engine
                 #endregion
             }
 
+            // Render our shapes now
+            DebugShapeRenderer.Draw(gameTime, camera.View, camera.Projection);
 
             base.Draw(gameTime);
         }

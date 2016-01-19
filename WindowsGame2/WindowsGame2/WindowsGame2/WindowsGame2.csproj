@@ -93,7 +93,10 @@
     <Compile Include="Engine\Billboards\Billboard.cs" />
     <Compile Include="Engine\Camera\Camera.cs" />
     <Compile Include="Engine\Components.cs" />
+    <Compile Include="Engine\DebugShapeRenderer.cs" />
     <Compile Include="Engine\Helper.cs" />
+    <Compile Include="Engine\Lighting PrePass\LightingClass.cs" />
+    <Compile Include="Engine\Lighting PrePass\MovingLight.cs" />
     <Compile Include="Engine\Particles\Fire\Fire.cs" />
     <Compile Include="Engine\Particles\Fire\FireSystem.cs" />
     <Compile Include="Engine\Particles\Rain\RainSystem.cs" />

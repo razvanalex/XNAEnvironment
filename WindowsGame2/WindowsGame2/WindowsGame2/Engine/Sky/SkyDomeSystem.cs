@@ -41,7 +41,7 @@ namespace Engine.Sky
 
         QuadRenderComponent quad;
 
-        SkyDomeParameters parameters;
+        SkyDomeParameters  parameters;
 
         VertexDeclaration vertexDecl;
         VertexPositionTexture[] domeVerts, quadVerts;
@@ -57,6 +57,8 @@ namespace Engine.Sky
         private float cloudCover;
         private float cloudSharpness;
         private float numTiles;
+        private float lightIntensity;
+
         GraphicsDevice graphicsDevice;
 
         GameTime gameTime;
@@ -73,7 +75,12 @@ namespace Engine.Sky
         /// Gets/Sets Phi value
         /// </summary>
         public float Phi { get { return fPhi; } set { fPhi = value; } }
-            
+      
+        /// <summary>
+        /// Gets/Sets intensity of light value
+        /// </summary>
+        public float LightIntensity { get { return lightIntensity; } set { lightIntensity = value; } }
+
         /// <summary>
         /// Gets/Sets actual time computation
         /// </summary>
@@ -312,6 +319,85 @@ namespace Engine.Sky
         }
         #endregion
 
+
+        public float Light_anim, r = 0, g = 0, b = 0, speed = 0.0005f, a = 0.2f;
+        private float sunFactor = 0;
+        public float SunFactor
+        {
+            get { return sunFactor; }
+            set { sunFactor = value; }
+        }
+        bool sunset = false;
+    
+        /// <summary>
+        /// Gets/Sets maximum ambintal intensity of light. Recommanded value is bewteen 0.2f -> 0.5f
+        /// </summary>
+        public static float MaxAmbientIntensity { get; set; }
+      
+        /// <summary>
+        /// Gets/Sets minimum ambintal intensity of light. Recommanded value is between 0.1f -> 0.2f
+        /// </summary>
+        public static float MinAmbientIntensity { get; set; }
+
+        public void UpdateLight()
+        {
+            Light_anim = Theta;
+
+            if (Light_anim >= 2 * MathHelper.Pi)
+                Light_anim = 0;
+
+            Parameters.LightDirection = new Vector4((float)Math.Sin(Light_anim), (float)Math.Cos(Light_anim), 0, 1);
+
+            if (Light_anim > MathHelper.Pi / 2 + 0.20f && Light_anim < MathHelper.Pi * 3 / 2 - 0.20f)
+            {
+                Parameters.LightColor = new Vector4(1);
+                Parameters.AmbientColor = new Vector4(MaxAmbientIntensity);
+                sunFactor = MaxAmbientIntensity;
+            }
+            else if ((Light_anim >= (MathHelper.Pi / 2 - 0.20f) && Light_anim <= MathHelper.Pi / 2 + 0.20f) || (Light_anim >= (MathHelper.Pi * 3 / 2 - 0.20f) && Light_anim <= MathHelper.Pi * 3 / 2 + 0.20f))
+            {
+                if ((Light_anim >= (MathHelper.Pi / 2 - 0.20f) && Light_anim <= MathHelper.Pi / 2 + 0.20f)) { sunset = false; }
+                else if ((Light_anim >= (MathHelper.Pi * 3 / 2 - 0.20f) && Light_anim <= MathHelper.Pi * 3 / 2 + 0.20f)) { sunset = true; }
+
+                if (!sunset) //sunrise
+                {
+                    r = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 20;
+                    g = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 15;
+                    b = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 10;
+                    a = ((Light_anim - MathHelper.PiOver2 + 0.10f));
+                    sunFactor = ((Light_anim - MathHelper.PiOver2 + 0.10f)) * 2;
+                }
+                else //sunset
+                {
+                    r = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 20;
+                    g = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 15;
+                    b = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 10;
+                    a = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f));
+                    sunFactor = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 1;
+
+                }
+                if (r >= 1) r = 1;
+                if (r <= 0) r = 0;
+                if (g >= 1) g = 1;
+                if (g <= 0) g = 0;
+                if (b >= 1) b = 1;
+                if (b <= 0) b = 0;
+                if (a >= MaxAmbientIntensity) a = MaxAmbientIntensity;
+                if (a <= MinAmbientIntensity) a = MinAmbientIntensity;
+                if (sunFactor <= 0f) sunFactor = 0f;
+
+                Parameters.LightColor = new Vector4(r, g, b, 1);
+                Parameters.AmbientColor = new Vector4(a, a, a, a);
+            }
+            else
+            {
+                Parameters.LightColor = new Vector4(0, 0, 0, 1);
+                Parameters.AmbientColor = new Vector4(new Vector3(MinAmbientIntensity), 0f);
+                sunFactor = 0;
+            }
+            lightIntensity = a;
+        }
+
         #region Update
         /// <summary>
         /// Allows the game component to update itself.
@@ -328,8 +414,8 @@ namespace Engine.Sky
             }
 
             parameters.LightDirection = this.GetDirection();
-            parameters.LightDirection.Normalize(); 
-          //  base.Update(gameTime);
+            parameters.LightDirection.Normalize();
+            UpdateLight();
         }
         #endregion
 
@@ -338,10 +424,6 @@ namespace Engine.Sky
         /// Draws the component.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        public  void Draw(Camera.Camera camera, GraphicsDevice graphicsDevice, Texture2D lightBuffer)
-        {
-
-        }
 
         public void Draw(Matrix View, Matrix Projection, Vector3 CameraPosition)
         {
