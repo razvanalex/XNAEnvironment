@@ -20,8 +20,8 @@ namespace Engine.Particles
         Random r = new Random();
         GraphicsDevice graphicsDevice;
 
-        Vector3 Position;
-        Vector2 scale;
+        public Vector3 Position;
+        public Vector2 scale;
         int nParticle;
         Vector2 ParticleSize;
         float lifeSpan;

@@ -187,10 +187,19 @@ namespace Engine.Water
             foreach (Models model in models)
                 water.Objects.Add(model);
 
-       /*     foreach (Billboard tree in trees)
+            foreach (Billboard tree in trees)
                 for (int lod = 0; lod < 3; lod++)
                     if (tree.instanceTransforms[lod].Length != 0)
-                        water.Objects.Add(tree.trunck[lod][0]);*/
+                    {
+                        water.Objects.Add(tree.trunck[lod][0]);
+                        if (tree.Leaves)
+                            for (int i = 0; i < tree.NoTrees; i++)
+                            {
+                                if (tree.LeavesAreVisible[i])
+                                    for (int j = 0; j < tree.NoLeaves; j++)
+                                        water.Objects.Add(tree.leaves[i][j]);
+                            }
+                    }
 
         }
 

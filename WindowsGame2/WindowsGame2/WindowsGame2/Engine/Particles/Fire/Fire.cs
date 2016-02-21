@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+using Engine.Shaders;
 
 namespace Engine.Particles
 {
@@ -29,6 +30,12 @@ namespace Engine.Particles
         public void AddFire(Vector3 Position, Vector2 Scale, int NoParticles, Vector2 ParticleSize, float LifeSpan, Vector3 Wind, float FadeInTime)
         {
             FireParticle.Add(new FireSystem(game, Position, Scale, NoParticles, ParticleSize, LifeSpan, Wind, FadeInTime));
+        }
+
+        public void AddLight(ref LightingClass light)
+        {
+            for (int i = 0; i < FireParticle.Count(); i++)
+                light.AddPointLight(FireParticle[0].scale.X * 25, 2, Color.Orange, new Vector3(FireParticle[i].Position.X, FireParticle[i].Position.Y + FireParticle[0].scale.Y / 2, FireParticle[i].Position.Z));
         }
 
         public void Update(Camera.Camera camera)

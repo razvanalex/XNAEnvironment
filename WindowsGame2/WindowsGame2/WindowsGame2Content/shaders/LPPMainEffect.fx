@@ -293,12 +293,12 @@ float4 ReconstructPixelShaderFunction(ReconstructVertexShaderOutput input):COLOR
 	// Find the screen space texture coordinate and offset it
 	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
 
-	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
-	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
+		//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
+		float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
 
-	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-	float3 specular = lightColor.rgb * lightColor.a;
-	float3 finalColor = AmbientColor + LightColor * lightColor.rgb + EmissiveColor;
+		//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
+		float3 specular = lightColor.rgb * lightColor.a;
+		float3 finalColor = AmbientColor +LightColor * lightColor.rgb + EmissiveColor;
 	
 	// Texture if necessary
 #if (TextureEnabled == true)
@@ -318,14 +318,14 @@ float4 ReconstructPixelShaderFunctionInstance(ReconstructVertexShaderOutput inpu
 	PixelShaderOutput output = (PixelShaderOutput)1;
 
 	// Find the screen space texture coordinate and offset it
-	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) +LightBufferPixelSize;
+	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
 
-	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
-	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
+		//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
+		float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
 
-	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-	float3 specular = lightColor.rgb * lightColor.a;
-	float3 finalColor = AmbientColor + LightColor * lightColor.rgb + EmissiveColor;
+		//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
+		float3 specular = lightColor.rgb * lightColor.a;
+		float3 finalColor = AmbientColor +LightColor * lightColor.rgb + EmissiveColor;
 
 	// Texture if necessary
 #if (TextureEnabled == true)
@@ -662,13 +662,13 @@ float4 TerrainPixelShaderFunction(TerrainVertexShaderOutput input) : COLOR0
 
 		// Find the screen space texture coordinate and offset it
 		float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
-	
-	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
-	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
-	
-	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-	float3 specular = lightColor.rgb * lightColor.a;
-	float3 finalColor = AmbientColor + LightColor * lightColor.rgb + EmissiveColor;
+
+		//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
+		float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
+
+		//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
+		float3 specular = lightColor.rgb * lightColor.a;
+		float3 finalColor = AmbientColor + LightColor * lightColor.rgb + EmissiveColor;
 	
 	float bBlendDist;
 	float bBlendWidth;
@@ -740,12 +740,6 @@ technique RenderToGBuffer
 {
     pass RenderToGBufferPass
     {
-	#ifdef ALPHA_MASKED	
-		CullMode = None;
-	#else
-		CullMode = CCW;
-	#endif
-
         VertexShader = compile vs_3_0 VertexShaderFunction();
         PixelShader = compile ps_3_0 PixelShaderFunction();
     }
@@ -755,12 +749,6 @@ technique ReconstructShading
 {
 	pass ReconstructShadingPass
     {
-	#ifdef ALPHA_MASKED	
-		CullMode = None;
-	#else
-		CullMode = CCW;
-	#endif
-
         VertexShader = compile vs_3_0 ReconstructVertexShaderFunction();
         PixelShader = compile ps_3_0 ReconstructPixelShaderFunction();
     }
@@ -770,12 +758,6 @@ technique OutputShadow
 {
 	pass OutputShadowPass
 	{		
-	#ifdef ALPHA_MASKED	
-		CullMode = None;
-	#else
-		CullMode = CCW;
-	#endif
-
         VertexShader = compile vs_3_0 OutputShadowVertexShaderFunction();
         PixelShader = compile ps_3_0 OutputShadowPixelShaderFunction();
 	}

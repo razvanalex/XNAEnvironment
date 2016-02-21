@@ -385,7 +385,7 @@ namespace Engine.Terrain
         public void Update(GameTime time)
         {
             //this._effect.FogEnabled = false;
-            System.Threading.Thread.Sleep(250);
+            System.Threading.Thread.Sleep(500);
             //return;
             this._processIterationId += 1;
             if (this._processIterationId > ProcessIterationMaxValue)
@@ -481,7 +481,7 @@ namespace Engine.Terrain
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
 
-            effect.Parameters["LightDirection"].SetValue(LightDirection);
+            effect.Parameters["LightDirection"].SetValue(-LightDirection);
             effect.Parameters["LightColor"].SetValue(LightColor);
             effect.Parameters["TextureTiling"].SetValue(textureTiling);
 
@@ -498,12 +498,17 @@ namespace Engine.Terrain
             effect.Parameters["WaterHeight"].SetValue(WaterHeight);
 
             RasterizerState rs = new RasterizerState();
-            rs.CullMode = CullMode.None;
+            rs.CullMode = CullMode.CullClockwiseFace;
             rs.FillMode = FillMode.Solid;
             Device.RasterizerState = rs;
           
             this.Effect.CurrentTechnique.Passes[0].Apply();
             this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+
+            rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            Device.RasterizerState = rs;
         }
 
         public void Draw(Camera.Camera camera, GraphicsDevice graphicsDevice, Texture2D lightBuffer)
@@ -542,11 +547,17 @@ namespace Engine.Terrain
             effect.CurrentTechnique.Passes[0].Apply();
         
             RasterizerState rs = new RasterizerState();
-            rs.CullMode = CullMode.None;
+            rs.CullMode = CullMode.CullClockwiseFace;
             rs.FillMode = FillMode.Solid;
             Device.RasterizerState = rs;
 
             this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+            
+            rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            Device.RasterizerState = rs;
+        
         }
       
 
@@ -564,11 +575,18 @@ namespace Engine.Terrain
             effect.Parameters["WorldViewProjection"].SetValue(Transform * camera.View * camera.Projection);
             effect.Parameters["FarClip"].SetValue(camera.FarPlane);
             effect.CurrentTechnique.Passes[0].Apply();
+           
             RasterizerState  rs = new RasterizerState();
-            rs.CullMode = CullMode.None;
+            rs.CullMode = CullMode.CullClockwiseFace;
             rs.FillMode = FillMode.Solid;
             graphicsDevice.RasterizerState = rs;
+            
             this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+           
+            rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            Device.RasterizerState = rs;
         }
 
         public void RenderShadowMap(ref Matrix viewProj, GraphicsDevice graphicsDevice)
@@ -584,10 +602,16 @@ namespace Engine.Terrain
 
             effect.CurrentTechnique.Passes[0].Apply();
             RasterizerState rs = new RasterizerState();
-            rs.CullMode = CullMode.None;
+            rs.CullMode = CullMode.CullClockwiseFace;
             rs.FillMode = FillMode.Solid;
             graphicsDevice.RasterizerState = rs;
+           
             this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+
+            rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            Device.RasterizerState = rs;
         }
 
         public void SetClipPlane(Vector4? Plane)

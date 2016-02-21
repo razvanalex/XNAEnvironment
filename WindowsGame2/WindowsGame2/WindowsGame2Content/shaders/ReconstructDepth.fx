@@ -45,7 +45,7 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input)
     VertexShaderOutput output = (VertexShaderOutput)0;
 	
 	output.Position = input.Position;
-	output.TexCoord = input.Position.xy*0.5f + float2(0.5f,0.5f); 
+	output.TexCoord = input.Position.xy * 0.5f + float2(0.5f,0.5f); 
 	output.TexCoord.y = 1 - output.TexCoord.y;	
 	output.TexCoord += GBufferPixelSize;
 

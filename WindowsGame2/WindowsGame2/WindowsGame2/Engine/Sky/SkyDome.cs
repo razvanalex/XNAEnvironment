@@ -39,7 +39,14 @@ namespace Engine.Sky
         private GamePadState previousPadState;
 
         KeyboardState keyState, oldKeyState;
-
+      
+        private Color sunColor;      
+        public Color SunColor
+        {
+            get { return sunColor; }
+            set { sunColor = value; }
+        }
+     
         private enum Status
         {
             Manual = 0,
@@ -81,7 +88,7 @@ namespace Engine.Sky
              
                 sky.prevWeather = SkyDomeSystem.Weather.Clear;
                 sky.WeatherChange(ref sky.prevWeather);
-                weather = SkyDomeSystem.Weather.Clear;
+                weather = SkyDomeSystem.Weather.Clouds;
                 sky.WeatherChange(ref weather);   
             }
         }
@@ -113,6 +120,7 @@ namespace Engine.Sky
                 Gr = sky.Gr;
                 SKY(gameTime);
             }
+            sunColor = new Color(sky.SunColor);
         }
 
         public void GetData(object[] obj)

@@ -33,7 +33,7 @@ PixelShaderOutput PixelShaderFunction(VertexShaderOutput input)
     PixelShaderOutput output;
     //this value depends on your normal encoding method. 
 	//on our example, it will generate a (0,0,-1) normal
-    output.Normal = float4(0.5,0.5,0,0);   
+    output.Normal = float4(0.5, 0.5, 0, 0);   
     //max depth
     output.Depth = 1.0f;
     return output;

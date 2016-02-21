@@ -35,7 +35,6 @@ namespace Engine
 
         Camera.Camera camera;
         SkyDome sky;
-        LensFlareComponent lensFlare;
         Components components;
 
         Vector3 LightColor;
@@ -88,9 +87,7 @@ namespace Engine
             spriteFont = Content.Load<SpriteFont>("SpriteFont1");
             camera = new FreeCamera(new Vector3(0, 200, 0), 0, 0, 1f, 1000000.0f, graphicsDevice);
             sky = new SkyDome(game, false, camera, graphicsDevice);
-            lensFlare = new LensFlareComponent(game);
             components = new Components(graphicsDevice);
-            game.Components.Add(lensFlare);
 
             terrain.InitializeTerrin(Qtree, (FreeCamera)camera, terrain, Content.Load<Texture2D>("textures//Terrain//BasicTerrain//heightmap"), Vector3.Zero, Content, graphicsDevice);
 
@@ -180,8 +177,7 @@ namespace Engine
         {
             graphicsDevice.Clear(Color.CornflowerBlue);
             //sky.Draw(gameTime);
-            lensFlare.View = camera.View;
-            lensFlare.Projection = camera.Projection;
+
             terrain.Draw(camera.View, camera.Projection, camera.Transform.Translation);
             //fire.Draw(camera);
 

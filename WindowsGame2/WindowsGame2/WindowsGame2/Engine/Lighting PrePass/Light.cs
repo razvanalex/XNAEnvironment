@@ -10,7 +10,7 @@ namespace Engine.Shaders
             Point,
             Directional, //not implemented
             Spot
-        } ;
+        };
 
         private Type _lightType = Type.Point;
         private Matrix _transform = Matrix.Identity;

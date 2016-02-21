@@ -348,9 +348,10 @@ namespace Engine.Sky
 
             Parameters.LightDirection = new Vector4((float)Math.Sin(Light_anim), (float)Math.Cos(Light_anim), 0, 1);
 
+
             if (Light_anim > MathHelper.Pi / 2 + 0.20f && Light_anim < MathHelper.Pi * 3 / 2 - 0.20f)
             {
-                Parameters.LightColor = new Vector4(1);
+                Parameters.LightColor = new Vector4(2, 2, 2, 1);
                 Parameters.AmbientColor = new Vector4(MaxAmbientIntensity);
                 sunFactor = MaxAmbientIntensity;
             }
@@ -373,9 +374,10 @@ namespace Engine.Sky
                     g = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 15;
                     b = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 10;
                     a = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f));
-                    sunFactor = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 1;
 
+                    sunFactor = (-(Light_anim - 3 * MathHelper.PiOver2 - 0.10f)) * 1;
                 }
+
                 if (r >= 1) r = 1;
                 if (r <= 0) r = 0;
                 if (g >= 1) g = 1;
@@ -386,16 +388,17 @@ namespace Engine.Sky
                 if (a <= MinAmbientIntensity) a = MinAmbientIntensity;
                 if (sunFactor <= 0f) sunFactor = 0f;
 
-                Parameters.LightColor = new Vector4(r, g, b, 1);
+                Parameters.LightColor = new Vector4(r + 1, g + 1, b + 1, 1);
                 Parameters.AmbientColor = new Vector4(a, a, a, a);
             }
             else
             {
-                Parameters.LightColor = new Vector4(0, 0, 0, 1);
+                Parameters.LightColor = new Vector4(1, 1, 1, 1);
                 Parameters.AmbientColor = new Vector4(new Vector3(MinAmbientIntensity), 0f);
                 sunFactor = 0;
             }
             lightIntensity = a;
+
         }
 
         #region Update
@@ -427,13 +430,7 @@ namespace Engine.Sky
 
         public void Draw(Matrix View, Matrix Projection, Vector3 CameraPosition)
         {
-            graphicsDevice.SetRenderTarget(null);
             Matrix World = Matrix.CreateTranslation(CameraPosition.X, CameraPosition.Y, CameraPosition.Z);
-
-            if (previousTheta != fTheta || previousPhi != fPhi)
-                UpdateMieRayleighTextures();
-
-            game.GraphicsDevice.Clear(new Color(sunColor));//new Color(0.10980f, 0.30196f, 0.49412f)));//sunColor
 
              RasterizerState rs = new RasterizerState();
              rs.CullMode = CullMode.None;            
@@ -449,16 +446,14 @@ namespace Engine.Sky
             scatterEffect.Parameters["txRayleigh"].SetValue(this.rayleighTex);
             scatterEffect.Parameters["World"].SetValue(World);
             scatterEffect.Parameters["WorldViewProjection"].SetValue(World * View * Projection);
-            scatterEffect.Parameters["v3SunDir"].SetValue(new Vector3(-parameters.LightDirection.X,
-                -parameters.LightDirection.Y, -parameters.LightDirection.Z));
+            scatterEffect.Parameters["v3SunDir"].SetValue(new Vector3(-parameters.LightDirection.X, -parameters.LightDirection.Y, -parameters.LightDirection.Z));
             scatterEffect.Parameters["NumSamples"].SetValue(parameters.NumSamples);
             scatterEffect.Parameters["fExposure"].SetValue(parameters.Exposure);
             scatterEffect.Parameters["SunColor"].SetValue(sunColor);
             scatterEffect.Parameters["gr"].SetValue(this.Gr);
             scatterEffect.Parameters["StarsTex"].SetValue(starsTex);
             if (fTheta < Math.PI / 2.0f || fTheta > 3.0f * Math.PI / 2.0f)
-                scatterEffect.Parameters["starIntensity"].SetValue((float)Math.Abs(
-                    Math.Sin(Theta + (float)Math.PI / 2.0f)));
+                scatterEffect.Parameters["starIntensity"].SetValue((float)Math.Abs(Math.Sin(Theta + (float)Math.PI / 2.0f)));
             else
                 scatterEffect.Parameters["starIntensity"].SetValue(0.0f);
            
@@ -472,7 +467,7 @@ namespace Engine.Sky
             DrawGlow(View, Projection, CameraPosition);
             DrawMoon(View, Projection, CameraPosition);
             DrawClouds(View, Projection, CameraPosition);
-            graphicsDevice.SetRenderTarget(null);
+            //graphicsDevice.SetRenderTarget(null);
           
             depthState = new DepthStencilState();
             depthState.DepthBufferEnable = true; 
@@ -562,6 +557,11 @@ namespace Engine.Sky
         public void PreDraw(GameTime gameTime)
         {
             noiseEffect.Parameters["time"].SetValue((float)gameTime.TotalGameTime.TotalSeconds / inverseCloudVelocity);
+
+            if (previousTheta != fTheta || previousPhi != fPhi)
+                UpdateMieRayleighTextures();
+
+            //game.GraphicsDevice.Clear(new Color(sunColor));//new Color(0.10980f, 0.30196f, 0.49412f)));//sunColor
         }
 
         public void DrawClouds(Matrix View, Matrix Projection, Vector3 CameraPosition)

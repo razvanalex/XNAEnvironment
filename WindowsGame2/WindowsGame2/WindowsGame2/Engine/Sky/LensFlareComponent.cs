@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Engine.Sky
 {
-    public class LensFlareComponent : DrawableGameComponent
+    public class LensFlareComponent
     {
         // How big is the circular glow effect?
         const float glowSize = 200;
@@ -21,6 +21,8 @@ namespace Engine.Sky
         Vector2 lightPosition;
         bool lightBehindCamera;
 
+        Game game;
+        GraphicsDevice graphicsDevice;
 
         // Graphics objects.
         Texture2D glowSprite;
@@ -74,26 +76,27 @@ namespace Engine.Sky
             new Flare( 2.0f, 1.4f, new Color( 25,  50, 100), "textures//LensFlare//flare3"),
         };
 
-        public LensFlareComponent(Game game)
-            : base(game)
+        public LensFlareComponent(Game game, GraphicsDevice graphicsDevice)
         {
+            this.game = game;
+            this.graphicsDevice = graphicsDevice;
         }
 
-        protected override void LoadContent()
+        public void LoadContent()
         {
             // Create a SpriteBatch for drawing the glow and flare sprites.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            spriteBatch = new SpriteBatch(graphicsDevice);
 
             // Load the glow and flare textures.
-            glowSprite = Game.Content.Load<Texture2D>("textures//LensFlare//glow");
+            glowSprite = game.Content.Load<Texture2D>("textures//LensFlare//glow");
 
             foreach (Flare flare in flares)
             {
-                flare.Texture = Game.Content.Load<Texture2D>(flare.TextureName);
+                flare.Texture = game.Content.Load<Texture2D>(flare.TextureName);
             }
 
             // Effect for drawing occlusion query polygons.
-            basicEffect = new BasicEffect(GraphicsDevice);
+            basicEffect = new BasicEffect(graphicsDevice);
 
             basicEffect.View = Matrix.Identity;
             basicEffect.VertexColorEnabled = true;
@@ -104,24 +107,23 @@ namespace Engine.Sky
             queryVertices[0].Position = new Vector3(-querySize / 2, -querySize / 2, -1);
             queryVertices[1].Position = new Vector3(querySize / 2, -querySize / 2, -1);
             queryVertices[2].Position = new Vector3(-querySize / 2, querySize / 2, -1);
-            queryVertices[3].Position = new Vector3(querySize / 2, querySize / 2, -1) ;
+            queryVertices[3].Position = new Vector3(querySize / 2, querySize / 2, -1);
 
             // Create the occlusion query object.
-            occlusionQuery = new OcclusionQuery(GraphicsDevice);
+            occlusionQuery = new OcclusionQuery(graphicsDevice);
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
-           
-            base.Update(gameTime);
+
         }
-        public override void Draw(GameTime gameTime)
+        public void Draw(GameTime gameTime)
         {
             // Check whether the light is hidden behind the scenery.
             UpdateOcclusion();
 
             // Draw the flare effect.
-           // DrawGlow();
+            //DrawGlow();
             DrawFlares();
 
             RestoreRenderStates();
@@ -129,13 +131,12 @@ namespace Engine.Sky
 
         public void UpdateOcclusion()
         {
-
             Matrix infiniteView = View;
 
             infiniteView.Translation = Vector3.Zero;
 
             // Project the light position into 2D screen space.
-            Viewport viewport = GraphicsDevice.Viewport;
+            Viewport viewport = graphicsDevice.Viewport;
 
             Vector3 projectedPosition = viewport.Project(-LightDirection, Projection,
                                                          infiniteView, Matrix.Identity);
@@ -166,8 +167,8 @@ namespace Engine.Sky
             // Set renderstates for drawing the occlusion query geometry. We want depth
             // tests enabled, but depth writes disabled, and we disable color writes
             // to prevent this query polygon actually showing up on the screen.
-            GraphicsDevice.BlendState = ColorWriteDisable;
-            GraphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
+            graphicsDevice.BlendState = ColorWriteDisable;
+            graphicsDevice.DepthStencilState = DepthStencilState.DepthRead;
 
             // Set up our BasicEffect to center on the current 2D light position.
             basicEffect.World = Matrix.CreateTranslation(lightPosition.X,
@@ -183,7 +184,7 @@ namespace Engine.Sky
             // Issue the occlusion query.
             occlusionQuery.Begin();
 
-            GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, queryVertices, 0, 2);
+            graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, queryVertices, 0, 2);
 
             occlusionQuery.End();
 
@@ -195,7 +196,7 @@ namespace Engine.Sky
             if (lightBehindCamera || occlusionAlpha <= 0)
                 return;
 
-            Color color = Color.White *occlusionAlpha;
+            Color color = Color.White * occlusionAlpha;
             Vector2 origin = new Vector2(glowSprite.Width, glowSprite.Height) / 2;
             float scale = glowSize * 2 / glowSprite.Width;
 
@@ -212,7 +213,7 @@ namespace Engine.Sky
             if (lightBehindCamera || occlusionAlpha <= 0)
                 return;
 
-            Viewport viewport = GraphicsDevice.Viewport;
+            Viewport viewport = graphicsDevice.Viewport;
 
             // Lensflare sprites are positioned at intervals along a line that
             // runs from the 2D light position toward the center of the screen.
@@ -248,9 +249,9 @@ namespace Engine.Sky
 
         void RestoreRenderStates()
         {
-            GraphicsDevice.BlendState = BlendState.Opaque;
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
-            GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
+            graphicsDevice.BlendState = BlendState.Opaque;
+            graphicsDevice.DepthStencilState = DepthStencilState.Default;
+            graphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
         }
     }
 }

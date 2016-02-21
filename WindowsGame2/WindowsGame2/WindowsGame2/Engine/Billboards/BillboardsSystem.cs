@@ -12,7 +12,7 @@ using Engine.Water;
 
 namespace Engine.Billboards
 {
-    public class BillboardsSystem// : IRenderable
+    public class BillboardsSystem : IRenderable
     {
         public Vector3 LightDirection;
         public Vector3 LightColor;

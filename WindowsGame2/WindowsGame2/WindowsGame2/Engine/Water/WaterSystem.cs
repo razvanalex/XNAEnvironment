@@ -64,7 +64,7 @@ namespace Engine.Water
             waterEffect.Parameters["WaveLength"].SetValue(WaveLength);
             waterEffect.Parameters["WaveHeight"].SetValue(WaveHeight);
             waterEffect.Parameters["WaveSpeed"].SetValue(WaveSpeed);
-            waterEffect.Parameters["LightDirection"].SetValue(Vector3.Negate(Vector3.Reflect(-LightDirection, Vector3.Up)));
+            waterEffect.Parameters["LightDirection"].SetValue(LightDirection);
             waterEffect.Parameters["LightColor"].SetValue(LightColor);
             waterEffect.Parameters["SunFactor"].SetValue(SunFactor);
             waterEffect.Parameters["WaterHeight"].SetValue(waterMesh.Position.Y);
@@ -78,8 +78,8 @@ namespace Engine.Water
             // Reflect the camera's properties across the water plane
             Vector3 reflectedCameraPosition = camera.Transform.Translation;
             reflectedCameraPosition.Y = -reflectedCameraPosition.Y + waterMesh.Position.Y * 2;
-
-            Vector3 reflectedCameraTarget = camera.Target;
+            
+            Vector3 reflectedCameraTarget = ((FreeCamera)camera).Target;
             reflectedCameraTarget.Y = -reflectedCameraTarget.Y + waterMesh.Position.Y * 2;
 
             // Create a temporary camera to render the reflected scene
@@ -117,15 +117,14 @@ namespace Engine.Water
             Vector3 refractedCameraTarget = camera.Target;
 
             // Create a temporary camera to render the rafracted scene
-            Camera.Camera refractionCamera = new TargetCamera(refractedCameraPosition, refractedCameraTarget, camera.NearPlane, camera.FarPlane, graphics);
-            refractionCamera.Update();
+           // Camera.Camera refractionCamera = new TargetCamera(refractedCameraPosition, refractedCameraTarget, camera.NearPlane, camera.FarPlane, graphics);
+           // refractionCamera.Update();
 
             // Set the reflection camera's view matrix to the water effect
-            waterEffect.Parameters["RefractedView"].SetValue(refractionCamera.View);
+            waterEffect.Parameters["RefractedView"].SetValue(camera.View);
 
             // Create the clip plane
             Vector4 clipPlane = new Vector4(0, 1, 0, waterMesh.Position.Y);
-            Vector4 clipPlaneFixForSky = new Vector4(0, 1, 0, -waterMesh.Position.Y);
 
             // Set the render target
             graphics.SetRenderTarget(refractionTarg);
@@ -134,8 +133,8 @@ namespace Engine.Water
             // Draw all objects with clip plane
             foreach (IRenderable renderable in Objects)
             {
-                renderable.SetClipPlane(camera.Transform.Translation.Y > waterMesh.Position.Y ? clipPlane : clipPlaneFixForSky);
-                renderable.Draw(refractionCamera.View, refractionCamera.Projection, refractedCameraPosition);
+                renderable.SetClipPlane(clipPlane);
+                renderable.Draw(camera.View, camera.Projection, refractedCameraPosition);
                 renderable.SetClipPlane(null);
             }
           
@@ -150,7 +149,7 @@ namespace Engine.Water
         {
             renderRefraction(camera);
             renderReflection(camera);
-
+           
             waterEffect.Parameters["Time"].SetValue((float)gameTime.TotalGameTime.TotalSeconds);
         }
 

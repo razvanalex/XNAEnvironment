@@ -1,3 +1,4 @@
+Content\models\model1.xnb
 Content\models\skySphere.xnb
 Content\models\plane.xnb
 Content\models\Trees\Fir\Fir_Tree.xnb
@@ -98,6 +99,7 @@ Content\textures\Terrain\BasicTerrain\heightmap.xnb
 Content\textures\Terrain\BasicTerrain\Ground.xnb
 Content\textures\Terrain\BasicTerrain\GroundMap.xnb
 Content\SpriteFont1.xnb
+Content\shaders\LPPMainEffect_0.xnb
 Content\models\Trees\Fir\Fir_Tree\rinde5_0.xnb
 Content\models\Trees\Fir\Fir_Tree\tannenzweig1_0.xnb
 Content\models\Trees\Fir\Fir_Tree\rinde5_moos_0.xnb
@@ -112,5 +114,5 @@ Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb
 Content\models\Trees\Linden\Linden\2_0.xnb
 Content\models\Trees\Linden\Far_FarLinden\VeryLowLinden_0.xnb
 Content\models\Trees\Palms\Palm\VeryLowPalm_0.xnb
-Content\models\model1.xnb
-Content\shaders\LPPMainEffect_0.xnb
+Content\shaders\DownsampleDepth.xnb
+Content\shaders\LightShaft.xnb

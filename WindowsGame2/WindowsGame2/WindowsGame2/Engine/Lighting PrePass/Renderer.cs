@@ -4,6 +4,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
+using Engine;
+using Engine.Camera;
+using Engine.Sky;
+using Engine.Terrain;
+using Engine.Particles;
+using Engine.Water;
+using Engine.Billboards;
+using Engine.Shaders;
+
 namespace Engine.Shaders
 {
     /// <summary>
@@ -58,6 +67,11 @@ namespace Engine.Shaders
         private int _width;
 
         /// <summary>
+        /// This render target is a downsampled version of the main depth buffer
+        /// </summary>
+        private RenderTarget2D _halfDepth;
+
+        /// <summary>
         /// This render target stores our zbuffer values
         /// </summary>
         private RenderTarget2D _depthBuffer;
@@ -77,6 +91,17 @@ namespace Engine.Shaders
         /// This render target stores our final composition
         /// </summary>
         public RenderTarget2D _outputTexture;
+
+        /// <summary>
+        /// Keed track if we already downsampled the depth buffer fot this frame
+        /// </summary>
+        private bool _depthDownsampledThisFrame = false;
+
+        /// <summary>
+        /// Scratch buffers that are quarter the resolution of the main one
+        /// </summary>
+        private RenderTarget2D _quarterBuffer0;
+        private RenderTarget2D _quarterBuffer1;
 
         /// <summary>
         /// Effect to reconstruct Z buffer from linear depth buffer
@@ -138,6 +163,18 @@ namespace Engine.Shaders
 
         private List<LightEntry> _lightEntries = new List<LightEntry>();
         private List<LightEntry> _lightShadowCasters = new List<LightEntry>();
+      
+        private RenderTarget2D processedOutputTexture;
+
+        private LightShaftEffect lightShaftEffect;
+
+        private DownsampleDepthEffect _downsampleDepth;
+
+        public LightShaftEffect LightShaftEffect
+        {
+            set { lightShaftEffect = value; }
+            get { return lightShaftEffect; }
+        }
 
         #endregion
         #region Properties
@@ -165,6 +202,14 @@ namespace Engine.Shaders
         {
             get { return _lightBuffer; }
         }
+       
+        /// <summary>
+        /// This render target is a downsampled version of the main depth buffer
+        /// </summary>
+        public RenderTarget2D HalfDepth
+        {
+            get { return _halfDepth; }
+        }
 
         /// <summary>
         /// Use screen-aligned quads for point lights
@@ -183,7 +228,23 @@ namespace Engine.Shaders
             get { return _graphicsDevice; }
         }
 
+        /// <summary>
+        /// Scratch buffer that is quarter the resolution of the main one
+        /// </summary>
+        public RenderTarget2D QuarterBuffer0
+        {
+            get { return _quarterBuffer0; }
+        }
+
+        /// <summary>
+        /// Scratch buffer that is quarter the resolution of the main one
+        /// </summary>
+        public RenderTarget2D QuarterBuffer1
+        {
+            get { return _quarterBuffer1; }
+        }
         #endregion
+        
         /// <summary>
         /// Construct a new copy of our renderer
         /// </summary>
@@ -191,7 +252,7 @@ namespace Engine.Shaders
         /// <param name="contentManager"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        public Renderer(GraphicsDevice graphicsDevice, ContentManager contentManager, int width, int height)
+        public Renderer(Game game, GraphicsDevice graphicsDevice, ContentManager contentManager, int width, int height)
         {
             _width = width;
             _height = height;
@@ -217,6 +278,9 @@ namespace Engine.Shaders
 
             CreateGBuffer();
             LoadShaders();
+
+            _downsampleDepth = new DownsampleDepthEffect();
+            _downsampleDepth.Init(contentManager, this);
         }
 
 
@@ -245,8 +309,23 @@ namespace Engine.Shaders
 
             //We need another depth here because we need to render all objects again, to reconstruct their shading 
             //using our light texture.
-            _outputTexture = new RenderTarget2D(GraphicsDevice, _width, _height, false, SurfaceFormat.Color,
+            _outputTexture = new RenderTarget2D(GraphicsDevice, _width, _height, false, SurfaceFormat.HdrBlendable,
                                                 DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.DiscardContents);
+            
+            //the downsampled depth buffer must have the same format as the main one
+            _halfDepth = new RenderTarget2D(GraphicsDevice, _width / 2, _height / 2, false,
+                                              SurfaceFormat.Single, DepthFormat.None, 0,
+                                              RenderTargetUsage.DiscardContents);
+            const int quarterRes = 4;
+            _quarterBuffer0 = new RenderTarget2D(GraphicsDevice, _width / quarterRes, _height / quarterRes, false,
+                                              SurfaceFormat.Color, DepthFormat.None, 0,
+                                              RenderTargetUsage.DiscardContents);
+            _quarterBuffer1 = new RenderTarget2D(GraphicsDevice, _width / quarterRes, _height / quarterRes, false,
+                                              SurfaceFormat.Color, DepthFormat.None, 0,
+                                              RenderTargetUsage.DiscardContents);
+            //Our final output just need a color target
+            processedOutputTexture = new RenderTarget2D(GraphicsDevice, _width, _height, false, SurfaceFormat.Color,
+                                    DepthFormat.None, 0, RenderTargetUsage.DiscardContents);
         }
 
         /// <summary>
@@ -268,7 +347,7 @@ namespace Engine.Shaders
         /// <param name="meshes">All meshes not instanced</param>
         /// <param name="IMeshes">All meshes instanced</param>
         /// <returns></returns>
-        public void RenderScene(Camera.Camera camera, GameTime gameTime, List<Light> visibleLights, object[] meshes, object[] IMeshes)
+        public RenderTarget2D DrawScene(Camera.Camera camera, GameTime gameTime, List<Light> visibleLights, object[] meshes, object[] IMeshes)
         {
             //compute the frustum corners for this camera
             ComputeFrustumCorners(camera);
@@ -311,6 +390,7 @@ namespace Engine.Shaders
             //dont use depth/stencil test...we dont have a depth buffer, anyway
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
             GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+
             //draw using additive blending. 
             //At first I was using BlendState.additive, but it seems to use alpha channel for modulation, 
             //and as we use alpha channel as the specular intensity, we have to create our own blend state here
@@ -323,16 +403,46 @@ namespace Engine.Shaders
             };
 
             RenderLights(camera);
+            PreDraw(camera, meshes, gameTime);
 
-            //reconstruct each object shading, using the light texture as input (and another specific parameters too)         
+            //reconstruct each object shading, using the light texture as input (and another specific parameters too)                  
+            GraphicsDevice.SetRenderTarget(_outputTexture);
             GraphicsDevice.Clear(ClearOptions.DepthBuffer | ClearOptions.Stencil, Color.Black, 1.0f, 0);
-            GraphicsDevice.SetRenderTarget(null);
+            InitSkyClear(meshes, gameTime);
+
             GraphicsDevice.DepthStencilState = DepthStencilState.Default;
             GraphicsDevice.BlendState = BlendState.Opaque;
             GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-
+            
+            RasterizerState rs = new RasterizerState();
+            rs.CullMode = CullMode.None;
+            rs.FillMode = FillMode.Solid;
+            GraphicsDevice.RasterizerState = rs;
+            
             ReconstructShading(camera, gameTime, meshes);
             ReconstructShadingInstanced(camera, gameTime, IMeshes);
+            DrawParticles(camera, meshes);
+
+            GraphicsDevice.SetRenderTarget(null);
+ 
+            RenderTarget2D result = _outputTexture;
+            if (lightShaftEffect != null)
+            {
+                lightShaftEffect.RenderPostFx(this, _graphicsDevice, _outputTexture, processedOutputTexture);
+                result = processedOutputTexture;
+            }
+
+            return result;
+        }
+
+        public void RenderScene(Camera.Camera camera, GameTime gameTime, List<Light> visibleLights, object[] meshes, object[] IMeshes)
+        {
+            SpriteBatch spriteBatch = new SpriteBatch(GraphicsDevice);
+            RenderTarget2D output = DrawScene(camera, gameTime, visibleLights, meshes, IMeshes);
+
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
+            spriteBatch.Draw(output, new Rectangle(0, 0, GraphicsDevice.Viewport.Width,GraphicsDevice.Viewport.Height), Color.White);        
+            spriteBatch.End();
         }
 
         /// <summary>
@@ -460,17 +570,11 @@ namespace Engine.Shaders
         {
             foreach (object mesh in meshes)
             {
-                if (mesh is Water.Water)
-                    ((Water.Water)mesh).PreDraw(camera, gameTime);
                 if (mesh is Sky.SkyDome)
-                    ((Sky.SkyDome)mesh).PreDraw(gameTime);
+                    ((Sky.SkyDome)mesh).Draw();
             }
             foreach (object mesh in meshes)
             {
-                if (mesh is Sky.SkyDome)
-                    ((Sky.SkyDome)mesh).Draw();
-                if (mesh is Sky.SkySphere)
-                    ((Sky.SkySphere)mesh).Draw(camera.View, camera.Projection, camera.Transform.Translation);
                 if (mesh is Water.Water)
                     ((Water.Water)mesh).Draw(camera);
                 if (mesh is List<Models>)
@@ -481,8 +585,24 @@ namespace Engine.Shaders
                 if (mesh is Terrain.Terrain)
                     for (int i = 0; i < ((Terrain.Terrain)mesh).QuadTrees.Count; i++)
                         ((Terrain.Terrain)mesh).QuadTrees[i].Draw(camera, GraphicsDevice, _lightBuffer);
+                if (mesh is LensFlareComponent)
+                {
+                    ((LensFlareComponent)mesh).View = camera.View;
+                    ((LensFlareComponent)mesh).Projection = camera.Projection;
+                    ((LensFlareComponent)mesh).Draw(gameTime);
+                }
+            }               
+        }
+        private void DrawParticles(Camera.Camera camera, object[] meshes)
+        {
+            foreach (object mesh in meshes)
+            {
+                if (mesh is Fire)
+                    ((Fire)mesh).Draw(camera);
             }
         }
+
+
         private void ReconstructShadingInstanced(Camera.Camera camera, GameTime gameTime, object[] InstancedMeshes)
         {
             foreach (object mesh in InstancedMeshes)
@@ -543,21 +663,13 @@ namespace Engine.Shaders
                         if (light.LightType == Light.Type.Point)
                         {
                             //check if the light touches the near plane
-                             BoundingSphere boundingSphereExpanded = light.BoundingSphere;
-                             boundingSphereExpanded.Radius *= 1375f; //expand it a little, because our mesh is not a perfect sphere
-                             PlaneIntersectionType planeIntersectionType;
-                             camera.Frustum.Near.Intersects(ref boundingSphereExpanded, out planeIntersectionType);
-                            // if (planeIntersectionType != PlaneIntersectionType.Intersecting)
-                            // {
-                            //     GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-                            //     GraphicsDevice.DepthStencilState = _ccwDepthState;
-                           //  }
-                            // else
-                           //  {
-                                 GraphicsDevice.RasterizerState = RasterizerState.CullNone;
-                                 GraphicsDevice.DepthStencilState = _ccwDepthState;
-                            // }
-                            
+                            BoundingSphere boundingSphereExpanded = light.BoundingSphere;
+                            boundingSphereExpanded.Radius *= 1375f; //expand it a little, because our mesh is not a perfect sphere
+                            PlaneIntersectionType planeIntersectionType;
+                            camera.Frustum.Near.Intersects(ref boundingSphereExpanded, out planeIntersectionType);
+                            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                            GraphicsDevice.DepthStencilState = _ccwDepthState;
+
                             Matrix lightMatrix = Matrix.CreateScale(light.Radius);
                             lightMatrix.Translation = light.BoundingSphere.Center;
 
@@ -584,7 +696,7 @@ namespace Engine.Shaders
                               {*/
                             GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
                             GraphicsDevice.DepthStencilState = _cwDepthState;
-                           // }
+                            // }
 
                             float tan = (float)Math.Tan(MathHelper.ToRadians(light.SpotAngle));
                             Matrix lightMatrix = Matrix.CreateScale(light.Radius * tan, light.Radius * tan, light.Radius);
@@ -762,6 +874,41 @@ namespace Engine.Shaders
 
             effect.Parameters["FrustumCorners"].SetValue(_localFrustumCorners);
         }
+      
+        /// <summary>
+        /// Attempt to get the downsampled depth buffer. If it's not generated for this frame,
+        /// downsample it no
+        /// </summary>
+        /// <returns></returns>
+        public RenderTarget2D GetDownsampledDepth()
+        {
+            if (!_depthDownsampledThisFrame)
+                DownsampleDepthbuffer();
+            return _halfDepth;
+        }
+        private void DownsampleDepthbuffer()
+        {
+            _downsampleDepth.RenderEffect(this, _graphicsDevice);
+            _depthDownsampledThisFrame = true;
+        }
+
+        private void PreDraw(Camera.Camera camera, object[] meshes, GameTime gameTime)
+        {
+            foreach (object mesh in meshes)
+            {
+                if (mesh is Sky.SkyDome)
+                    ((Sky.SkyDome)mesh).PreDraw(gameTime);
+                if (mesh is Water.Water)
+                    ((Water.Water)mesh).PreDraw(camera, gameTime);
+            }
+        }
+        private void InitSkyClear(object[] meshes, GameTime gameTime)
+        {
+            foreach (object mesh in meshes)
+                if (mesh is Sky.SkyDome)
+                    GraphicsDevice.Clear(((Sky.SkyDome)mesh).SunColor);
+        }
+      
 
         public Texture2D GetShadowMap(int i)
         {

@@ -20,7 +20,7 @@ namespace Engine.Shaders
         public List<Light> lights;
         public List<Light> visibleLights;
         public List<MovingLight>  moveLight;
-        public float MaxAmbientIntensity = 0.3f;
+        public float MaxAmbientIntensity = 0.5f;
         public float MinAmbientIntensity = 0.1f;
 
         public LightingClass()
@@ -152,11 +152,14 @@ namespace Engine.Shaders
             lights.Add(spot);
         }
 
-        public void UpdatDirectionalLight(float DirectionalYaw, float DirectionalPitch, float DirectionalRoll)
+        public void UpdatDirectionalLight(float DirectionalYaw, float DirectionalPitch, float DirectionalRoll, float Intensity)
         {
             foreach (Light light in lights)
                 if (light.LightType == Light.Type.Directional)
+                {
                     light.Transform = Matrix.CreateFromYawPitchRoll(DirectionalYaw, DirectionalPitch, DirectionalRoll);
+                    light.Intensity = Intensity;
+                }
         }
 
         public void UpdateMovingPoint(GameTime gameTime)
@@ -194,5 +197,20 @@ namespace Engine.Shaders
 
             }
         }
+
+        public Light DirLight()
+        {
+            Light DL = new Light();
+
+            foreach (Light light in lights)
+            {
+                if (light.LightType == Light.Type.Directional)
+                {
+                    DL = light;
+                }             
+            }
+            return DL;
+        }
+   
     }
 }

@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 
 using Engine.Camera;
 using Engine.Terrain;
+using Engine.Water;
 
 namespace Engine.Billboards
 {
@@ -360,7 +361,7 @@ namespace Engine.Billboards
                     visible_tree[lod][no[lod]] = true;
                     no[lod]++;
                 }
-                else if (distance > 3000 && distance <= 5000)
+                else if (distance > 3000 && distance <= 4000)
                 {
                     lod = 2;
                     trunck[lod][no[lod]] = new BillboardsSystem(content, BillboardsSystem.BillboardMode.None,

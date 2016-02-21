@@ -144,7 +144,7 @@ namespace Engine
                         setEffectParameter(effect, "CameraPosition", CameraPosition);
                     }
 
-                    ((MeshTag)meshPart.Tag).Material.SetEffectParameters(effect);
+                    //((MeshTag)meshPart.Tag).Material.SetEffectParameters(effect);
                 }
 
                 mesh.Draw();
