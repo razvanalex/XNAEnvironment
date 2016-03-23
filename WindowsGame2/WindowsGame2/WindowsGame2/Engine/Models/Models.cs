@@ -388,7 +388,7 @@ namespace Engine
         }
 
         public void RenderMesh(GraphicsDevice graphicsDevice)
-        {
+        {        
             graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
                                             meshPart.NumVertices,
                                             meshPart.StartIndex,

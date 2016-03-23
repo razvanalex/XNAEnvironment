@@ -20,7 +20,7 @@ namespace Engine.Shaders
         public List<Light> lights;
         public List<Light> visibleLights;
         public List<MovingLight>  moveLight;
-        public float MaxAmbientIntensity = 0.5f;
+        public float MaxAmbientIntensity = 0.4f;
         public float MinAmbientIntensity = 0.1f;
 
         public LightingClass()
@@ -126,13 +126,18 @@ namespace Engine.Shaders
             spot.Color = LightColor;
             spot.CastShadows = CastShadows;
             spot.SpotAngle = SpotAngle;
+        
+            Matrix rotation = Matrix.CreateFromYawPitchRoll(SpotYaw, SpotPitch, SpotRoll);
+            Matrix transform = rotation;
+            transform.Translation = LightPosition;        
 
-            Matrix transformation;
-            Vector3 pos = LightPosition;
-            transformation = Matrix.CreateFromYawPitchRoll(SpotYaw, SpotPitch, SpotRoll);
-            transformation.Translation = pos;
-            spot.Transform = transformation;
+            float tan = (float)Math.Tan(MathHelper.ToRadians(SpotAngle));
+            Matrix scale = Matrix.CreateScale(Radius * tan, Radius * tan, Radius);
+            transform = scale * transform;
+            
+            spot.Transform = transform;
             lights.Add(spot);
+
         }
 
         public void AddSpotLight(float Radius, float Intensity, float SpotAngle, float SpotYaw, float SpotPitch, float SpotRoll, Color LightColor, Vector3 LightPosition, float ShadowDepthBias)
@@ -146,9 +151,11 @@ namespace Engine.Shaders
             spot.CastShadows = true;
             spot.SpotAngle = SpotAngle;
 
-            Matrix transformation = Matrix.CreateFromYawPitchRoll(SpotYaw, SpotPitch, SpotRoll);
-            transformation.Translation = LightPosition;
-            spot.Transform = transformation;
+            Matrix rotation = Matrix.CreateFromYawPitchRoll(SpotYaw, SpotPitch, SpotRoll);
+            Matrix transform = rotation;
+            transform.Translation = LightPosition;
+
+            spot.Transform = transform;
             lights.Add(spot);
         }
 
@@ -183,7 +190,7 @@ namespace Engine.Shaders
                  //   if (Camera.Camera.DefaultCamera.Frustum.Intersects(light.Frustum))
                   //  {
                         visibleLights.Add(light);
-                        //DebugShapeRenderer.AddBoundingFrustum(light.Frustum, Color.Green);
+                     //   DebugShapeRenderer.AddBoundingFrustum(light.Frustum, Color.Red);
                   //  }
                 }
                 else if (light.LightType == Light.Type.Point)

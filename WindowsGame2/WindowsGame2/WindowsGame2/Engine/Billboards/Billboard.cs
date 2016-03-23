@@ -66,6 +66,7 @@ namespace Engine.Billboards
         public Vector3 Scale = new Vector3(0.1f);
         public Vector3 ScaleL = new Vector3(0.02f);
 
+        private float[] LOD_Tree = new float[3];
         public bool Leaves = true; // by default Leaves is true, so be care when you call LoadData() function
         #endregion
         public Billboard(ContentManager content, Camera.Camera camera, GraphicsDevice graphicsDevice)
@@ -177,6 +178,10 @@ namespace Engine.Billboards
         }
         public void Initialize()
         {
+            LOD_Tree[0] = 500;
+            LOD_Tree[1] = 3000;
+            LOD_Tree[2] = 5000;
+
             for (int tree = 0; tree < LOD; tree++)
             {
                 instancedModelBones[tree] = new Matrix[instancedModel[tree].Bones.Count];
@@ -330,7 +335,7 @@ namespace Engine.Billboards
                 else if (Terrain is SmallTerrain)
                     Heigth = ((SmallTerrain)Terrain).GetHeightAtPosition(Position[tree].X, Position[tree].Z, out Stepness);
 
-                if (distance < 500)
+                if (distance < LOD_Tree[0])
                 {
                     lod = 0;
                     trunck[lod][no[lod]] = new BillboardsSystem(content, BillboardsSystem.BillboardMode.None,
@@ -350,7 +355,7 @@ namespace Engine.Billboards
                     visible_tree[lod][no[lod]] = true;
                     no[lod]++;
                 }
-                else if (distance >= 500 && distance <= 3000)
+                else if (distance >= LOD_Tree[0] && distance <= LOD_Tree[1])
                 {
                     lod = 1;
                     trunck[lod][no[lod]] = new BillboardsSystem(content, BillboardsSystem.BillboardMode.None,
@@ -361,7 +366,7 @@ namespace Engine.Billboards
                     visible_tree[lod][no[lod]] = true;
                     no[lod]++;
                 }
-                else if (distance > 3000 && distance <= 4000)
+                else if (distance > LOD_Tree[1] && distance <= LOD_Tree[2])
                 {
                     lod = 2;
                     trunck[lod][no[lod]] = new BillboardsSystem(content, BillboardsSystem.BillboardMode.None,
@@ -372,7 +377,7 @@ namespace Engine.Billboards
                     visible_tree[lod][no[lod]] = true;
                     no[lod]++;
                 }
-                else if (distance > 5000)
+                else if (distance > LOD_Tree[2])
                 {
                     lod = 3;
                     no[lod]++;

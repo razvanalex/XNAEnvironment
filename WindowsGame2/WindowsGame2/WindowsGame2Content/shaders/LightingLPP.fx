@@ -358,10 +358,10 @@ float4 SpotLightMeshShadowPS(VertexShaderOutputMeshBased input) : COLOR0
 	//will reject this pixel anyway
 	
 	//if depth value == 1, we can assume its a background value, so skip it
-	//clip(-depthValue + 0.9999f);
+	clip(-depthValue + 0.9999f);
 
     // Reconstruct position from the depth value, the FOV, aspect and pixel position
-	//depthValue*=FarClip;
+	depthValue*=FarClip;
 	//convert screenPos to [-1..1] range
 	float3 pos = float3(TanAspect*(screenPos*2 - 1)*depthValue, -depthValue);
 	

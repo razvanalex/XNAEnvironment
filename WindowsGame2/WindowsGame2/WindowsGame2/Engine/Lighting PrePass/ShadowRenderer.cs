@@ -111,6 +111,7 @@ namespace Engine.Shaders
 
             BoundingFrustum frustum = light.Frustum;
 
+
             foreach (object mesh in meshes)
             {
                 if (mesh is List<Models>)
@@ -127,23 +128,24 @@ namespace Engine.Shaders
                 if (mesh is Models)
                 {
                     //cull meshes outside the light volume
-                  //  if (!frustum.Intersects(((Models)mesh).BoundingSphere))
-                  //      continue;
+                    // if (!frustum.Intersects(((Models)mesh).BoundingSphere))
+                    //    continue;
 
                     //render it
                     ((Models)mesh).RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
                 }
                 if (mesh is Terrain.Terrain)
                 {
-                    for (int i = 0; i < ((Terrain.Terrain)mesh).QuadTrees.Count; i++)
+                    for (int index = 0; index < ((Terrain.Terrain)mesh).QuadTrees.Count; index++)
                     {
                         //cull meshes outside the light volume
-                     //   if (!frustum.Intersects(((Terrain.Terrain)mesh).QuadTrees[i].BoundingSphere))
-                     //       continue;
+                        //  if (!frustum.Intersects(((Terrain.Terrain)mesh).QuadTrees[index].BoundingSphere))
+                        //      continue;
 
                         //render it
-                        ((Terrain.Terrain)mesh).QuadTrees[i].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
+                        ((Terrain.Terrain)mesh).QuadTrees[index].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
                     }
+
                 }
             }
             foreach (object mesh in InstancedMeshes)
@@ -157,14 +159,14 @@ namespace Engine.Shaders
                             ((Billboards.Billboard)mesh).trunck[lod][0].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
 
                     if (((Billboards.Billboard)mesh).Leaves)
-                        for (int i = 0; i < ((Billboards.Billboard)mesh).NoTrees; i++)
+                        for (int tree = 0; tree < ((Billboards.Billboard)mesh).NoTrees; tree++)
                         {
-                            if (((Billboards.Billboard)mesh).LeavesAreVisible[i])
+                            if (((Billboards.Billboard)mesh).LeavesAreVisible[tree])
                                 for (int j = 0; j < ((Billboards.Billboard)mesh).NoLeaves; j++)
                                 {
-                                    ((Billboards.Billboard)mesh).leaves[i][j].UpdateTransformationMatrix(((Billboards.Billboard)mesh).instanceTransforms1[i]);
+                                    ((Billboards.Billboard)mesh).leaves[tree][j].UpdateTransformationMatrix(((Billboards.Billboard)mesh).instanceTransforms1[tree]);
                                     if (j == 0)
-                                        ((Billboards.Billboard)mesh).leaves[i][j].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
+                                        ((Billboards.Billboard)mesh).leaves[tree][j].RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
                                 }
                         }
                 }

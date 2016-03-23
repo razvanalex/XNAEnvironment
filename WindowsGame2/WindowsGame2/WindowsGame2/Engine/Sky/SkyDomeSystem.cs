@@ -519,14 +519,14 @@ namespace Engine.Sky
             game.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
             texturedEffect.CurrentTechnique = texturedEffect.Techniques["Textured"];
-           // texturedEffect.Begin();
+            // texturedEffect.Begin();
             texturedEffect.Parameters["World"].SetValue(
                 Matrix.CreateRotationX(this.Theta + (float)Math.PI / 2.0f) *
                 Matrix.CreateRotationY(-this.Phi + (float)Math.PI / 2.0f) *
                 Matrix.CreateTranslation(parameters.LightDirection.X * 5,
                 parameters.LightDirection.Y * 5,
                 parameters.LightDirection.Z * 5) *
-                Matrix.CreateTranslation(CameraPosition));//*
+                Matrix.CreateTranslation(CameraPosition));
             texturedEffect.Parameters["View"].SetValue(View);
             texturedEffect.Parameters["Projection"].SetValue(Projection);
             texturedEffect.Parameters["Texture"].SetValue(this.glowTex);
@@ -537,19 +537,18 @@ namespace Engine.Sky
                 texturedEffect.Parameters["alpha"].SetValue(0.0f);
             foreach (EffectPass pass in texturedEffect.CurrentTechnique.Passes)
             {
-               // pass.Begin();
+                // pass.Begin();
                 pass.Apply();
                 game.GraphicsDevice.DrawUserIndexedPrimitives<VertexPositionTexture>
                     (PrimitiveType.TriangleList, quadVerts, 0, 4, quadIb, 0, 2);
 
-             //   pass.End();
+                //   pass.End();
             }
-       //     texturedEffect.End();
+            //     texturedEffect.End();
 
-          //  game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
+            //game.GraphicsDevice.RenderState.AlphaBlendEnable = false;
             graphicsDevice.BlendState = BlendState.Opaque;
         }
-
         #endregion
 
         #region DrawClouds

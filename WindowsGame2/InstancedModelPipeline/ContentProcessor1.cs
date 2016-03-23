@@ -38,7 +38,6 @@ namespace InstancedModelPipeline
             // Tell it to use our custom InstancedModel.fx shader.
             newMaterial.Effect = new ExternalReference<EffectContent>("InstancedModel.fx",
                                                                       rootIdentity);
-            
             // Copy the texture setting across from the original material.
             BasicMaterialContent basicMaterial = material as BasicMaterialContent;
 

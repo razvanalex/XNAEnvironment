@@ -8,7 +8,7 @@ namespace Engine.Shaders
         public enum Type
         {
             Point,
-            Directional, //not implemented
+            Directional,
             Spot
         };
 

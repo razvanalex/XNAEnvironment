@@ -194,6 +194,13 @@ namespace Engine.Shaders
             get { return _normalBuffer; }
         }
 
+        private RenderTarget2D testBuffer;
+       
+        public RenderTarget2D TestBuffer
+        {
+            get { return testBuffer; }
+        }
+
         /// <summary>
         /// This render target stores the light buffer, the sum of all lights
         /// applied to our scene
@@ -311,7 +318,10 @@ namespace Engine.Shaders
             //using our light texture.
             _outputTexture = new RenderTarget2D(GraphicsDevice, _width, _height, false, SurfaceFormat.HdrBlendable,
                                                 DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.DiscardContents);
-            
+          
+            testBuffer = new RenderTarget2D(GraphicsDevice, _width, _height, false, SurfaceFormat.HdrBlendable,
+                                                DepthFormat.Depth24Stencil8, 0, RenderTargetUsage.DiscardContents);
+
             //the downsampled depth buffer must have the same format as the main one
             _halfDepth = new RenderTarget2D(GraphicsDevice, _width / 2, _height / 2, false,
                                               SurfaceFormat.Single, DepthFormat.None, 0,
@@ -389,7 +399,7 @@ namespace Engine.Shaders
 
             //dont use depth/stencil test...we dont have a depth buffer, anyway
             GraphicsDevice.DepthStencilState = DepthStencilState.None;
-            GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
 
             //draw using additive blending. 
             //At first I was using BlendState.additive, but it seems to use alpha channel for modulation, 
@@ -403,6 +413,8 @@ namespace Engine.Shaders
             };
 
             RenderLights(camera);
+
+            GraphicsDevice.SetRenderTarget(null);
             PreDraw(camera, meshes, gameTime);
 
             //reconstruct each object shading, using the light texture as input (and another specific parameters too)                  
@@ -546,6 +558,7 @@ namespace Engine.Shaders
                 DepthBufferWriteEnable = true,
                 DepthBufferFunction = CompareFunction.Always
             };
+
             //store previous state
             BlendState oldBlendState = GraphicsDevice.BlendState;
             BlendState blendState = new BlendState();
@@ -665,9 +678,7 @@ namespace Engine.Shaders
                             //check if the light touches the near plane
                             BoundingSphere boundingSphereExpanded = light.BoundingSphere;
                             boundingSphereExpanded.Radius *= 1375f; //expand it a little, because our mesh is not a perfect sphere
-                            PlaneIntersectionType planeIntersectionType;
-                            camera.Frustum.Near.Intersects(ref boundingSphereExpanded, out planeIntersectionType);
-                            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                            GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
                             GraphicsDevice.DepthStencilState = _ccwDepthState;
 
                             Matrix lightMatrix = Matrix.CreateScale(light.Radius);
@@ -685,25 +696,16 @@ namespace Engine.Shaders
                         {
                             //check if the light touches the far plane
                             Plane near = camera.Frustum.Near;
-                            near.D = 2000; //give some room because we dont use a perfect-fit mesh for the spot light
+                            near.D += 2; //give some room because we dont use a perfect-fit mesh for the spot light
                             PlaneIntersectionType planeIntersectionType = near.Intersects(light.Frustum);
-                            /*  if (planeIntersectionType != PlaneIntersectionType.Back)
-                              {
-                                  GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-                                  GraphicsDevice.DepthStencilState = _ccwDepthState;
-                              }
-                              else
-                              {*/
-                            GraphicsDevice.RasterizerState = RasterizerState.CullClockwise;
-                            GraphicsDevice.DepthStencilState = _cwDepthState;
-                            // }
+                            GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                            GraphicsDevice.DepthStencilState = _ccwDepthState;
 
                             float tan = (float)Math.Tan(MathHelper.ToRadians(light.SpotAngle));
-                            Matrix lightMatrix = Matrix.CreateScale(light.Radius * tan, light.Radius * tan, light.Radius);
+                            Matrix scale = Matrix.CreateScale(light.Radius * tan, light.Radius * tan, light.Radius);
+                            Matrix transform = scale * light.Transform;
 
-                            lightMatrix *= light.Transform;
-
-                            _lighting.Parameters["WorldViewProjection"].SetValue(lightMatrix * camera.View * camera.Projection);
+                            _lighting.Parameters["WorldViewProjection"].SetValue(transform * camera.View * camera.Projection);
                             float cosSpotAngle = (float)Math.Cos(MathHelper.ToRadians(light.SpotAngle));
                             _lighting.Parameters["SpotAngle"].SetValue(cosSpotAngle);
                             _lighting.Parameters["SpotExponent"].SetValue(light.SpotExponent / (1 - cosSpotAngle));
@@ -763,6 +765,7 @@ namespace Engine.Shaders
                         }
                         _lighting.CurrentTechnique.Passes[0].Apply();
                         _quadRenderer.RenderQuad(GraphicsDevice, -Vector2.One, Vector2.One);
+
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();

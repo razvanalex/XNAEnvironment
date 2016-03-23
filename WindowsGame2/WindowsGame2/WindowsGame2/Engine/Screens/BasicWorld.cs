@@ -122,8 +122,8 @@ namespace Engine
             this.Content = Content;
             this.graphicsDevice = graphicsDevice;
             this.graphics = graphics;
-            graphics.PreferredBackBufferHeight = 700;
-            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 600;
+            graphics.PreferredBackBufferWidth = 1024;
             graphics.ApplyChanges();
             InitializeThread();
             InitializeTerrain();
@@ -149,8 +149,9 @@ namespace Engine
 
             #region Terrain
       
-            models.Add(new Models(Content.Load<Model>("models//model1"), new Vector3(0, 0, 0), Vector3.Zero, new Vector3(20), graphicsDevice));       
-
+            models.Add(new Models(Content.Load<Model>("models//model1"), new Vector3(0, 0, 0), Vector3.Zero, new Vector3(20), graphicsDevice));
+           // models.Add(new Models(Content.Load<Model>("models//cone"), new Vector3(0, 0, 0), Vector3.Zero, new Vector3(20), graphicsDevice));       
+           
             components = new Components(graphicsDevice);
             //BasicTerrain//heightmap
             terrain.InitializeTerrin(Qtree, (FreeCamera)camera, terrain, Content.Load<Texture2D>("textures//Terrain//terrain513"), WaterPos, Content, graphicsDevice);
@@ -196,8 +197,13 @@ namespace Engine
             light = new LightingClass();
             light.AddDirectionalLight(MathHelper.PiOver2, sky.Theta + MathHelper.PiOver2, 0, new Color(LightColor), sky.sky.Parameters.AmbientColor.W, 10000, 0.005f);
 
-          /*  Random random = new Random();
-            for (int i = 0; i < 1; i++ )
+            fire = new Fire(game);
+            fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
+            fire.AddFire(new Vector3(543, Qtree.GetHeight(543, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
+            fire.AddLight(ref light);
+
+           Random random = new Random();
+           for (int i = 0; i < 50; i++)
                 light.AddMovingPointLight(100, 1,
                     new Color(((float)random.NextDouble() * 2 - 1) * 255, 
                         ((float)random.NextDouble() * 2 - 1) * 255, 
@@ -209,14 +215,10 @@ namespace Engine
                         Qtree.GetHeight(((float)random.NextDouble() * 2 - 1) * 1000, ((float)random.NextDouble() * 2-1) * 1000) + 50, 
                         ((float)random.NextDouble() * 2 - 1) * 1000),
                     ((float)random.NextDouble() * 2 - 1) * 5);
-            */
 
-            light.AddSpotLight(1000, 1, 30, 5 * MathHelper.PiOver4, -MathHelper.PiOver4, 0, new Color(255, 255, 255), new Vector3(0, 1000, 100), false);
 
-            fire = new Fire(game);
-            fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
-            fire.AddFire(new Vector3(543, Qtree.GetHeight(543, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
-            fire.AddLight(ref light);
+            light.AddSpotLight(2000, 1, 30, MathHelper.PiOver4, -MathHelper.PiOver2 / 4, 0, new Color(255, 255, 255), new Vector3(0, 1000, 100), 0.0005f);
+            light.AddSpotLight(2000, 1, 30, 5 * MathHelper.PiOver4, -MathHelper.PiOver2 / 4, 0, new Color(255, 255, 255), new Vector3(0, 1000, 0), 0.0005f);
 
             lensFlare = new LensFlareComponent(game, graphicsDevice);
             lensFlare.LoadContent();
@@ -310,11 +312,11 @@ namespace Engine
             else if ((keyState.IsKeyDown(Keys.B) && oldKeyState.IsKeyUp(Keys.B)) && blur)
                 blur = false;
 
-            /*  if ((keyState.IsKeyDown(Keys.U)))
+             if ((keyState.IsKeyDown(Keys.U)))
                   models[0].Position += new Vector3(0, 3f, 0);
               if ((keyState.IsKeyDown(Keys.J)))
                   models[0].Position -= new Vector3(0, 3f, 0);
-              */
+              
             if (keyState.IsKeyDown(Keys.PageUp))
             {
                 THeight += 10;
@@ -554,10 +556,10 @@ namespace Engine
                 
                 _postProcessingComponent.PreRender(renderer, camera);
                 renderer.RenderScene(((FreeCamera)camera), gameTime, light.visibleLights, new object[] { sky, lensFlare, terrain, water, models, fire }, new object[] { tree.Fir, tree.Linden, tree.Palm });
-
+                
 
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
-               // spriteBatch.Draw(renderer.LightBuffer, new Rectangle(0, 0, 200, 200), Color.White);
+               // spriteBatch.Draw(renderer.GetShadowMap(0), new Rectangle(0, 0, 200, 200), Color.White);
               //  spriteBatch.Draw(water.water.reflectionTarg, new Rectangle(0, 0, 200, 200), Color.White);
                //  spriteBatch.Draw(renderer._outputTexture, new Rectangle(0, 0, 600, 200), Color.White);            
                  spriteBatch.End();

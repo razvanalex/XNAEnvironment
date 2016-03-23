@@ -12,7 +12,6 @@ Content\models\Trees\Linden\FarLinden.xnb
 Content\models\Trees\Linden\leaves.xnb
 Content\models\Trees\Linden\Far_FarLinden.xnb
 Content\models\Trees\Palms\Far_FarPalm.xnb
-Content\models\cone.xnb
 Content\models\sphere.xnb
 Content\shaders\SkyBox.xnb
 Content\shaders\ModelReflextion.xnb
@@ -35,12 +34,14 @@ Content\Effects\Sky\SNoise.xnb
 Content\Effects\Sky\Textured.xnb
 Content\models\Trees\Linden\InstancedModel.xnb
 Content\models\Trees\Palms\InstancedModel.xnb
-Content\models\InstancedModel.xnb
 Content\Effects\ParticleEffect.xnb
 Content\shaders\ClearGBuffer.xnb
 Content\shaders\LightingLPP.xnb
 Content\shaders\LPPMainEffect.xnb
 Content\shaders\ReconstructDepth.xnb
+Content\shaders\DownsampleDepth.xnb
+Content\shaders\LightShaft.xnb
+Content\models\InstancedModel.xnb
 Content\models\Trees\Linden\Linden\BroadleafBark.xnb
 Content\models\Trees\Linden\Linden\SampleLeaves_2.xnb
 Content\textures\Skybox\SkyBoxTex.xnb
@@ -114,5 +115,4 @@ Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb
 Content\models\Trees\Linden\Linden\2_0.xnb
 Content\models\Trees\Linden\Far_FarLinden\VeryLowLinden_0.xnb
 Content\models\Trees\Palms\Palm\VeryLowPalm_0.xnb
-Content\shaders\DownsampleDepth.xnb
-Content\shaders\LightShaft.xnb
+Content\models\cone.xnb
