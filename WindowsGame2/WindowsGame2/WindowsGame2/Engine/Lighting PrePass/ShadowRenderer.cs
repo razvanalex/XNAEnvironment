@@ -134,6 +134,10 @@ namespace Engine.Shaders
                     //render it
                     ((Models)mesh).RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
                 }
+                if (mesh is CarPlayer)
+                {
+                    ((CarPlayer)mesh).RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
+                }
                 if (mesh is Terrain.Terrain)
                 {
                     for (int index = 0; index < ((Terrain.Terrain)mesh).QuadTrees.Count; index++)
@@ -242,6 +246,10 @@ namespace Engine.Shaders
 
                         //render it
                         ((Models)mesh).RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
+                    }
+                    if (mesh is CarPlayer)
+                    {
+                        ((CarPlayer)mesh).RenderShadowMap(ref viewProj, renderer.GraphicsDevice);
                     }
                     if (mesh is Terrain.Terrain)
                     {                      

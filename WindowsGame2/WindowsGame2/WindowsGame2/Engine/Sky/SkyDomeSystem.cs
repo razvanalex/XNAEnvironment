@@ -281,7 +281,7 @@ namespace Engine.Sky
                         GoTo(ref inverseCloudVelocity, 4, 0.012f);
                         GoTo(ref Gr, 0.9f, 0.0001f);
                         GoTo(ref cloudCover, 4, 0.001f);
-                        Console.WriteLine("CloudCover " + CloudCover + " Gr = " + Gr + " inverseCloudVelocity = " + inverseCloudVelocity);
+                        //Console.WriteLine("CloudCover " + CloudCover + " Gr = " + Gr + " inverseCloudVelocity = " + inverseCloudVelocity);
                         if (CloudCover == 4.0f && Gr == 0.9f && inverseCloudVelocity == 4.0f)
                         {
                             weather = Weather.Rain;

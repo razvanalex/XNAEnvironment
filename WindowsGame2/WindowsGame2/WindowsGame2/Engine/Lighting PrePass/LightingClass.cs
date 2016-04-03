@@ -21,7 +21,7 @@ namespace Engine.Shaders
         public List<Light> visibleLights;
         public List<MovingLight>  moveLight;
         public float MaxAmbientIntensity = 0.4f;
-        public float MinAmbientIntensity = 0.1f;
+        public float MinAmbientIntensity = 0.17f;
 
         public LightingClass()
         {

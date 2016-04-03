@@ -67,7 +67,7 @@ namespace Engine.Sky
             fDensity = 0.0003f;
             waveLengths = new Vector3(0.65f, 0.57f, 0.475f);
             numSamples = 10;
-            exposure = -2.0f;
+            exposure = -2f;
 
             setLengths();
         }

@@ -21,7 +21,7 @@ namespace Engine.Sky
        
         public SkySphere(ContentManager Content, GraphicsDevice graphicsDevice, TextureCube Texture)
         {
-            model = new Models(Content.Load<Model>("models//skySphere"), Vector3.Zero, Vector3.Zero, new Vector3(-100000), graphicsDevice);
+            model = new Models(Content, Content.Load<Model>("models//skySphere"), Vector3.Zero, Vector3.Zero, new Vector3(-100000), graphicsDevice);
             effect = Content.Load<Effect>("shaders//SkyBox");
             effect.Parameters["CubeMap"].SetValue(Texture);          
             model.SetModelEffect(effect, false);

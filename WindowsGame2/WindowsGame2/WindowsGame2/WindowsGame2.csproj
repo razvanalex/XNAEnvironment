@@ -104,6 +104,10 @@
     <Compile Include="Engine\Particles\Fire\FireSystem.cs" />
     <Compile Include="Engine\Particles\Rain\RainSystem.cs" />
     <Compile Include="Engine\Particles\Rain\Rain.cs" />
+    <Compile Include="Engine\Players\Car\Car.cs" />
+    <Compile Include="Engine\Players\Car\CarData.cs" />
+    <Compile Include="Engine\Players\Car\ControlCar.cs" />
+    <Compile Include="Engine\Players\PlayerManager.cs" />
     <Compile Include="Engine\Screens\BasicWorld.cs" />
     <Compile Include="Engine\Screens\TestWorld.cs" />
     <Compile Include="Engine\Lighting PrePass\Light.cs" />
@@ -193,9 +197,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Engine\Players\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
   <!--

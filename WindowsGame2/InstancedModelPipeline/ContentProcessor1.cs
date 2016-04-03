@@ -28,7 +28,7 @@ namespace InstancedModelPipeline
         /// <summary>
         /// Override the ConvertMaterial method to apply our custom InstancedModel.fx shader.
         /// </summary>
-        
+
         protected override MaterialContent ConvertMaterial(MaterialContent material,
                                                            ContentProcessorContext context)
         {
@@ -45,7 +45,7 @@ namespace InstancedModelPipeline
             {
                 newMaterial.Textures.Add("Texture", basicMaterial.Texture);
             }
-            
+
             // Chain to the base ModelProcessor, so it can build our new material.
             return base.ConvertMaterial(newMaterial, context);
         }

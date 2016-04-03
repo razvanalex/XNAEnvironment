@@ -30,6 +30,7 @@ const static float LightBufferScaleInv = 10.0f;
 
 //Light Color
 float4 DiffuseColor = float4(1, 1, 1, 1);
+float SpecularPower = 1;
 float4 DefaultSpecular = float4(1, 1, 1, 1);
 float4 EmissiveColor = float4(0, 0, 0, 1);
 float4 NormalColor = float4(0.50196, 0.50196, 1, 0.05882);
@@ -293,25 +294,25 @@ float4 ReconstructPixelShaderFunction(ReconstructVertexShaderOutput input):COLOR
 	// Find the screen space texture coordinate and offset it
 	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
 
-		//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
-		float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
-
-		//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-		float3 specular = lightColor.rgb * lightColor.a;
-		float3 finalColor = AmbientColor +LightColor * lightColor.rgb + EmissiveColor;
+	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
+	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
 	
-	// Texture if necessary
-#if (TextureEnabled == true)
-	float4 alpha = tex2D(Sampler, input.TexCoord);
-
+	float4 finalColor;
+	// Texture if necessary or apply DiffuseColor
 	if (TextureEnabled)
-		finalColor *= alpha;
+	{
+		float4 alpha = tex2D(Sampler, input.TexCoord);
+		finalColor = alpha;
+		if (AlphaTest == true)
+			clip((alpha.a - AlphaTestValue));
+	}
+	else finalColor = DiffuseColor;
+	
+	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
+	float3 specular = lightColor.rgb * lightColor.a;
+	finalColor *= float4(AmbientColor, 1) + float4(LightColor, 1) * lightColor + EmissiveColor;	
 
-	if (AlphaTest == true)
-		clip((alpha.a - AlphaTestValue));
-#endif
-
-	return float4(finalColor, 1);
+	return finalColor * (specular, 1);
 }
 float4 ReconstructPixelShaderFunctionInstance(ReconstructVertexShaderOutput input) :COLOR0
 {
@@ -320,25 +321,25 @@ float4 ReconstructPixelShaderFunctionInstance(ReconstructVertexShaderOutput inpu
 	// Find the screen space texture coordinate and offset it
 	float2 screenPos = PostProjectionSpaceToScreenSpace(input.TexCoordScreenSpace) + LightBufferPixelSize;
 
-		//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
-		float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
+	//read our light buffer texture. Remember to multiply by our magic constant explained on the blog
+	float4 lightColor = tex2D(lightSampler, screenPos) * LightBufferScaleInv;
 
-		//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
-		float3 specular = lightColor.rgb * lightColor.a;
-		float3 finalColor = AmbientColor +LightColor * lightColor.rgb + EmissiveColor;
-
-	// Texture if necessary
-#if (TextureEnabled == true)
+	float4 finalColor;
+	// Texture if necessary or apply DiffuseColor
+	if (TextureEnabled)
+	{
 		float4 alpha = tex2D(Sampler, input.TexCoord);
+		finalColor = alpha;
+		if (AlphaTest == true)
+			clip((alpha.a - AlphaTestValue));
+	}
+	else finalColor = DiffuseColor;
 
-		if (TextureEnabled)
-			finalColor *= alpha;
+	//our specular intensity is stored in alpha. We reconstruct the specular here, using a cheap and NOT accurate trick
+	float3 specular = lightColor.rgb * lightColor.a;
+	finalColor *= float4(AmbientColor, 1) + float4(LightColor, 1) * lightColor + EmissiveColor;
 
-	if (AlphaTest == true)
-		clip((alpha.a - AlphaTestValue));
-#endif
-
-	return float4(finalColor, 1);
+	return finalColor;
 }
 struct ShadowMapVertexShaderInput
 {

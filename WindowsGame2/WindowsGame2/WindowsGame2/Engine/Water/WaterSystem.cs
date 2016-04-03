@@ -52,10 +52,9 @@ namespace Engine.Water
             this.content = content;
             this.graphics = graphics;
 
-            waterMesh = new Models(content.Load<Model>("models//plane"), position,
-                new Vector3(0, -MathHelper.PiOver2, 0), new Vector3(size.X, 1, size.Y), graphics);
-           
+            waterMesh = new Models(content, content.Load<Model>("models//plane"), position, new Vector3(0, -MathHelper.PiOver2, 0), new Vector3(size.X, 1, size.Y), graphics);
             waterEffect = content.Load<Effect>("Effects//water");
+
             waterMesh.SetModelEffect(waterEffect, false);
             waterEffect.Parameters["viewportWidth"].SetValue(graphics.Viewport.Width);
             waterEffect.Parameters["viewportHeight"].SetValue(graphics.Viewport.Height);
@@ -69,7 +68,7 @@ namespace Engine.Water
             waterEffect.Parameters["SunFactor"].SetValue(SunFactor);
             waterEffect.Parameters["WaterHeight"].SetValue(waterMesh.Position.Y);
             refractionTarg = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
-
+            
             reflectionTarg = new RenderTarget2D(graphics, graphics.Viewport.Width, graphics.Viewport.Height, false, SurfaceFormat.Color, DepthFormat.Depth24);
         }
 
@@ -158,6 +157,14 @@ namespace Engine.Water
             waterMesh.Draw(View, Projection, CameraPosition);            
         }
 
+        public void RenderToGBuffer(Camera.Camera camera, GraphicsDevice graphicsDevice)
+        {
+            waterMesh.RenderToGBuffer(camera, graphicsDevice);
+        }
+        public void RenderShadowMap(ref Matrix viewProj, GraphicsDevice graphicsDevice)
+        {
+            waterMesh.RenderShadowMap(ref viewProj, graphicsDevice);
+        }
         public void Draw(Camera.Camera camera, GraphicsDevice graphicsDevice, Texture2D lightBuffer)
         {
             waterMesh.Draw(camera, graphicsDevice, lightBuffer); 

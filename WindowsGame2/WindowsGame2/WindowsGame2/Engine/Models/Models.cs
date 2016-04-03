@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Engine.Water;
+
 namespace Engine
 {
     public class Material
@@ -45,6 +46,9 @@ namespace Engine
         private GraphicsDevice graphicsDevice;
         private BoundingSphere boundingSphere;
 
+        public Effect effect;
+        public Effect _effect;
+
         public BoundingSphere BoundingSphere
         {
             get
@@ -62,7 +66,7 @@ namespace Engine
         Matrix transform = Matrix.Identity;
         public Matrix Transform
         {
-            get 
+            get
             {
                 Matrix _scale, _rotation, _position;
                 _scale = Matrix.CreateScale(Scale);
@@ -72,12 +76,12 @@ namespace Engine
                 Matrix.Multiply(ref _scale, ref _rotation, out transform);
                 Matrix.Multiply(ref transform, ref _position, out transform);
 
-                return transform; 
+                return transform;
             }
             set { transform = value; }
         }
 
-        public Models(Model Model, Vector3 Position, Vector3 Rotation,
+        public Models(ContentManager Content, Model Model, Vector3 Position, Vector3 Rotation,
             Vector3 Scale, GraphicsDevice graphicsDevice)
         {
             this.Model = Model;
@@ -93,6 +97,9 @@ namespace Engine
             this.Scale = Scale;
 
             this.graphicsDevice = graphicsDevice;
+
+            effect = Content.Load<Effect>("Effects//AlphaBlending");
+            _effect = Content.Load<Effect>("shaders//LPPMainEffect");
         }
 
         private void buildBoundingSphere()
@@ -144,7 +151,7 @@ namespace Engine
                         setEffectParameter(effect, "CameraPosition", CameraPosition);
                     }
 
-                    //((MeshTag)meshPart.Tag).Material.SetEffectParameters(effect);
+                    ((MeshTag)meshPart.Tag).Material.SetEffectParameters(effect);
                 }
 
                 mesh.Draw();
@@ -195,7 +202,7 @@ namespace Engine
                     if (CopyEffect)
                         toSet = effect.Clone();
 
-                    MeshTag tag = ((MeshTag)part.Tag);
+                    MeshTag tag = (MeshTag)part.Tag;
 
                     // If this ModelMeshPart has a texture, set it to the effect
                     if (tag.Texture != null)
@@ -226,8 +233,30 @@ namespace Engine
                     ((MeshTag)meshPart.Tag).Material = material;
             }
         }
+        public void generateTags()
+        {
+            foreach (ModelMesh mesh in Model.Meshes)
+                foreach (ModelMeshPart part in mesh.MeshParts)
+                    if (part.Effect is BasicEffect)
+                    {
+                        BasicEffect effect = (BasicEffect)part.Effect;
+                        MeshTag tag = new MeshTag(effect.DiffuseColor, effect.Texture, effect.SpecularPower);
+                        part.Tag = tag;
+                    }
+                    else
+                    {
+                        Effect cacheEffect = (Effect)part.Effect;
+                        Vector4 asdas = cacheEffect.Parameters["DiffuseColor"].GetValueVector4(); 
+                        Vector3 asda = new Vector3(asdas.X, asdas.Y, asdas.Z);
+                        MeshTag tag = new MeshTag(
+                            asda,
+                            cacheEffect.Parameters["Texture"].GetValueTexture2D(),
+                            cacheEffect.Parameters["SpecularPower"].GetValueSingle());
+                        part.Tag = tag;
+                    }
+        }
 
-        private void generateTags()
+        public void InitGenerateTags()
         {
             foreach (ModelMesh mesh in Model.Meshes)
                 foreach (ModelMeshPart part in mesh.MeshParts)
@@ -292,13 +321,19 @@ namespace Engine
                     effect.Parameters["LightColor"].SetValue(LightColor);
 
                     if (((MeshTag)subMesh.Tag) != null)
+                    {
                         if (((MeshTag)subMesh.Tag).Texture != null)
                         {
                             effect.Parameters["TextureEnabled"].SetValue(true);
                             effect.Parameters["Texture"].SetValue(((MeshTag)subMesh.Tag).Texture);
                         }
                         else effect.Parameters["TextureEnabled"].SetValue(false);
-                    
+                        if (((MeshTag)subMesh.Tag).Color != null)
+                        {
+                            effect.Parameters["DiffuseColor"].SetValue(new Vector4(((MeshTag)subMesh.Tag).Color, 1));
+                        }
+                    }
+
                     effect.CurrentTechnique.Passes[0].Apply();
 
                     graphicsDevice.SetVertexBuffer(subMesh.VertexBuffer, subMesh.VertexOffset);
@@ -388,7 +423,7 @@ namespace Engine
         }
 
         public void RenderMesh(GraphicsDevice graphicsDevice)
-        {        
+        {
             graphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0,
                                             meshPart.NumVertices,
                                             meshPart.StartIndex,

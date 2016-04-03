@@ -601,17 +601,19 @@ namespace Engine.Terrain
             effect.Parameters["TextureEnabled"].SetValue(false);
 
             effect.CurrentTechnique.Passes[0].Apply();
-            RasterizerState rs = new RasterizerState();
-            rs.CullMode = CullMode.CullClockwiseFace;
-            rs.FillMode = FillMode.Solid;
-            graphicsDevice.RasterizerState = rs;
-           
-            this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
-
-            rs = new RasterizerState();
+        
+            RasterizerState rs = new RasterizerState();       
             rs.CullMode = CullMode.None;
             rs.FillMode = FillMode.Solid;
             Device.RasterizerState = rs;
+           
+            this.Device.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, this._currentBufferData.NumberOfVertices, 0, this._currentBufferData.NumberOfIndices);
+         
+            rs = new RasterizerState();
+            rs.CullMode = CullMode.CullClockwiseFace;
+            rs.FillMode = FillMode.Solid;
+            graphicsDevice.RasterizerState = rs;
+
         }
 
         public void SetClipPlane(Vector4? Plane)

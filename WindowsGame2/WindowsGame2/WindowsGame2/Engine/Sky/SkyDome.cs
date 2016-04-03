@@ -85,10 +85,10 @@ namespace Engine.Sky
                 Gr = sky.Gr;
                 sky.Parameters.NumSamples = 10;
                 TIME = random.Next(5, 10); // 510
-             
+
                 sky.prevWeather = SkyDomeSystem.Weather.Clear;
                 sky.WeatherChange(ref sky.prevWeather);
-                weather = SkyDomeSystem.Weather.Clouds;
+                weather = SkyDomeSystem.Weather.Clear;
                 sky.WeatherChange(ref weather);   
             }
         }
@@ -196,7 +196,7 @@ namespace Engine.Sky
 
             float step = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if ((keyState.IsKeyDown(Keys.Space) && !previousKeyState.IsKeyDown(Keys.Space)) ||
+            if ((keyState.IsKeyDown(Keys.NumPad5) && !previousKeyState.IsKeyDown(Keys.NumPad5)) ||
                 (GamePad.GetState(PlayerIndex.One).Buttons.A == ButtonState.Pressed &&
                 previousPadState.Buttons.A == ButtonState.Released))
             {
@@ -221,9 +221,9 @@ namespace Engine.Sky
             {
                 case Status.Manual:
                     sky.RealTime = false;
-                    if (keyState.IsKeyDown(Keys.Down) || GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed)
+                    if (keyState.IsKeyDown(Keys.NumPad2) || GamePad.GetState(PlayerIndex.One).DPad.Down == ButtonState.Pressed)
                         sky.Theta -= 0.4f * step;
-                    if (keyState.IsKeyDown(Keys.Up) || GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed)
+                    if (keyState.IsKeyDown(Keys.NumPad8) || GamePad.GetState(PlayerIndex.One).DPad.Up == ButtonState.Pressed)
                         sky.Theta += 0.4f * step;
                     if (sky.Theta > (float)Math.PI * 2.0f)
                         sky.Theta = sky.Theta - (float)Math.PI * 2.0f;

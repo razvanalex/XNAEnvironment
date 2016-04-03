@@ -310,7 +310,6 @@ C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\Window
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\cone.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\sphere.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb
-C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\DownsampleDepth.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LightShaft.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Fir_Tree\rinde5_0.xnb
@@ -320,3 +319,14 @@ C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\Window
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\FarFir_Tree\rinde5_0.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\FarFir_Tree\M_4ABIPIN0_0.xnb
 C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Far_FarFir_Tree\M_4ABIPIN0_0.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Audi R8\Wheel2.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Aventador 2012\Wheel.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Veneno\Wheel1.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Veneno\Lamborghini_Veneno\Matte__FF3.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Veneno\Lamborghini_Veneno.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Audi R8\AudiR8.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Metal_Aluminum_Anodized_0.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\rim_0.xnb
+C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Matte__FF3_0.xnb

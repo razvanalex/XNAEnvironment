@@ -57,6 +57,7 @@ namespace LightPrePassProcessor
 
             return base.Process(input, context);
         }
+
         private void MergeTransforms(NodeContent input)
         {
             if (input is MeshContent)
@@ -79,7 +80,7 @@ namespace LightPrePassProcessor
 
             OpaqueDataDictionary processorParameters = new OpaqueDataDictionary();
             processorParameters["ColorKeyColor"] = this.ColorKeyColor;
-            processorParameters["ColorKeyEnabled"] = false;
+            processorParameters["ColorKeyEnabled"] = this.ColorKeyEnabled;
             processorParameters["TextureFormat"] = this.TextureFormat;
             processorParameters["GenerateMipmaps"] = this.GenerateMipmaps;
             processorParameters["ResizeTexturesToPowerOfTwo"] = this.ResizeTexturesToPowerOfTwo;
@@ -91,6 +92,27 @@ namespace LightPrePassProcessor
 
             //extract the extra parameters
             ExtractDefines(lppMaterial, material, context);
+
+            // copy the textures in the original material to the new normal mapping
+            // material. this way the diffuse texture is preserved. The
+            // PreprocessSceneHierarchy function has already added the normal map
+            // texture to the Textures collection, so that will be copied as well.
+            foreach (KeyValuePair<String, ExternalReference<TextureContent>> texture
+                in material.Textures)
+            {
+                lppMaterial.Textures.Add(texture.Key, texture.Value);
+            }
+
+            try
+            {
+                lppMaterial.OpaqueData.Add("DiffuseColor", new Vector4((Vector3)material.OpaqueData["DiffuseColor"], (float)material.OpaqueData["Alpha"]));
+                lppMaterial.OpaqueData.Add("SpecularColor", material.OpaqueData["SpecularColor"]);
+                lppMaterial.OpaqueData.Add("SpecularPower", material.OpaqueData["SpecularPower"]);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
 
             // and convert the material using the NormalMappingMaterialProcessor,
             // who has something special in store for the normal map.

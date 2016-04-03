@@ -12,7 +12,14 @@ Content\models\Trees\Linden\FarLinden.xnb
 Content\models\Trees\Linden\leaves.xnb
 Content\models\Trees\Linden\Far_FarLinden.xnb
 Content\models\Trees\Palms\Far_FarPalm.xnb
+Content\models\cone.xnb
 Content\models\sphere.xnb
+Content\models\Cars\Audi R8\AudiR8.xnb
+Content\models\Cars\Audi R8\Wheel2.xnb
+Content\models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012.xnb
+Content\models\Cars\Lamborghini Aventador 2012\Wheel.xnb
+Content\models\Cars\Lamborghini Veneno\Lamborghini_Veneno.xnb
+Content\models\Cars\Lamborghini Veneno\Wheel1.xnb
 Content\shaders\SkyBox.xnb
 Content\shaders\ModelReflextion.xnb
 Content\Effects\Water.xnb
@@ -99,6 +106,7 @@ Content\models\Trees\Palms\Palm\VeryLowPalm.xnb
 Content\textures\Terrain\BasicTerrain\heightmap.xnb
 Content\textures\Terrain\BasicTerrain\Ground.xnb
 Content\textures\Terrain\BasicTerrain\GroundMap.xnb
+Content\models\Cars\Lamborghini Veneno\Lamborghini_Veneno\Matte__FF3.xnb
 Content\SpriteFont1.xnb
 Content\shaders\LPPMainEffect_0.xnb
 Content\models\Trees\Fir\Fir_Tree\rinde5_0.xnb
@@ -115,4 +123,6 @@ Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb
 Content\models\Trees\Linden\Linden\2_0.xnb
 Content\models\Trees\Linden\Far_FarLinden\VeryLowLinden_0.xnb
 Content\models\Trees\Palms\Palm\VeryLowPalm_0.xnb
-Content\models\cone.xnb
+Content\Metal_Aluminum_Anodized_0.xnb
+Content\rim_0.xnb
+Content\Matte__FF3_0.xnb

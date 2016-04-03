@@ -211,6 +211,22 @@ namespace Engine.Water
             water = new WaterSystem(Content, graphicsDevice, WaterPos, WaterSize, WaveLength, WaveHeight, WaveSpeed, Vector3.Negate(Vector3.Reflect(LightDirection, Vector3.Up)), LightColor, SunFactor);
         }
 
+        public void RenderToGBuffer(Camera.Camera camera, GraphicsDevice graphicsDevice)
+        {
+            water.RenderToGBuffer(camera, graphicsDevice);
+        }
+
+        public void RenderShadowMap(ref Matrix viewProj, GraphicsDevice graphicsDevice)
+        {
+            water.RenderShadowMap(ref viewProj, graphicsDevice);
+        }
+
+        public void Draw(Camera.Camera camera, GraphicsDevice graphicsDevice, Texture2D lightBuffer)
+        {
+            water.Draw(camera, graphicsDevice, lightBuffer);
+        }
+
+
         public void Draw(Camera.Camera camera)
         {
             water.Draw(camera.View, camera.Projection, camera.Transform.Translation);

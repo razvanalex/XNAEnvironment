@@ -35,6 +35,9 @@
       <Name>model1</Name>
       <Importer>FbxImporter</Importer>
       <Processor>LightPrePassProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
+      <ProcessorParameters_ColorKeyEnabled>False</ProcessorParameters_ColorKeyEnabled>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +209,41 @@
       <Name>sphere</Name>
       <Importer>FbxImporter</Importer>
       <Processor>ModelProcessor</Processor>
+    </Compile>
+    <Compile Include="models\Cars\Audi R8\AudiR8.fbx">
+      <Name>AudiR8</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <ProcessorParameters_GenerateTangentFrames>True</ProcessorParameters_GenerateTangentFrames>
+    </Compile>
+    <Compile Include="models\Cars\Audi R8\Wheel2.fbx">
+      <Name>Wheel2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+    </Compile>
+    <Compile Include="models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012.fbx">
+      <Name>Lamborghini_Aventador_2012</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
+    </Compile>
+    <Compile Include="models\Cars\Lamborghini Aventador 2012\Wheel.fbx">
+      <Name>Wheel</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
+    </Compile>
+    <Compile Include="models\Cars\Lamborghini Veneno\Lamborghini_Veneno.fbx">
+      <Name>Lamborghini_Veneno</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
+    </Compile>
+    <Compile Include="models\Cars\Lamborghini Veneno\Wheel1.fbx">
+      <Name>Wheel1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <ProcessorParameters_ResizeTexturesToPowerOfTwo>True</ProcessorParameters_ResizeTexturesToPowerOfTwo>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -686,6 +724,14 @@
       <Name>InstancedModel</Name>
       <Importer>EffectImporter</Importer>
       <Processor>EffectProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="models\Cars\Lamborghini Veneno\Lamborghini_Veneno\Matte__FF3.jpg">
+      <Name>Matte__FF3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <ProcessorParameters_ResizeToPowerOfTwo>True</ProcessorParameters_ResizeToPowerOfTwo>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\$(XnaFrameworkVersion)\Microsoft.Xna.GameStudio.ContentPipeline.targets" />

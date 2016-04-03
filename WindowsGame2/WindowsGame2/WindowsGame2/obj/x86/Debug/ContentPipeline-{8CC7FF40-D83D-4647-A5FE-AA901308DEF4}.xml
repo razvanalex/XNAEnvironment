@@ -6,12 +6,17 @@
       <Name>models\model1</Name>
       <Importer>FbxImporter</Importer>
       <Processor>LightPrePassProcessor</Processor>
+      <Parameters>
+        <Data Key="ResizeTexturesToPowerOfTwo">True</Data>
+        <Data Key="ColorKeyEnabled">False</Data>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\model1.xnb</Output>
-      <Time>2016-01-22T20:19:21.2653567+02:00</Time>
+      <Time>2016-04-02T19:22:09.6075582+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\model1_0.xml</Key>
-        <Value>2016-03-13T22:03:40.0923746+02:00</Value>
+        <Value>2016-04-02T20:45:15.4321543+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
@@ -26,7 +31,7 @@
       <Time>2015-01-09T19:17:34.6026512+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\skySphere_0.xml</Key>
-        <Value>2016-03-13T22:03:41.708467+02:00</Value>
+        <Value>2016-04-02T20:45:17.0732481+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -39,7 +44,7 @@
       <Time>2015-01-09T20:41:54.8702705+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\plane_0.xml</Key>
-        <Value>2016-03-13T22:03:41.7994722+02:00</Value>
+        <Value>2016-04-02T20:45:17.1692536+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -55,7 +60,7 @@
       <Time>2016-02-26T21:58:11.0754721+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\Fir_Tree_0.xml</Key>
-        <Value>2016-03-13T22:03:42.4855115+02:00</Value>
+        <Value>2016-04-02T20:45:17.8312915+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Fir_Tree\rinde5_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -75,7 +80,7 @@
       <Time>2016-02-26T21:58:15.1681193+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\FarFir_Tree_0.xml</Key>
-        <Value>2016-03-13T22:03:43.6915804+02:00</Value>
+        <Value>2016-04-02T20:45:19.0153592+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\FarFir_Tree\rinde5_moos_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -92,7 +97,7 @@
       <Time>2015-04-13T15:45:27.4039134+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Null_fbx_0.xml</Key>
-        <Value>2016-03-13T22:03:44.5706307+02:00</Value>
+        <Value>2016-04-02T20:45:20.0654193+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -105,7 +110,7 @@
       <Time>2015-07-21T22:00:49.7393848+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\PPLightMesh_0.xml</Key>
-        <Value>2016-03-13T22:03:44.6816371+02:00</Value>
+        <Value>2016-04-02T20:45:20.1634249+03:00</Value>
       </Dependency>
     </Item>
     <Item>
@@ -121,7 +126,7 @@
       <Time>2016-02-26T21:58:07.0274438+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Fir\Far_FarFir_Tree_0.xml</Key>
-        <Value>2016-03-13T22:03:44.750641+02:00</Value>
+        <Value>2016-04-02T20:45:20.2194281+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\Far_FarFir_Tree\M_4ABIPIN0_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Fir\InstancedModel.xnb</Request>
@@ -139,7 +144,7 @@
       <Time>2015-09-01T22:46:24.3930746+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Palms\Palm_0.xml</Key>
-        <Value>2016-03-13T22:03:45.3016725+02:00</Value>
+        <Value>2016-04-02T20:45:20.7444581+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm\pinetreebark1_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\InstancedModel.xnb</Request>
@@ -155,7 +160,7 @@
       <Time>2016-01-15T16:39:26.2284892+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Linden_0.xml</Key>
-        <Value>2016-03-13T22:03:45.9127075+02:00</Value>
+        <Value>2016-04-02T20:45:21.3814946+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\BroadleafBark_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -170,10 +175,10 @@
       </Parameters>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\FarLinden.xnb</Output>
-      <Time>2016-01-15T14:55:53.9281659+02:00</Time>
+      <Time>2016-03-25T18:22:06.9692456+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\FarLinden_0.xml</Key>
-        <Value>2016-03-13T22:03:46.8287599+02:00</Value>
+        <Value>2016-04-02T20:45:22.2625449+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\LindenTexture_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -188,7 +193,7 @@
       <Time>2016-01-15T16:22:55.3848162+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\leaves_0.xml</Key>
-        <Value>2016-03-13T22:03:47.669808+02:00</Value>
+        <Value>2016-04-02T20:45:23.0815918+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Linden\2_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -203,10 +208,10 @@
       </Parameters>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden.xnb</Output>
-      <Time>2016-01-15T14:50:44.9824953+02:00</Time>
+      <Time>2016-03-28T22:18:10.0532939+03:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Far_FarLinden_0.xml</Key>
-        <Value>2016-03-13T22:03:47.9578245+02:00</Value>
+        <Value>2016-04-02T20:45:23.3396066+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\Far_FarLinden\VeryLowLinden_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Linden\InstancedModel.xnb</Request>
@@ -224,10 +229,25 @@
       <Time>2015-12-22T20:26:56.0196198+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Palms\Far_FarPalm_0.xml</Key>
-        <Value>2016-03-13T22:03:48.6428636+02:00</Value>
+        <Value>2016-04-02T20:45:24.0096449+03:00</Value>
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\Palm\VeryLowPalm_0.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Trees\Palms\InstancedModel.xnb</Request>
+    </Item>
+    <Item>
+      <Source>models\cone.fbx</Source>
+      <Name>models\cone</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\cone.xnb</Output>
+      <Time>2016-04-02T20:26:55.4971522+03:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\cone_0.xml</Key>
+        <Value>2016-04-02T20:45:24.6676825+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
     </Item>
     <Item>
       <Source>models\sphere.fbx</Source>
@@ -239,8 +259,116 @@
       <Time>2016-01-03T14:36:57.9214885+02:00</Time>
       <Dependency>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\sphere_0.xml</Key>
-        <Value>2016-03-13T22:03:49.4869119+02:00</Value>
+        <Value>2016-04-02T20:45:24.728686+03:00</Value>
       </Dependency>
+    </Item>
+    <Item>
+      <Source>models\Cars\Audi R8\AudiR8.fbx</Source>
+      <Name>models\Cars\Audi R8\AudiR8</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Parameters>
+        <Data Key="GenerateTangentFrames">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Audi R8\AudiR8.xnb</Output>
+      <Time>2014-02-02T12:35:37.5237779+02:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Audi R8\AudiR8_0.xml</Key>
+        <Value>2016-04-02T20:45:26.1457671+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Metal_Aluminum_Anodized_0.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>models\Cars\Audi R8\Wheel2.fbx</Source>
+      <Name>models\Cars\Audi R8\Wheel2</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Audi R8\Wheel2.xnb</Output>
+      <Time>2014-02-02T12:31:26.2534189+02:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Audi R8\Wheel2_0.xml</Key>
+        <Value>2016-04-02T20:45:27.893867+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\rim_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012.fbx</Source>
+      <Name>models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Parameters>
+        <Data Key="ResizeTexturesToPowerOfTwo">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012.xnb</Output>
+      <Time>2014-02-01T22:08:52.828257+02:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012_0.xml</Key>
+        <Value>2016-04-02T20:45:34.2452303+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Aventador 2012\Wheel.fbx</Source>
+      <Name>models\Cars\Lamborghini Aventador 2012\Wheel</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Parameters>
+        <Data Key="ResizeTexturesToPowerOfTwo">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Aventador 2012\Wheel.xnb</Output>
+      <Time>2014-02-01T21:21:51.8461532+02:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Aventador 2012\Wheel_0.xml</Key>
+        <Value>2016-04-02T20:45:36.8843813+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Veneno\Lamborghini_Veneno.fbx</Source>
+      <Name>models\Cars\Lamborghini Veneno\Lamborghini_Veneno</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Parameters>
+        <Data Key="ResizeTexturesToPowerOfTwo">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Veneno\Lamborghini_Veneno.xnb</Output>
+      <Time>2014-08-27T18:31:07.4821419+03:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Veneno\Lamborghini_Veneno_0.xml</Key>
+        <Value>2016-04-02T20:45:38.1944562+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Matte__FF3_0.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Veneno\Wheel1.fbx</Source>
+      <Name>models\Cars\Lamborghini Veneno\Wheel1</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Parameters>
+        <Data Key="ResizeTexturesToPowerOfTwo">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Veneno\Wheel1.xnb</Output>
+      <Time>2014-01-31T12:03:48.632997+02:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Veneno\Wheel1_0.xml</Key>
+        <Value>2016-04-02T20:45:39.0025024+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
     </Item>
     <Item>
       <Source>shaders\SkyBox.fx</Source>
@@ -480,7 +608,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Output>
-      <Time>2016-02-26T20:58:57.5809922+02:00</Time>
+      <Time>2016-04-02T20:18:44.7079644+03:00</Time>
     </Item>
     <Item>
       <Source>shaders\ReconstructDepth.fx</Source>
@@ -1078,6 +1206,18 @@
       <Time>2016-01-02T17:11:44.6533251+02:00</Time>
     </Item>
     <Item>
+      <Source>models\Cars\Lamborghini Veneno\Lamborghini_Veneno\Matte__FF3.jpg</Source>
+      <Name>models\Cars\Lamborghini Veneno\Lamborghini_Veneno\Matte__FF3</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ResizeToPowerOfTwo">True</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\Cars\Lamborghini Veneno\Lamborghini_Veneno\Matte__FF3.xnb</Output>
+      <Time>2014-08-27T17:39:14.0808155+03:00</Time>
+    </Item>
+    <Item>
       <Source>SpriteFont1.spritefont</Source>
       <Name>SpriteFont1</Name>
       <Importer>FontDescriptionImporter</Importer>
@@ -1091,7 +1231,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\model1_0.xml</Output>
-      <Time>2016-01-22T20:19:21.2653567+02:00</Time>
+      <Time>2016-04-02T19:22:09.6075582+03:00</Time>
     </Item>
     <Item>
       <Source>shaders\LPPMainEffect.fx</Source>
@@ -1099,7 +1239,7 @@
       <Processor>LightPrePassFXProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Output>
-      <Time>2016-02-26T20:58:57.5809922+02:00</Time>
+      <Time>2016-04-02T20:18:44.7079644+03:00</Time>
     </Item>
     <Item>
       <Source>models\skySphere.fbx</Source>
@@ -1329,7 +1469,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\FarLinden_0.xml</Output>
-      <Time>2016-01-15T14:55:53.9281659+02:00</Time>
+      <Time>2016-03-25T18:22:06.9692456+02:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Linden\Far_FarLinden\LindenTexture.png</Source>
@@ -1375,7 +1515,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Trees\Linden\Far_FarLinden_0.xml</Output>
-      <Time>2016-01-15T14:50:44.9824953+02:00</Time>
+      <Time>2016-03-28T22:18:10.0532939+03:00</Time>
     </Item>
     <Item>
       <Source>models\Trees\Linden\Far_FarLinden\VeryLowLinden.png</Source>
@@ -1421,7 +1561,7 @@
       <Importer>FbxImporter</Importer>
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\cone_0.xml</Output>
-      <Time>2016-03-21T20:29:25.4560344+02:00</Time>
+      <Time>2016-04-02T20:26:55.4971522+03:00</Time>
     </Item>
     <Item>
       <Source>models\sphere.fbx</Source>
@@ -1431,19 +1571,94 @@
       <Time>2016-01-03T14:36:57.9214885+02:00</Time>
     </Item>
     <Item>
-      <Source>models\cone.fbx</Source>
-      <Name>models\cone</Name>
+      <Source>models\Cars\Audi R8\AudiR8.fbx</Source>
       <Importer>FbxImporter</Importer>
-      <Processor>LightPrePassProcessor</Processor>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Audi R8\AudiR8_0.xml</Output>
+      <Time>2014-02-02T12:35:37.5237779+02:00</Time>
+    </Item>
+    <Item>
+      <Source>C:\Users\Razvan\Documents\Visual Studio 2010\Projects\WindowsGame6\WindowsGame6\WindowsGame6Content\Models\AudiR8\Metal_Aluminum_Anodized.jpg</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">false</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">false</Data>
+      </Parameters>
       <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\cone.xnb</Output>
-      <Time>2016-03-21T20:29:25.4560344+02:00</Time>
-      <Dependency>
-        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\cone_0.xml</Key>
-        <Value>2016-03-21T20:29:27.1720374+02:00</Value>
-      </Dependency>
-      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
-      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Metal_Aluminum_Anodized_0.xnb</Output>
+      <Time>2014-02-02T12:35:02.9728023+02:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Cars\Audi R8\Wheel2.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Audi R8\Wheel2_0.xml</Output>
+      <Time>2014-02-02T12:31:26.2534189+02:00</Time>
+    </Item>
+    <Item>
+      <Source>C:\Users\Razvan\Documents\Visual Studio 2010\Projects\WindowsGame6\WindowsGame6\WindowsGame6Content\Models\Wheel2\rim.jpg</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">false</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">false</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">false</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\rim_0.xnb</Output>
+      <Time>2014-02-02T12:31:08.6274107+02:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Aventador 2012\Lamborghini_Aventador_2012_0.xml</Output>
+      <Time>2014-02-01T22:08:52.828257+02:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Aventador 2012\Wheel.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Aventador 2012\Wheel_0.xml</Output>
+      <Time>2014-02-01T21:21:51.8461532+02:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Veneno\Lamborghini_Veneno.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Veneno\Lamborghini_Veneno_0.xml</Output>
+      <Time>2014-08-27T18:31:07.4821419+03:00</Time>
+    </Item>
+    <Item>
+      <Source>C:\Users\Razvan\Documents\Visual Studio 2010\Projects\WindowsGame6\WindowsGame6\WindowsGame6Content\Models\Lamborghini_Veneno\Matte__FF3.jpg</Source>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Parameters>
+        <Data Key="ColorKeyColor" Type="Framework:Color">FFFF00FF</Data>
+        <Data Key="ColorKeyEnabled" Type="bool">false</Data>
+        <Data Key="TextureFormat" Type="Processors:TextureProcessorOutputFormat">DxtCompressed</Data>
+        <Data Key="GenerateMipmaps" Type="bool">true</Data>
+        <Data Key="ResizeToPowerOfTwo" Type="bool">true</Data>
+        <Data Key="PremultiplyAlpha" Type="bool">false</Data>
+      </Parameters>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Matte__FF3_0.xnb</Output>
+      <Time>2014-08-27T17:39:14.0808155+03:00</Time>
+    </Item>
+    <Item>
+      <Source>models\Cars\Lamborghini Veneno\Wheel1.fbx</Source>
+      <Importer>FbxImporter</Importer>
+      <Options>IntermediateFile, DontCacheImportedData</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Veneno\Wheel1_0.xml</Output>
+      <Time>2014-01-31T12:03:48.632997+02:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -1484,11 +1699,11 @@
       </Assembly>
       <Assembly>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\LightPrePassProcessor\bin\x86\Debug\LightPrePassProcessor.dll</Key>
-        <Value>2016-03-13T22:03:32.8499603+02:00</Value>
+        <Value>2016-04-02T20:45:12.197577+03:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\InstancedModelPipeline\bin\x86\Debug\InstancedModelPipeline.dll</Key>
-        <Value>2016-03-13T22:03:29.2687518+02:00</Value>
+        <Value>2016-03-28T20:12:19.2825278+03:00</Value>
       </Assembly>
       <Assembly>
         <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>

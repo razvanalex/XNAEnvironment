@@ -427,7 +427,7 @@ namespace Engine.Billboards
             _effect.Parameters["AlphaTestGreater"].SetValue(false);
 
             RenderShadowMapInstancing(model, instancedModelBones, instanceTransforms, ref viewProj, graphicsDevice);
-
+        
             graphicsDevice.BlendState = BlendState.Opaque;
             graphicsDevice.DepthStencilState = DepthStencilState.Default;
         }

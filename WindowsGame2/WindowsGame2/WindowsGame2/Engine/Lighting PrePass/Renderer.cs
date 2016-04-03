@@ -584,7 +584,10 @@ namespace Engine.Shaders
             foreach (object mesh in meshes)
             {
                 if (mesh is Sky.SkyDome)
+                {
                     ((Sky.SkyDome)mesh).Draw();
+                    ((Sky.SkyDome)mesh).DrawRain(camera);
+                }
             }
             foreach (object mesh in meshes)
             {
@@ -598,6 +601,9 @@ namespace Engine.Shaders
                 if (mesh is Terrain.Terrain)
                     for (int i = 0; i < ((Terrain.Terrain)mesh).QuadTrees.Count; i++)
                         ((Terrain.Terrain)mesh).QuadTrees[i].Draw(camera, GraphicsDevice, _lightBuffer);
+                if (mesh is CarPlayer)
+                    ((CarPlayer)mesh).Draw(camera, GraphicsDevice, _lightBuffer);
+
                 if (mesh is LensFlareComponent)
                 {
                     ((LensFlareComponent)mesh).View = camera.View;
@@ -788,6 +794,9 @@ namespace Engine.Shaders
                     for (int i = 0; i < ((Terrain.Terrain)mesh).QuadTrees.Count; i++)
                         ((Terrain.Terrain)mesh).QuadTrees[i].RenderToGBuffer(camera, GraphicsDevice);
                 }
+                if (mesh is CarPlayer)
+                    ((CarPlayer)mesh).RenderToGBuffer(camera, GraphicsDevice);
+
                 //if (mesh is Water.Water)
                 // {
                 //     ((Water.Water)mesh).water.waterMesh.RenderToGBuffer(camera, GraphicsDevice);
