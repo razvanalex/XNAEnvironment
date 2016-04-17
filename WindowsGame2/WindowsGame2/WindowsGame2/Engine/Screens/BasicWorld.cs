@@ -13,6 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
+#region Using Engine
 using Engine;
 using Engine.Camera;
 using Engine.Sky;
@@ -21,24 +22,37 @@ using Engine.Particles;
 using Engine.Water;
 using Engine.Billboards;
 using Engine.Shaders;
+#endregion
 
 namespace Engine
 {
     public class BasicWorld : Microsoft.Xna.Framework.DrawableGameComponent
     {
+        #region Variables
         GraphicsDeviceManager graphics;
         GraphicsDevice graphicsDevice;
 
         ContentManager Content;
         SpriteBatch spriteBatch;
 
-        Components components;
-
         List<Models> models = new List<Models>();
 
+        #region Components
+        Components components;
+        Game game;
+        LensFlareComponent lensFlare;
+        BillboardsClass tree;
+        LightingClass light;
+        PostProcessingComponent _postProcessingComponent;
+        PlayerManager playerManager;
+        #endregion
+
+        #region Camera
         //Camera
         Camera.Camera camera;
         MouseState lastMouseState;
+        float deltaX = 0, deltaY = 0;
+        #endregion
 
         #region Sky
         SkyDome sky;
@@ -58,9 +72,14 @@ namespace Engine
         Vector2 WaterSize = new Vector2(30000, 30000);
         #endregion
 
+        #region Terrain
         //Terrain
         Terrain.Terrain terrain;
         QuadTree Qtree;
+        bool terrain_ = true;
+        private BackgroundWorker worker;
+        public static float THeight = 3500;
+        #endregion
 
         #region Blur
         //Blur   
@@ -76,47 +95,50 @@ namespace Engine
         bool blur = false;
         #endregion
 
-        bool terrain_ = true;
-        float deltaX = 0, deltaY = 0;
-        private BackgroundWorker worker;
-        public static float THeight = 3500;
-        BillboardsClass tree;
+        #region Particles
+        //Particles
+        Fire fire;
+       // GroundHit groundHit;
+        #endregion
 
-        public GameTime gametime;
-
+        #region Utilities
         //ScreenShot
         int ScreenShotTime = 0;
 
-        //Shadow
-        KeyboardState keyState, oldKeyState;
-
+        //Full Screen
         bool fullScreen;
 
+        //Timer
         float timer = 0;
 
-        Fire fire;
+        //public GameTime
+        public GameTime gametime;
 
-        Game game;
-        LensFlareComponent lensFlare;
+        //Keyboard
+        KeyboardState keyState, oldKeyState;
 
+        //Font
+        SpriteFont spriteFont;
+        #endregion
+
+        #region Renderer
+        //Renderer for Shadows
+        Renderer renderer;
+
+        //Light
         Vector4 AmbientColor;
         Vector3 LightColor;
         Vector3 LightDirection;
+        #endregion
 
-        //font
-        SpriteFont spriteFont;
-
-        Renderer renderer;
-        LightingClass light;
-
-        PostProcessingComponent _postProcessingComponent;
-
+        #region FPS Counter
         //FPS Counter
         int frameRate = 0;
         int frameCounter = 0;
         TimeSpan elapsedTime = TimeSpan.Zero;
+        #endregion  
 
-        PlayerManager playerManager;
+        #endregion
 
         public BasicWorld(Game game, ContentManager Content, GraphicsDeviceManager graphics, GraphicsDevice graphicsDevice)
             : base(game)
@@ -150,12 +172,11 @@ namespace Engine
 
             camera = new FreeCamera(new Vector3(0, 5000, 0), 0, 0, 1f, 100000.0f, graphicsDevice);
 
-            #region Terrain
-
             models.Add(new Models(Content, Content.Load<Model>("models//model1"), new Vector3(0, 0, 0), Vector3.Zero, new Vector3(20), graphicsDevice));
             // models.Add(new Models(Content.Load<Model>("models//cone"), new Vector3(0, 0, 0), Vector3.Zero, new Vector3(20), graphicsDevice));       
-
             components = new Components(graphicsDevice);
+
+            #region Terrain
             //BasicTerrain//heightmap
             terrain.InitializeTerrin(Qtree, (FreeCamera)camera, terrain, Content.Load<Texture2D>("textures//Terrain//terrain513"), WaterPos, Content, graphicsDevice);
             terrain.TerrainTextures(Qtree,
@@ -177,22 +198,22 @@ namespace Engine
 
             #endregion
 
-            #region BillBoards
-
+            #region Sky
             //Sky
             sky = new SkyDome(game, false, camera, graphicsDevice);
             sky.GetData(new object[] { Qtree });
+            #endregion
 
             UpdateLight();
 
+            #region BillBoards
             tree = new BillboardsClass(Content, camera, graphicsDevice);
             tree.GetData(new object[] { Qtree, sky });
             tree.Initialize();
             #endregion
 
-
             //Water
-           // water = new Water.Water(WaveLength, WaveHeight, WaveSpeed, WaterPos, WaterSize, Content, graphicsDevice, LightDirection, LightColor, sky.sky.LightIntensity);
+            water = new Water.Water(WaveLength, WaveHeight, WaveSpeed, WaterPos, WaterSize, Content, graphicsDevice, LightDirection, LightColor, sky.sky.LightIntensity);
 
             worker.RunWorkerAsync();
 
@@ -200,10 +221,16 @@ namespace Engine
             light = new LightingClass();
             light.AddDirectionalLight(MathHelper.PiOver2, sky.Theta + MathHelper.PiOver2, 0, new Color(LightColor), sky.sky.Parameters.AmbientColor.W, 10000, 0.005f);
 
+
+            #region Particles 
             fire = new Fire(game);
-            fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
-            fire.AddFire(new Vector3(543, Qtree.GetHeight(543, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
+            fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(10, 0, 0), 1);
+            //fire.AddFire(new Vector3(543, Qtree.GetHeight(543, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
             fire.AddLight(ref light);
+
+            //groundHit = new GroundHit(game);
+            //groundHit.AddDust(new Vector3(4000, Qtree.GetHeight(4000, -250), -250), new Vector2(10, 10), 20, new Vector2(20), 1, new Vector3(0), 1);
+            #endregion
 
             Random random = new Random();
             for (int i = 0; i < 0; i++)
@@ -289,7 +316,6 @@ namespace Engine
         }
         public override void Update(GameTime gameTime)
         {                          
-            fire.Update(camera);
             // Allows the game to exit
             if ((GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed) || (Keyboard.GetState().IsKeyDown(Keys.Q)) || (Keyboard.GetState().IsKeyDown(Keys.Escape)))
                 game.Exit();
@@ -380,11 +406,14 @@ namespace Engine
             sky.Update(gameTime);
             sky.GetData(new object[] { Qtree });
 
-            //water.UpdateLight(LightColor, LightDirection, sky.sky.SunFactor);
-            //water.GetData(new object[] { Qtree, sky, new Billboard[] { tree.Linden, tree.Fir, tree.Palm } });
-            //water.ChangeGraphics();
+            water.UpdateLight(LightColor, LightDirection, sky.sky.SunFactor);
+            water.GetData(new object[] { Qtree, sky, new Billboard[] { tree.Linden, tree.Fir, tree.Palm } });
+            water.ChangeGraphics();
 
             playerManager.Update(gameTime);
+
+            fire.Update(camera);
+            //groundHit.Update(camera);
 
             //  Thread t1 = new Thread(delegate()
             // {
@@ -561,19 +590,21 @@ namespace Engine
                 light.SetLights();
 
                 _postProcessingComponent.PreRender(renderer, camera);
-                renderer.RenderScene(((FreeCamera)camera), gameTime, light.visibleLights, new object[] { sky, lensFlare, terrain_ ? terrain : null, /*water,*/ models, playerManager.carPlayer, fire }, new object[] { tree.Fir, tree.Linden, tree.Palm });
+                renderer.RenderScene(((FreeCamera)camera), gameTime, light.visibleLights, 
+                    new object[] { sky, lensFlare, terrain_ ? terrain : null, water, models, playerManager.carPlayer, fire }, 
+                    new object[] { tree.Fir, tree.Linden, tree.Palm });
                
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);
                 // spriteBatch.Draw(renderer.GetShadowMap(0), new Rectangle(0, 0, 200, 200), Color.White);
                 //  spriteBatch.Draw(water.water.reflectionTarg, new Rectangle(0, 0, 200, 200), Color.White);
                 //  spriteBatch.Draw(renderer._outputTexture, new Rectangle(0, 0, 600, 200), Color.White);            
                 spriteBatch.End();
-
+                
                 //FPS
                 frameCounter++;
                 spriteBatch.Begin();
                 spriteBatch.DrawString(spriteFont, "FPS: " +  frameRate.ToString(), new Vector2(20, 20), Color.Black);
-                spriteBatch.DrawString(spriteFont, "Speed: " + playerManager.carPlayer.models[0].Rotation.ToString(), new Vector2(20, 40), Color.Black);
+                spriteBatch.DrawString(spriteFont, "Speed: " + playerManager.carPlayer.speed.ToString(), new Vector2(20, 40), Color.Black);
                 spriteBatch.DrawString(spriteFont, "Gear: " + playerManager.carPlayer.gear.ToString(), new Vector2(20, 60), Color.Black);
                 spriteBatch.End();
                 #endregion

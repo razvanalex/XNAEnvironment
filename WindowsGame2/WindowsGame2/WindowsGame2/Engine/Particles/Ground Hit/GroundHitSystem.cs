@@ -13,10 +13,11 @@ using Engine.Camera;
 
 namespace Engine.Particles
 {
-    public class FireSystem : Microsoft.Xna.Framework.GameComponent
+    public class GroundHitSystem : Microsoft.Xna.Framework.GameComponent
     {
-        ParticleSystem ps;
-        ParticleSystem smoke;
+        ParticleSystem dust;
+        ParticleSystem rocks;
+
         Random r = new Random();
         GraphicsDevice graphicsDevice;
 
@@ -24,25 +25,24 @@ namespace Engine.Particles
         public Vector2 scale;
         int nParticle;
         Vector2 ParticleSize;
-        Vector2 SmokeSize;
         float lifeSpan;
         Vector3 wind;
         float FadeInTime;
 
-        Matrix transformPS;
-        Matrix transformSM;
+        Matrix transformDust;
+        Matrix transformRocks;
 
-        public Matrix TransformPS
+        public Matrix TransformDust
         {
-            get { return transformPS; }
+            get { return transformDust; }
         }
-        public Matrix TransformSM
+        public Matrix TransformRocks
         {
-            get { return transformSM; }
+            get { return transformRocks; }
         }
 
-        public FireSystem(Game game, Vector3 Position, Vector2 scale, int nParticle,
-            Vector2 ParticleSize, float lifeSpan, Vector3 wind, float FadeInTime)
+        public GroundHitSystem(Game game, Vector3 Position, Vector2 scale, int nParticle,
+            Vector2 ParticleSize, float ParticleScaleSpeed, float lifeSpan, Vector3 wind, float FadeInTime)
             : base(game)
         {
             this.graphicsDevice = game.GraphicsDevice;
@@ -53,10 +53,11 @@ namespace Engine.Particles
             this.lifeSpan = lifeSpan;
             this.wind = wind;
             this.FadeInTime = FadeInTime;
-            SmokeSize = ParticleSize;
 
-            ps = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/fire"), nParticle, ParticleSize, lifeSpan, wind, FadeInTime);
-            smoke = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/smoke"), nParticle * 3, ParticleSize, lifeSpan * 50, wind * 2, FadeInTime /1000);
+           // dust = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/smoke"), 
+           //                             nParticle, lifeSpan, wind, FadeInTime);
+           // rocks = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/fire"), 
+          //                              nParticle, lifeSpan, wind, FadeInTime);
         }
 
         // Returns a random Vector3 between min and max
@@ -79,14 +80,14 @@ namespace Engine.Particles
 
             float randSpeed = ((float)r.NextDouble() + 2) * scale.Y;
 
-            ps.AddParticle(randPosition + Position, randAngle, randSpeed, new Vector2(1));
-            ps.Update();
+           // rocks.AddParticle(randPosition + Position, randAngle, randSpeed, ParticleSize);
+            rocks.Update();
 
-            smoke.AddParticle(randPosition + Position + new Vector3(0, scale.Y, 0), randAngle, randSpeed * 2, new Vector2(1f));
-            smoke.Update();
+            //dust.AddParticle(randPosition + Position + new Vector3(0, 4 * scale.Y, 0), randAngle, randSpeed, ParticleSize);
+            dust.Update();
 
-            TransformMatrix(ref transformPS, Position, new Vector3(((FreeCamera)camera).Yaw, ((FreeCamera)camera).Pitch, 0));
-            TransformMatrix(ref transformSM, Position + new Vector3(0, scale.Y, 0), new Vector3(((FreeCamera)camera).Yaw, ((FreeCamera)camera).Pitch, 0));
+            TransformMatrix(ref transformRocks, Position, new Vector3(((FreeCamera)camera).Yaw, ((FreeCamera)camera).Pitch, 0));
+            TransformMatrix(ref transformDust, Position, new Vector3(((FreeCamera)camera).Yaw, ((FreeCamera)camera).Pitch, 0)); 
         }
 
         void TransformMatrix(ref Matrix transform, Vector3 Position, Vector3 Rotation)
@@ -100,13 +101,10 @@ namespace Engine.Particles
             Matrix.Multiply(ref transform, ref _position, out transform);
         }
 
-        public void Draw(Matrix[] instanceTransformsPS, Matrix[] instanceTransformsSM, Camera.Camera camera)
+        public void Draw(Camera.Camera camera)
         {
-            //   ps.DrawHardwareInstancing(instanceTransformsPS, ((FreeCamera)camera), Position);
-            //   smoke.DrawHardwareInstancing(instanceTransformsSM, ((FreeCamera)camera), Position);         
-            ps.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
-            smoke.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
-        }
-
+            dust.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
+            rocks.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
+        }        
     }
 }

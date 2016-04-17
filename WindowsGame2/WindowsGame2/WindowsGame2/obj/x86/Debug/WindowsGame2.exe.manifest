@@ -68,14 +68,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WindowsGame2.exe" size="208808">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WindowsGame2.exe" size="213416">
       <assemblyIdentity name="WindowsGame2" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>lT58rFVZW9YCX+tedbjgyBFatMc=</dsig:DigestValue>
+        <dsig:DigestValue>qE1vjSlZAuj/sA99onDNGgSKowo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,13 +97,13 @@
       <dsig:DigestValue>oxiNoXkK3KoQQaxPPovc4lkcOiY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Effects\ParticleEffect.xnb" size="11036">
+  <file name="Content\Effects\ParticleEffect.xnb" size="11444">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>/wW4VqQlS0cB6eKLOn3F8yXVVqw=</dsig:DigestValue>
+      <dsig:DigestValue>xytcGkciCm+Vqpjn/7F22V94Lx8=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Effects\Sky\scatter.xnb" size="18800">
@@ -268,13 +268,13 @@
       <dsig:DigestValue>cz7in7VWQ5owWdEEs7HZbEHRuvk=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\models\plane.xnb" size="1274">
+  <file name="Content\models\plane.xnb" size="1634">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>FJtYfK0V42+TQhs077El+HqCwsA=</dsig:DigestValue>
+      <dsig:DigestValue>rHR8NT3IGyPB3CX9/+mos+aCnzM=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\models\PPLightMesh.xnb" size="5878">

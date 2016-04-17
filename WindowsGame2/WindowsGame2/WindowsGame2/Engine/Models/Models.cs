@@ -246,13 +246,18 @@ namespace Engine
                     else
                     {
                         Effect cacheEffect = (Effect)part.Effect;
-                        Vector4 asdas = cacheEffect.Parameters["DiffuseColor"].GetValueVector4(); 
-                        Vector3 asda = new Vector3(asdas.X, asdas.Y, asdas.Z);
-                        MeshTag tag = new MeshTag(
-                            asda,
-                            cacheEffect.Parameters["Texture"].GetValueTexture2D(),
-                            cacheEffect.Parameters["SpecularPower"].GetValueSingle());
-                        part.Tag = tag;
+                        if (cacheEffect.Parameters["DiffuseColor"] != null &&
+                            cacheEffect.Parameters["Texture"] != null &&
+                            cacheEffect.Parameters["SpecularPower"] != null)
+                        {
+                            Vector4 diffuseColor = cacheEffect.Parameters["DiffuseColor"].GetValueVector4();
+                            Vector3 DiffuseColor = new Vector3(diffuseColor.X, diffuseColor.Y, diffuseColor.Z);
+                            MeshTag tag = new MeshTag(
+                                DiffuseColor,
+                                cacheEffect.Parameters["Texture"].GetValueTexture2D(),
+                                cacheEffect.Parameters["SpecularPower"].GetValueSingle());
+                            part.Tag = tag;
+                        }
                     }
         }
 

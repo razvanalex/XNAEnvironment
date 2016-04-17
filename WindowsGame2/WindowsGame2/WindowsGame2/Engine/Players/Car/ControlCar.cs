@@ -22,8 +22,8 @@ namespace Engine
 
         public Vector3 Rotation;
         public float speed = 0f;
-        public float maxspeed;
-        float minspeed = -0.08f;
+        public float maxspeed = 0;
+        float minspeed = -8f;
 
         public float gear = 0;
         float Turn = 0.2f;
@@ -41,6 +41,8 @@ namespace Engine
         float CameraInertyMax = 0.5f;
         float CameraInertyMin = -0.5f;
 
+        public string KeyPressed;
+
         public CarControl(Game game, Vector3 Rotation, float speed, float maxSpeed, float Turning, float UAcceleration, float DAcceleration, float WheelTurn, float gear, float CameraInerty)
         {
             this.UAcceleration = UAcceleration;
@@ -54,7 +56,7 @@ namespace Engine
             this.maxspeed = maxSpeed;
         }
 
-        public void Control()
+        public void Control_Back()
         {
 #if !XBOX
             KeyboardState keyboardstate = Keyboard.GetState();
@@ -300,10 +302,153 @@ namespace Engine
                 }
             }
 #endif
+            gearbox();
+            Acceleration();
+        }
+ 
+        public void Control()
+        {
+#if !XBOX
+            KeyPressed = "";
+            DetectKeysPressed(ref KeyPressed);
+            
+            //Apply friction
+            speed -= (speed >= friction) ? friction : (speed <= -friction) ? -friction : 0;
+            if ((float)Math.Abs(speed) < friction) speed = 0;
+
+            switch(KeyPressed)
+            {
+                case "Up":
+                    speed += (speed <= maxspeed) ? UAcceleration : 0;
+                    break;
+                case "UpLeft":
+                    speed += (speed <= maxspeed) ? UAcceleration : 0;
+                    Rotation.X += (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+                case "UpRight":
+                    speed += (speed <= maxspeed) ? UAcceleration : 0;
+                    Rotation.X -= (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+                case "UpDown":
+                    speed += ((speed <= maxspeed) && (speed >= minspeed)) ? UAcceleration - DAcceleration : 0;
+                    break;
+                case "UpSpace":
+                    speed += (speed < 0) ? UAcceleration : 0;
+                    speed -= (speed > 0) ? WheelBreakes : 0;
+                    if ((float)Math.Abs(speed) < WheelBreakes) speed = 0;
+                    break;
+
+                case "Down":
+                    speed -= (speed >= minspeed) ? DAcceleration : 0;
+                    break;
+                case "DownRight":
+                    speed -= (speed >= minspeed) ? DAcceleration : 0;
+                    Rotation.X -= (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+                case "DownLeft":
+                    speed -= (speed >= minspeed) ? DAcceleration : 0;
+                    Rotation.X += (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+                case "DownUp":
+                    speed -= ((speed <= maxspeed) && (speed >= minspeed)) ? DAcceleration - UAcceleration : 0;
+                    break;
+                case "DownSpace":
+                    speed -= (speed > 0) ? DAcceleration + WheelBreakes : 0;
+                    speed += (speed < 0) ? WheelBreakes : 0;
+                    if ((float)Math.Abs(speed) < WheelBreakes) speed = 0;
+                    break;
+
+                case "Left":
+                    Rotation.X += (speed > 0) ? Turn : (speed < 0) ? -Turn : 0;
+                    //if ((float)Math.Abs(Rotation.X) < Turn) speed = Rotation.X;
+                    break;
+                case "LeftDown": 
+                    speed += (speed >= minspeed) ? DAcceleration : 0;
+                    Rotation.X += (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+                case "LeftRight": 
+                    break;
+                case "LeftUp": 
+                    speed += (speed <= maxspeed) ? UAcceleration : 0;
+                    Rotation.X += (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+
+                case "Right": 
+                    Rotation.X -= (speed > 0) ? Turn : (speed < 0) ? -Turn : 0;
+                    //if ((float)Math.Abs(Rotation.X) < Turn) speed = Rotation.X;
+                    break;
+                case "RightDown":
+                    speed -= (speed >= minspeed) ? DAcceleration : 0;
+                    Rotation.X -= (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+                case "RightLeft": break;
+                case "RightUp": 
+                    speed += (speed <= maxspeed) ? UAcceleration : 0;
+                    Rotation.X -= (Turn >= MaxTurn) ? Turn : 0;
+                    break;
+
+                case "Space":
+                    speed -= (speed >= WheelBreakes) ? WheelBreakes : (speed <= -WheelBreakes) ? -WheelBreakes : 0;
+                    if ((float)Math.Abs(speed) < WheelBreakes) speed = 0;
+                    break;
+                default: break;
+            }
 
             gearbox();
             Acceleration();
+#endif
+        }
 
+
+        private void DetectKeysPressed(ref string keyPressed)
+        {
+            KeyboardState keyboardstate = Keyboard.GetState();
+            if (keyboardstate.IsKeyDown(Keys.Up))
+            {
+                if (keyboardstate.IsKeyDown(Keys.Left))
+                    keyPressed = "UpLeft";
+                else if (keyboardstate.IsKeyDown(Keys.Right))
+                    keyPressed = "UpRight";
+                else if (keyboardstate.IsKeyDown(Keys.Down))
+                    keyPressed = "UpDown";
+                else if (keyboardstate.IsKeyDown(Keys.Space))
+                    keyPressed = "UpSpace";
+                else keyPressed = "Up";
+            }
+            else if (keyboardstate.IsKeyDown(Keys.Down))
+            {
+                if (keyboardstate.IsKeyDown(Keys.Left))
+                    keyPressed = "DownLeft";
+                else if (keyboardstate.IsKeyDown(Keys.Right))
+                    keyPressed = "DownRight";
+                else if (keyboardstate.IsKeyDown(Keys.Up))
+                    keyPressed = "DownUp";
+                else if (keyboardstate.IsKeyDown(Keys.Space))
+                    keyPressed = "DownSpace";
+                else keyPressed = "Down";
+            }
+            else if (keyboardstate.IsKeyDown(Keys.Left))
+            {
+                if (keyboardstate.IsKeyDown(Keys.Down))
+                    keyPressed = "LeftDown";
+                else if (keyboardstate.IsKeyDown(Keys.Right))
+                    keyPressed = "LeftRight";
+                else if (keyboardstate.IsKeyDown(Keys.Up))
+                    keyPressed = "LeftUp";
+                else keyPressed = "Left";
+            }
+            else if (keyboardstate.IsKeyDown(Keys.Right))
+            {
+                if (keyboardstate.IsKeyDown(Keys.Down))
+                    keyPressed = "RightDown";
+                else if (keyboardstate.IsKeyDown(Keys.Left))
+                    keyPressed = "RightLeft";
+                else if (keyboardstate.IsKeyDown(Keys.Up))
+                    keyPressed = "RightUp";
+                else keyPressed = "Right";
+            }
+            else if (keyboardstate.IsKeyDown(Keys.Space))
+                keyPressed = "Space";
         }
 
         public void gearbox()

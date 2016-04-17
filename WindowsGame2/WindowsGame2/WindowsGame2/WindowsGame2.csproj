@@ -102,6 +102,8 @@
     <Compile Include="Engine\Lighting PrePass\PostProcessingComponent.cs" />
     <Compile Include="Engine\Particles\Fire\Fire.cs" />
     <Compile Include="Engine\Particles\Fire\FireSystem.cs" />
+    <Compile Include="Engine\Particles\Ground Hit\GroundHit.cs" />
+    <Compile Include="Engine\Particles\Ground Hit\GroundHitSystem.cs" />
     <Compile Include="Engine\Particles\Rain\RainSystem.cs" />
     <Compile Include="Engine\Particles\Rain\Rain.cs" />
     <Compile Include="Engine\Players\Car\Car.cs" />

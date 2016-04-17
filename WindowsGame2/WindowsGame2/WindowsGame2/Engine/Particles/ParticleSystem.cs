@@ -79,16 +79,17 @@ namespace Engine.Particles
             indices = new int[nParticles * 6];
 
             Vector3 z = Vector3.Zero;
+            Vector2 z2 = Vector2.Zero;
 
             int x = 0;
 
             // Initialize particle settings and fill index and vertex arrays
             for (int i = 0; i < nParticles * 4; i += 4)
             {
-                particles[i + 0] = new ParticleVertex(z, new Vector2(0, 0), z, 0, -10);
-                particles[i + 1] = new ParticleVertex(z, new Vector2(0, 1), z, 0, -10);
-                particles[i + 2] = new ParticleVertex(z, new Vector2(1, 1), z, 0, -10);
-                particles[i + 3] = new ParticleVertex(z, new Vector2(1, 0), z, 0, -10);
+                particles[i + 0] = new ParticleVertex(z, new Vector2(0, 0), z, 0, -10, z2);
+                particles[i + 1] = new ParticleVertex(z, new Vector2(0, 1), z, 0, -10, z2);
+                particles[i + 2] = new ParticleVertex(z, new Vector2(1, 1), z, 0, -10, z2);
+                particles[i + 3] = new ParticleVertex(z, new Vector2(1, 0), z, 0, -10, z2);
 
                 indices[x++] = i + 0;
                 indices[x++] = i + 3;
@@ -100,7 +101,7 @@ namespace Engine.Particles
         }
 
         // Marks another particle as active and applies the given settings to it
-        public void AddParticle(Vector3 Position, Vector3 Direction, float Speed)
+        public void AddParticle(Vector3 Position, Vector3 Direction, float Speed, Vector2 Scale)
         {
             // If there are no available particles, give up
             if (nActive + 4 == nParticles * 4)
@@ -120,6 +121,7 @@ namespace Engine.Particles
                 particles[index + i].Direction = Direction;
                 particles[index + i].Speed = Speed;
                 particles[index + i].StartTime = startTime;
+                particles[index + i].ParticleScale = Scale;
             }
         }
 
@@ -163,7 +165,7 @@ namespace Engine.Particles
             verts.SetData<ParticleVertex>(particles);
             ints.SetData<int>(indices);
         }
-       
+
         public void Draw(Matrix View, Matrix Projection, Vector3 Up, Vector3 Right)
         {
             // Set the vertex and index buffer to the graphics card
@@ -171,7 +173,7 @@ namespace Engine.Particles
             graphicsDevice.Indices = ints;
 
             // Set the effect parameters
-            effect.CurrentTechnique = effect.Techniques["Technique01"];      
+            effect.CurrentTechnique = effect.Techniques["Technique01"];
             effect.Parameters["ParticleTexture"].SetValue(texture);
             effect.Parameters["View"].SetValue(View);
             effect.Parameters["Projection"].SetValue(Projection);
@@ -238,7 +240,7 @@ namespace Engine.Particles
             effect.Parameters["Up"].SetValue(camera.Transform.Up);
             effect.Parameters["Side"].SetValue(camera.Transform.Right);
             effect.Parameters["FadeInTime"].SetValue(fadeInTime);
-            
+
             // Enable blending render states
             graphicsDevice.BlendState = BlendState.AlphaBlend;
             graphicsDevice.DepthStencilState = DepthStencilState.DepthRead;

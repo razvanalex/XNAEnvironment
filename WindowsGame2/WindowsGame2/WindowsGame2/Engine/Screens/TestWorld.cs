@@ -99,7 +99,7 @@ namespace Engine
                 }, new int[] { 1000, 100, 100, 1000, 1000, 500 }, Content);
 
             fire = new Fire(game);
-            fire.AddFire(new Vector3(450, Qtree.GetHeight(0, 300), 300), new Vector2(10, 50), 100, new Vector2(50), 1f, new Vector3(0), 1);
+            //fire.AddFire(new Vector3(450, Qtree.GetHeight(0, 300), 300), new Vector2(10, 50), 100, new Vector2(50), 1f, new Vector3(0), 1);
 
             base.LoadContent();
         }

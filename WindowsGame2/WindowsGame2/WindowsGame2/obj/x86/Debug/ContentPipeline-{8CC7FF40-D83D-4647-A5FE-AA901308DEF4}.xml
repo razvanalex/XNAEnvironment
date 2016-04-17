@@ -35,19 +35,6 @@
       </Dependency>
     </Item>
     <Item>
-      <Source>models\plane.fbx</Source>
-      <Name>models\plane</Name>
-      <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
-      <Options>None</Options>
-      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\plane.xnb</Output>
-      <Time>2015-01-09T20:41:54.8702705+02:00</Time>
-      <Dependency>
-        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\plane_0.xml</Key>
-        <Value>2016-04-02T20:45:17.1692536+03:00</Value>
-      </Dependency>
-    </Item>
-    <Item>
       <Source>models\Trees\Fir\Fir_Tree.fbx</Source>
       <Name>models\Trees\Fir\Fir_Tree</Name>
       <Importer>FbxImporter</Importer>
@@ -581,7 +568,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Effects\ParticleEffect.xnb</Output>
-      <Time>2015-10-31T17:43:09.6833562+02:00</Time>
+      <Time>2016-04-14T20:49:06.8980881+03:00</Time>
     </Item>
     <Item>
       <Source>shaders\ClearGBuffer.fx</Source>
@@ -1659,6 +1646,21 @@
       <Options>IntermediateFile, DontCacheImportedData</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\Cars\Lamborghini Veneno\Wheel1_0.xml</Output>
       <Time>2014-01-31T12:03:48.632997+02:00</Time>
+    </Item>
+    <Item>
+      <Source>models\plane.fbx</Source>
+      <Name>models\plane</Name>
+      <Importer>FbxImporter</Importer>
+      <Processor>LightPrePassProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\models\plane.xnb</Output>
+      <Time>2015-01-09T20:41:54.8702705+02:00</Time>
+      <Dependency>
+        <Key>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\obj\x86\Debug\models\plane_0.xml</Key>
+        <Value>2016-04-02T20:45:17.1692536+03:00</Value>
+      </Dependency>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
+      <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

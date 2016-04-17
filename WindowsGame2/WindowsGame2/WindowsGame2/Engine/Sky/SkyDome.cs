@@ -149,7 +149,7 @@ namespace Engine.Sky
                 if (rain.density > 10f)
                     rain.density = 10;
             }
-            if (weather != SkyDomeSystem.Weather.Rain && rain != null)
+           if (weather != SkyDomeSystem.Weather.Rain && rain != null)
             {
                 rain.density -= 0.02f;
                 if (rain.density < 0f)

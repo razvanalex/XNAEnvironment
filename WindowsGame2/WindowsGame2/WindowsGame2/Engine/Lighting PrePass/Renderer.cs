@@ -584,10 +584,7 @@ namespace Engine.Shaders
             foreach (object mesh in meshes)
             {
                 if (mesh is Sky.SkyDome)
-                {
-                    ((Sky.SkyDome)mesh).Draw();
-                    ((Sky.SkyDome)mesh).DrawRain(camera);
-                }
+                    ((Sky.SkyDome)mesh).Draw();                  
             }
             foreach (object mesh in meshes)
             {
@@ -610,14 +607,18 @@ namespace Engine.Shaders
                     ((LensFlareComponent)mesh).Projection = camera.Projection;
                     ((LensFlareComponent)mesh).Draw(gameTime);
                 }
-            }               
+            } 
         }
         private void DrawParticles(Camera.Camera camera, object[] meshes)
         {
             foreach (object mesh in meshes)
             {
+                if (mesh is Sky.SkyDome)
+                    ((Sky.SkyDome)mesh).DrawRain(camera);
                 if (mesh is Fire)
                     ((Fire)mesh).Draw(camera);
+                if (mesh is GroundHit)
+                    ((GroundHit)mesh).Draw(camera);
             }
         }
 

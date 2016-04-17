@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,11 @@ namespace Engine.Particles
     struct ParticleVertex : IVertexType
     {
         Vector3 startPosition;
-        Vector2 uv;
-        Vector3 direction;
+        Vector2 uv;  
+        Vector3 direction;  
         float speed;
         float startTime;
+        Vector2 particleScale;
 
         // Starting position of that particle (t = 0)
         public Vector3 StartPosition
@@ -34,7 +36,7 @@ namespace Engine.Particles
         {
             get { return direction; }
             set { direction = value; }
-        }
+        }   
 
         // Speed of the particle in units/second
         public float Speed
@@ -51,14 +53,22 @@ namespace Engine.Particles
             set { startTime = value; }
         }
 
+        // Particle Scale of the particle
+        public Vector2 ParticleScale
+        {
+            get { return particleScale; }
+            set { particleScale = value; }
+        }
+
         public ParticleVertex(Vector3 StartPosition, Vector2 UV, Vector3 Direction,
-            float Speed, float StartTime)
+            float Speed, float StartTime, Vector2 ParticleScale)
         {
             this.startPosition = StartPosition;
             this.uv = UV;
             this.direction = Direction;
             this.speed = Speed;
             this.startTime = StartTime;
+            this.particleScale = ParticleScale;
         }
 
         // Vertex declaration
@@ -72,7 +82,9 @@ namespace Engine.Particles
             new VertexElement(32, VertexElementFormat.Single, // Movement speed
                 VertexElementUsage.TextureCoordinate, 2),
             new VertexElement(36, VertexElementFormat.Single, // Start time
-                VertexElementUsage.TextureCoordinate, 3)
+                VertexElementUsage.TextureCoordinate, 3),
+            new VertexElement(40, VertexElementFormat.Vector2, // Particle Scale
+                VertexElementUsage.TextureCoordinate, 4)
         );
 
         VertexDeclaration IVertexType.VertexDeclaration { get { return VertexDeclaration; } }

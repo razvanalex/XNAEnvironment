@@ -33,7 +33,7 @@ namespace Engine
                 Model_Wheel = @"models/Cars/Lamborghini Aventador 2012/Wheel";
                 Scale_Car = new Vector3(.39f);
                 Scale_Wheel = new Vector3(.38f);
-                MaxSpeed = 350f;
+                MaxSpeed = 30f;
             }
             if (modelCar == "Lamborghini Veneno")
             {
@@ -41,7 +41,7 @@ namespace Engine
                 Model_Wheel = @"models/Cars/Lamborghini Veneno/Wheel1";
                 Scale_Car = new Vector3(.39f);
                 Scale_Wheel = new Vector3(.38f);
-                MaxSpeed = 400f;
+                MaxSpeed = 35f;
             }
             if (modelCar == "Audi R8")
             {
@@ -49,7 +49,7 @@ namespace Engine
                 Model_Wheel = @"models/Cars/Audi R8/Wheel2";
                 Scale_Car = new Vector3(.39f);
                 Scale_Wheel = new Vector3(.38f);
-                MaxSpeed = 300f;
+                MaxSpeed = 20f;
             }
 
         }

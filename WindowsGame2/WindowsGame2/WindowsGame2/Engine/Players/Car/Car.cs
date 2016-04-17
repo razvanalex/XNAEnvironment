@@ -20,10 +20,10 @@ namespace Engine
     {
         SpriteBatch spriteBatch;
 
-public         List<Models> models = new List<Models>();
+        public List<Models> models = new List<Models>();
         Camera.Camera camera;
 
-        CarControl carControl;     
+        public CarControl carControl;
         QuadTree terrain;
 
         CarsData carData;
@@ -73,11 +73,11 @@ public         List<Models> models = new List<Models>();
         float test = 0;
         float t1, t2, t3, t4;
 
-        bool inter = false;
         int no_points = 0;
         Vector3 Point_On_Wheel = Vector3.Zero;
         Vector3 Point_On_Ground = Vector3.Zero;
-        float i = 0;
+
+        Vector3 WheelRotationVector = Vector3.Zero;
 
         public CarPlayer(Game game, GraphicsDevice graphicsDevice)
         {
@@ -86,10 +86,10 @@ public         List<Models> models = new List<Models>();
         }
 
         public void Initialize()
-        {          
+        {
             //Load Car by its name...
             CarModelName = "Audi R8";
-            carData = new CarsData(game, CarModelName);           
+            carData = new CarsData(game, CarModelName);
             Car_Scale = carData.Scale_Car;
             Wheel_Scale = carData.Scale_Wheel;
             CarModel = game.Content.Load<Model>(CarPath + CarModelName + carData.CarModelName);
@@ -112,7 +112,7 @@ public         List<Models> models = new List<Models>();
                 if (o is QuadTree)
                     terrain = (QuadTree)o;
                 if (o is Camera.Camera)
-                    camera = (Camera.Camera)o;               
+                    camera = (Camera.Camera)o;
             }
         }
 
@@ -121,7 +121,7 @@ public         List<Models> models = new List<Models>();
             foreach (Models model in models)
             {
                 model.AmbientColor = terrain.AmbientColor;
-                model.LightColor = terrain.LightColor;               
+                model.LightColor = terrain.LightColor;
             }
         }
         public void GenerateTags()
@@ -179,7 +179,7 @@ public         List<Models> models = new List<Models>();
                 speed = 0;
                 changeCar = false;
             }
-            OldSpeed = speed;        
+            OldSpeed = speed;
             UpdateLight();
         }
 
@@ -196,10 +196,10 @@ public         List<Models> models = new List<Models>();
             L4 = (float)Math.Sqrt((float)Math.Pow(models[3].Position.X - models[4].Position.X, 2) + (float)Math.Pow(models[3].Position.Y - models[4].Position.Y, 2) + (float)Math.Pow(models[3].Position.Z - models[4].Position.Z, 2));
 
             //Get Height from Wheels
-            HPosWUR = terrain.GetHeight(models[1].Position.X - CarHeigh  * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[1].Position.Z - CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
-            HPosWUL = terrain.GetHeight(models[2].Position.X - CarHeigh  * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[2].Position.Z - CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
-            HPosWDR = terrain.GetHeight(models[3].Position.X - CarHeigh  * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[3].Position.Z - CarHeigh  * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
-            HPosWDL = terrain.GetHeight(models[4].Position.X - CarHeigh  * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[4].Position.Z - CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
+            HPosWUR = terrain.GetHeight(models[1].Position.X - CarHeigh * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[1].Position.Z - CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
+            HPosWUL = terrain.GetHeight(models[2].Position.X - CarHeigh * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[2].Position.Z - CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
+            HPosWDR = terrain.GetHeight(models[3].Position.X - CarHeigh * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[3].Position.Z - CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
+            HPosWDL = terrain.GetHeight(models[4].Position.X - CarHeigh * (float)Math.Sin(Angle12) * (float)Math.Cos(models[0].Rotation.Y), models[4].Position.Z - CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y));// + CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34);
 
             t1 = terrain.GetHeight(models[1].Position.X, models[1].Position.Z);
             t2 = terrain.GetHeight(models[2].Position.X, models[2].Position.Z);
@@ -218,14 +218,18 @@ public         List<Models> models = new List<Models>();
             Vector3 NewCarPosition = new Vector3(0, 0, speed * (float)Math.Cos(Angle12));
             models[0].Position += Vector3.Transform(NewCarPosition, Matrix.CreateFromYawPitchRoll(models[0].Rotation.X, models[0].Rotation.Y, models[0].Rotation.Z));
             models[0].Position = new Vector3(models[0].Position.X, (float)Math.Abs(Math.Sin(models[0].Rotation.Y) * (L2 / 2 - CarHeigh)) + (float)Math.Abs(Math.Sin(models[0].Rotation.Z) * L1 / 2), models[0].Position.Z);
-            models[0].Rotation = new Vector3(models[0].Rotation.X, -Angle12, Angle34);     
-                    
+            models[0].Rotation = new Vector3(models[0].Rotation.X, -Angle12, Angle34);
+
             //Wheels  
-            heighPoint = new Vector3(-CarHeigh * ((float)Math.Sin(Angle12) * (float)Math.Cos(Angle34) * (float)Math.Sin(models[0].Rotation.X) + (float)Math.Sin(Angle34) * (float)Math.Cos(models[0].Rotation.X)), CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34),-CarHeigh * ((float)Math.Sin(Angle12) * (float)Math.Cos(Angle34) * (float)Math.Cos(models[0].Rotation.X) - (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.X)));
-            //heighPoint = new Vector3(-CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Cos(models[0].Rotation.Y) - CarHeigh * (float)Math.Sin(Angle34 + models[0].Rotation.Y), CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34), CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.Y) - CarHeigh * (float)Math.Cos(Angle34 + models[0].Rotation.Y));
-            
-            models[0].Position = new Vector3(0, terrain.GetHeight(models[0].Position.X, models[0].Position.Z), 0);
-           
+            heighPoint = new Vector3(
+                -CarHeigh * ((float)Math.Sin(Angle12) * (float)Math.Cos(Angle34) * (float)Math.Sin(models[0].Rotation.X) + (float)Math.Sin(Angle34) * (float)Math.Cos(models[0].Rotation.X)),
+                CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34), 
+                -CarHeigh * ((float)Math.Sin(Angle12) * (float)Math.Cos(Angle34) * (float)Math.Cos(models[0].Rotation.X) - (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.X)));
+          
+            //heighPoint = new Vector3(-CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Cos(models[0].Rotation.X) - CarHeigh * (float)Math.Sin(Angle34 + models[0].Rotation.X), CarHeigh * (float)Math.Cos(Angle12) * (float)Math.Cos(Angle34), CarHeigh * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.X) - CarHeigh * (float)Math.Cos(Angle34 + models[0].Rotation.X));
+
+            models[0].Position = new Vector3(models[0].Position.X, terrain.GetHeight(models[0].Position.X, models[0].Position.Z), models[0].Position.Z);
+
             Point_Right_Left = new Vector3(SemiRadiusL34 * ((float)Math.Cos(Angle34) * (float)Math.Cos(models[0].Rotation.X) - (float)Math.Sin(Angle12) * (float)Math.Sin(Angle34) * (float)Math.Sin(models[0].Rotation.X)), SemiRadiusL34 * (float)Math.Sin(Angle34) * (float)Math.Cos(Angle12), -SemiRadiusL34 * ((float)Math.Cos(Angle34) * (float)Math.Sin(models[0].Rotation.X) + (float)Math.Sin(Angle12) * (float)Math.Sin(Angle34) * (float)Math.Cos(models[0].Rotation.X)));
             Point_Up_Down = new Vector3(-SemiRadiusL12 * (float)Math.Cos(Angle12) * (float)Math.Cos(models[0].Rotation.X + MathHelper.PiOver2), SemiRadiusL12 * (float)Math.Sin(Angle12), SemiRadiusL12 * (float)Math.Cos(Angle12) * (float)Math.Sin(models[0].Rotation.X + MathHelper.PiOver2));
 
@@ -234,44 +238,29 @@ public         List<Models> models = new List<Models>();
             models[3].Position = models[0].Position + heighPoint + Point_Right_Left - Point_Up_Down;  //DR
             models[4].Position = models[0].Position + heighPoint - Point_Right_Left - Point_Up_Down;  //DL
 
-            models[1].Rotation = models[3].Rotation = models[0].Rotation;
-            models[2].Rotation = models[4].Rotation = new Vector3(models[0].Rotation.X, -models[0].Rotation.Y, -models[0].Rotation.Z) + new Vector3(MathHelper.Pi, 0, 0);
-            models[1].Rotation = models[3].Rotation += new Vector3(0, speed, 0);
-            models[2].Rotation = models[4].Rotation -= new Vector3(0, speed, 0);
+            Vector3 LeftWheelRot = new Vector3(
+                models[0].Rotation.X, 
+                models[0].Rotation.Y,
+                (float)Math.PI - models[0].Rotation.Z);
+            Vector3 RighttWheelRot = models[0].Rotation;
 
+            WheelRotationVector += new Vector3(0, speed / 10, 0);
+
+            models[1].Rotation = RighttWheelRot + WheelRotationVector;
+            models[2].Rotation = LeftWheelRot + WheelRotationVector;
+            models[3].Rotation = RighttWheelRot + WheelRotationVector;
+            models[4].Rotation = LeftWheelRot + WheelRotationVector;
+
+            /*models[1].Rotation += new Vector3(0, speed / 10, 0);
+            models[3].Rotation += new Vector3(0, speed / 10, 0);
+            models[2].Rotation += new Vector3(0, speed / 10, 0);
+            models[4].Rotation += new Vector3(0, speed / 10, 0);*/
+            
             //Acceleration and Gear
-            WheelAngleDetect(models[4]);
-           
             carControl.gearbox();
             carControl.Acceleration();
-            
-        }
 
-        public void WheelAngleDetect(Models wheel)
-        {
-
-            float WRadius = 0.06f;
-            float height = 0f;
-            float lenght_X = 0f;
-            float lenght_Z = 0f;
-
-            inter = false;
-            no_points = 0;
-
-            for (float i = 0; i <= MathHelper.Pi; i += 0.01f)
-            {
-                height = -WRadius * (float)Math.Abs((float)Math.Sin(i));
-                lenght_X = WRadius * (float)Math.Cos(i) * (float)Math.Sin(models[0].Rotation.Y);
-                lenght_Z = WRadius * (float)Math.Cos(i) * (float)Math.Cos(models[0].Rotation.Y);
-                Point_On_Wheel = wheel.Position + new Vector3(lenght_X, height, lenght_Z);
-                Point_On_Ground = wheel.Position + new Vector3(lenght_X, terrain.GetHeight(wheel.Position.X + lenght_X, wheel.Position.Z + lenght_Z) - wheel.Position.Y, lenght_Z);
-                if (decimal.Round((decimal)Point_On_Wheel.Y, 3, MidpointRounding.AwayFromZero) == decimal.Round((decimal)Point_On_Ground.Y, 3, MidpointRounding.AwayFromZero))
-                {
-                    inter = true;
-                    no_points++;
-                }
-            }
-        }
+        } 
 
         public void CameraView(ref Camera.Camera camera)
         {
@@ -350,7 +339,7 @@ public         List<Models> models = new List<Models>();
             float cameraRot = CameraRotation.X - CameraInerty - CamRotKey;
 
             camera = new FreeCamera(CameraTarget, cameraRot, 0, 1, 10000, graphicsDevice);
-            camera.Update();         
+            camera.Update();
             //camera = new Camera(this, CameraTarget, 0f, CameraRotation.X - CameraInerty, -2.5f, -1.5f, -2f, GraphicsDevice.Viewport.AspectRatio, 0.0002f, 1000f);      
         }
 

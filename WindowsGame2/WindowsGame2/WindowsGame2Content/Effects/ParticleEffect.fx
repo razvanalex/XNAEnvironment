@@ -9,11 +9,11 @@ sampler2D texSampler = sampler_state {
 
 float Time;
 float Lifespan;
-float2 Size;
 float3 Wind;
 float3 Up;
 float3 Side;
 float FadeInTime;
+float2 Size;
 
 struct VertexShaderInput
 {
@@ -22,6 +22,7 @@ struct VertexShaderInput
 	float3 Direction : TEXCOORD1;
 	float Speed : TEXCOORD2;
 	float StartTime : TEXCOORD3;
+	float2 ParticleScale : TEXCOORD4;
 };
 
 struct VertexShaderOutput
@@ -34,17 +35,19 @@ struct VertexShaderOutput
 VertexShaderOutput VertexShaderFunction(VertexShaderInput input, float4x4 instanceTransform)
 {
 	VertexShaderOutput output;
-
-	float3 position = input.Position;
-
-	// Move to billboard corner
-	float2 offset = Size * float2((input.UV.x - 0.5f) * 2.0f, -(input.UV.y - 0.5f) * 2.0f);
-	position += offset.x * Side + offset.y * Up;
-
+	
 	// Determine how long this particle has been alive
 	float relativeTime = (Time - input.StartTime);
 	output.RelativeTime = relativeTime;
 
+	float3 position = input.Position;
+	float2 scale = Size;
+	// Move to billboard corner
+	
+	float2 offset = scale * float2((input.UV.x - 0.5f) * 2.0f, -(input.UV.y - 0.5f) * 2.0f);
+	offset *= input.ParticleScale * relativeTime;
+
+	position += offset.x * Side + offset.y * Up;
 	// Move the vertex along its movement direction and the wind direction
 	position += (input.Direction * input.Speed + Wind) * relativeTime;
 
@@ -78,8 +81,8 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
 	// Sample texture
 	float4 color = tex2D(texSampler, input.UV);
 
-		// Fade out towards end of life
-		float d = clamp(1.0f - pow((input.RelativeTime / Lifespan), 10), 0, 1);
+	// Fade out towards end of life
+	float d = clamp(1.0f - pow((input.RelativeTime / Lifespan), 10), 0, 1);
 
 	// Fade in at beginning of life
 	d *= clamp((input.RelativeTime / FadeInTime), 0, 1);

@@ -35,7 +35,7 @@ namespace Engine
             carPlayer = new CarPlayer(game, graphicsDevice);
             carPlayer.GetData(new object[] { terrain, camera });
             carPlayer.Initialize();
-            carPlayer.GenerateTags();
+            carPlayer.GenerateTags();           
         }
 
         public void GetData(object[] obj)

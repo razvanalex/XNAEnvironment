@@ -74,7 +74,7 @@ namespace Engine.Particles
                 if (!snow) //rain
                 {
                     randAngle = Vector3.Down;
-                    randSpeed = ((float)r.NextDouble() + 2) * scale.Y;
+                    randSpeed = ((float)r.NextDouble() + 2) * scale.Y * 2;
                 }
                 else //snow
                 {
@@ -82,8 +82,8 @@ namespace Engine.Particles
                     randSpeed = ((float)r.NextDouble() + 2) * scale.Y;
                 }
 
-                Vector3 randPosition = randVec3(new Vector3(-scale.X, 0, -scale.X), new Vector3(scale.X, 0, scale.X));               
-                rp.AddParticle(randPosition + Position, randAngle, randSpeed);
+                Vector3 randPosition = randVec3(new Vector3(-scale.X, 0, -scale.X), new Vector3(scale.X, 0, scale.X));
+                rp.AddParticle(randPosition + Position, randAngle, randSpeed, new Vector2(1));
             }
         }
 

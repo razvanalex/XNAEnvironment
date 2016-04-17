@@ -72,7 +72,7 @@
     <Compile Include="models\plane.fbx">
       <Name>plane</Name>
       <Importer>FbxImporter</Importer>
-      <Processor>ModelProcessor</Processor>
+      <Processor>LightPrePassProcessor</Processor>
     </Compile>
     <Compile Include="models\Trees\Fir\Fir_Tree.fbx">
       <Name>Fir_Tree</Name>

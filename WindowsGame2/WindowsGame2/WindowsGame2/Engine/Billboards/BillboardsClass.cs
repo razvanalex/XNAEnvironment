@@ -50,7 +50,7 @@ namespace Engine.Billboards
         {
             //Generate Firs
             Fir = new Billboard(content, camera, graphicsDevice);
-            
+
             Fir.NoTrees = 2000;
             Fir.Scale = new Vector3(0.5f);
             

@@ -1,6 +1,5 @@
 Content\models\model1.xnb
 Content\models\skySphere.xnb
-Content\models\plane.xnb
 Content\models\Trees\Fir\Fir_Tree.xnb
 Content\models\Trees\Fir\FarFir_Tree.xnb
 Content\models\Null_fbx.xnb
@@ -126,3 +125,4 @@ Content\models\Trees\Palms\Palm\VeryLowPalm_0.xnb
 Content\Metal_Aluminum_Anodized_0.xnb
 Content\rim_0.xnb
 Content\Matte__FF3_0.xnb
+Content\models\plane.xnb
