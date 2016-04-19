@@ -78,18 +78,19 @@ namespace Engine.Particles
             particles = new ParticleVertex[nParticles * 4];
             indices = new int[nParticles * 6];
 
-            Vector3 z = Vector3.Zero;
+            Vector3 z3 = Vector3.Zero;
             Vector2 z2 = Vector2.Zero;
+            float z1 = 0;
 
             int x = 0;
 
             // Initialize particle settings and fill index and vertex arrays
             for (int i = 0; i < nParticles * 4; i += 4)
             {
-                particles[i + 0] = new ParticleVertex(z, new Vector2(0, 0), z, 0, -10, z2);
-                particles[i + 1] = new ParticleVertex(z, new Vector2(0, 1), z, 0, -10, z2);
-                particles[i + 2] = new ParticleVertex(z, new Vector2(1, 1), z, 0, -10, z2);
-                particles[i + 3] = new ParticleVertex(z, new Vector2(1, 0), z, 0, -10, z2);
+                particles[i + 0] = new ParticleVertex(z3, new Vector2(0, 0), z3, 0, -10, z2, z1);
+                particles[i + 1] = new ParticleVertex(z3, new Vector2(0, 1), z3, 0, -10, z2, z1);
+                particles[i + 2] = new ParticleVertex(z3, new Vector2(1, 1), z3, 0, -10, z2, z1);
+                particles[i + 3] = new ParticleVertex(z3, new Vector2(1, 0), z3, 0, -10, z2, z1);
 
                 indices[x++] = i + 0;
                 indices[x++] = i + 3;
@@ -101,7 +102,7 @@ namespace Engine.Particles
         }
 
         // Marks another particle as active and applies the given settings to it
-        public void AddParticle(Vector3 Position, Vector3 Direction, float Speed, Vector2 Scale)
+        public void AddParticle(Vector3 Position, Vector3 Direction, float Speed, Vector2 Scale, float ParticleMass)
         {
             // If there are no available particles, give up
             if (nActive + 4 == nParticles * 4)
@@ -122,6 +123,7 @@ namespace Engine.Particles
                 particles[index + i].Speed = Speed;
                 particles[index + i].StartTime = startTime;
                 particles[index + i].ParticleScale = Scale;
+                particles[index + i].ParticleMass = ParticleMass;
             }
         }
 
@@ -184,6 +186,7 @@ namespace Engine.Particles
             effect.Parameters["Up"].SetValue(Up);
             effect.Parameters["Side"].SetValue(Right);
             effect.Parameters["FadeInTime"].SetValue(fadeInTime);
+            effect.Parameters["UpVector"].SetValue(Vector3.Up);
 
             // Enable blending render states
             graphicsDevice.BlendState = BlendState.AlphaBlend;

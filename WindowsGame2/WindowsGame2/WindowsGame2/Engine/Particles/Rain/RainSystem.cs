@@ -83,7 +83,7 @@ namespace Engine.Particles
                 }
 
                 Vector3 randPosition = randVec3(new Vector3(-scale.X, 0, -scale.X), new Vector3(scale.X, 0, scale.X));
-                rp.AddParticle(randPosition + Position, randAngle, randSpeed, new Vector2(1));
+                rp.AddParticle(randPosition + Position, randAngle, randSpeed, new Vector2(0), 0);
             }
         }
 

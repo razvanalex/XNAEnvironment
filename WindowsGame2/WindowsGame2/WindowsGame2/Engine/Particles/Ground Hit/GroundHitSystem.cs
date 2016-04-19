@@ -15,8 +15,8 @@ namespace Engine.Particles
 {
     public class GroundHitSystem : Microsoft.Xna.Framework.GameComponent
     {
-        ParticleSystem dust;
-        ParticleSystem rocks;
+        public ParticleSystem dust;
+        public ParticleSystem rocks;
 
         Random r = new Random();
         GraphicsDevice graphicsDevice;
@@ -25,9 +25,11 @@ namespace Engine.Particles
         public Vector2 scale;
         int nParticle;
         Vector2 ParticleSize;
+        Vector2 ParticleScaleSpeed;
         float lifeSpan;
         Vector3 wind;
         float FadeInTime;
+        int factor = 10;
 
         Matrix transformDust;
         Matrix transformRocks;
@@ -42,7 +44,7 @@ namespace Engine.Particles
         }
 
         public GroundHitSystem(Game game, Vector3 Position, Vector2 scale, int nParticle,
-            Vector2 ParticleSize, float ParticleScaleSpeed, float lifeSpan, Vector3 wind, float FadeInTime)
+            Vector2 ParticleSize, Vector2 ParticleScaleSpeed, float lifeSpan, Vector3 wind, float FadeInTime)
             : base(game)
         {
             this.graphicsDevice = game.GraphicsDevice;
@@ -50,14 +52,15 @@ namespace Engine.Particles
             this.scale = scale;
             this.nParticle = nParticle;
             this.ParticleSize = ParticleSize;
+            this.ParticleScaleSpeed = ParticleScaleSpeed;
             this.lifeSpan = lifeSpan;
             this.wind = wind;
             this.FadeInTime = FadeInTime;
-
-           // dust = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/smoke"), 
-           //                             nParticle, lifeSpan, wind, FadeInTime);
-           // rocks = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/fire"), 
-          //                              nParticle, lifeSpan, wind, FadeInTime);
+            
+            dust = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/smoke"),
+                                        nParticle, ParticleSize, lifeSpan * 2, wind, FadeInTime);
+            rocks = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/soil-rock"),
+                                        nParticle * factor, ParticleSize / 8, lifeSpan, wind, FadeInTime);
         }
 
         // Returns a random Vector3 between min and max
@@ -68,26 +71,41 @@ namespace Engine.Particles
                 min.Y + (float)r.NextDouble() * (max.Y - min.Y),
                 min.Z + (float)r.NextDouble() * (max.Z - min.Z));
         }
-
+        float t = 0;
         public void Update(Camera.Camera camera)
         {
-            // Generate a direction within 15 degrees of (0, 1, 0)
-            Vector3 offset = new Vector3(MathHelper.ToRadians(10.0f));
-            Vector3 randAngle = Vector3.Up + randVec3(-offset, offset);
+            //Add rocks
+            for (int i = 0; i < nParticle * factor; i++)
+            {
+                // Generate a direction within 15 degrees of (0, 1, 0)
+                Vector3 offset = new Vector3(MathHelper.ToRadians(20.0f));
 
-            // Generate a position between (-400, 0, -400) and (400, 0, 400)
-            Vector3 randPosition = randVec3(new Vector3(-scale.X, 0, -scale.X), new Vector3(scale.X, 0, scale.X));
+                Vector3 randAngle = Vector3.Up + randVec3(-offset, offset);
 
-            float randSpeed = ((float)r.NextDouble() + 2) * scale.Y;
+                // Generate a position between (-scale.X, 0, -scale.X) and (scale.X, 0, scale.X)
+                Vector3 randPosition = randVec3(new Vector3(-scale.X, 0, -scale.X), new Vector3(scale.X, 0, scale.X));
 
-           // rocks.AddParticle(randPosition + Position, randAngle, randSpeed, ParticleSize);
-            rocks.Update();
+                float randSpeed = ((float)r.NextDouble() + 2) * scale.Y;
+                rocks.AddParticle(randPosition + Position, randAngle, randSpeed * 2, new Vector2(0), 5f);
+                rocks.Update();
+            }
 
-            //dust.AddParticle(randPosition + Position + new Vector3(0, 4 * scale.Y, 0), randAngle, randSpeed, ParticleSize);
-            dust.Update();
+            //Add smoke
+            for (int i = 0; i < nParticle; i++)
+            {
+                // Generate a direction within 15 degrees of (0, 1, 0)
+                Vector3 offset = new Vector3(MathHelper.ToRadians(50.0f));
 
-            TransformMatrix(ref transformRocks, Position, new Vector3(((FreeCamera)camera).Yaw, ((FreeCamera)camera).Pitch, 0));
-            TransformMatrix(ref transformDust, Position, new Vector3(((FreeCamera)camera).Yaw, ((FreeCamera)camera).Pitch, 0)); 
+                Vector3 randAngle = Vector3.Up + randVec3(-offset, offset);
+
+                // Generate a position between (-scale.X, 0, -scale.X) and (scale.X, 0, scale.X)
+                Vector3 randPosition = randVec3(new Vector3(-scale.X, 0, -scale.X), new Vector3(scale.X, 0, scale.X));
+
+                float randSpeed = ((float)r.NextDouble() + 2) * scale.Y;
+
+                dust.AddParticle(randPosition + Position, randAngle, randSpeed, ParticleScaleSpeed, 0);
+                dust.Update();         
+            }
         }
 
         void TransformMatrix(ref Matrix transform, Vector3 Position, Vector3 Rotation)

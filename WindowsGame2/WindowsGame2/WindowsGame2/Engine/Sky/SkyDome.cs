@@ -143,7 +143,7 @@ namespace Engine.Sky
                 rain = new Rain(game, camera.Transform.Translation, false, graphicsDevice);
                 rain.density = 0f;
             }
-            if (weather == SkyDomeSystem.Weather.Rain)
+            if (weather == SkyDomeSystem.Weather.Rain && rain != null)
             {
                 rain.density += 0.02f;
                 if (rain.density > 10f)

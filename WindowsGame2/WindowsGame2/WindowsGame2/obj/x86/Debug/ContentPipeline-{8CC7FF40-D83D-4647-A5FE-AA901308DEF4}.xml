@@ -568,7 +568,7 @@
       <Processor>EffectProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\Effects\ParticleEffect.xnb</Output>
-      <Time>2016-04-14T20:49:06.8980881+03:00</Time>
+      <Time>2016-04-18T19:59:03.0077597+03:00</Time>
     </Item>
     <Item>
       <Source>shaders\ClearGBuffer.fx</Source>
@@ -1661,6 +1661,15 @@
       </Dependency>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect.xnb</Request>
       <Request>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\shaders\LPPMainEffect_0.xnb</Request>
+    </Item>
+    <Item>
+      <Source>textures\Particles\soil-rock.png</Source>
+      <Name>textures\Particles\soil-rock</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\Razvan\Documents\GitHub\XNAEnvironment\WindowsGame2\WindowsGame2\WindowsGame2\bin\x86\Debug\Content\textures\Particles\soil-rock.xnb</Output>
+      <Time>2016-04-18T19:37:04.5173463+03:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

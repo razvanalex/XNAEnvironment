@@ -98,7 +98,7 @@ namespace Engine
         #region Particles
         //Particles
         Fire fire;
-       // GroundHit groundHit;
+        GroundHit groundHit;
         #endregion
 
         #region Utilities
@@ -224,12 +224,12 @@ namespace Engine
 
             #region Particles 
             fire = new Fire(game);
-            fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(10, 0, 0), 1);
-            //fire.AddFire(new Vector3(543, Qtree.GetHeight(543, -250), -250), new Vector2(10, 10), 200, new Vector2(20), 1, new Vector3(0), 1);
+            fire.AddFire(new Vector3(4500, Qtree.GetHeight(4500, -250), -250), new Vector2(10, 10), 200, new Vector2(20), new Vector2(1), 1, new Vector3(10, 0, 0), 1);
+            fire.AddFire(new Vector3(543, Qtree.GetHeight(543, -250), -250), new Vector2(10, 10), 200, new Vector2(20), new Vector2(1), 1, new Vector3(0), 1);
             fire.AddLight(ref light);
 
-            //groundHit = new GroundHit(game);
-            //groundHit.AddDust(new Vector3(4000, Qtree.GetHeight(4000, -250), -250), new Vector2(10, 10), 20, new Vector2(20), 1, new Vector3(0), 1);
+            groundHit = new GroundHit(game);
+            groundHit.AddDust(new Vector3(4000, Qtree.GetHeight(4000, -250), -250), new Vector2(10, 10), 30, new Vector2(20), new Vector2(1), 4, new Vector3(0), 0);
             #endregion
 
             Random random = new Random();
@@ -413,7 +413,7 @@ namespace Engine
             playerManager.Update(gameTime);
 
             fire.Update(camera);
-            //groundHit.Update(camera);
+            groundHit.Update(camera);
 
             //  Thread t1 = new Thread(delegate()
             // {
@@ -591,7 +591,7 @@ namespace Engine
 
                 _postProcessingComponent.PreRender(renderer, camera);
                 renderer.RenderScene(((FreeCamera)camera), gameTime, light.visibleLights, 
-                    new object[] { sky, lensFlare, terrain_ ? terrain : null, water, models, playerManager.carPlayer, fire }, 
+                    new object[] { sky, lensFlare, terrain_ ? terrain : null, water, models, playerManager.carPlayer, fire, groundHit }, 
                     new object[] { tree.Fir, tree.Linden, tree.Palm });
                
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Opaque, SamplerState.PointClamp, DepthStencilState.Default, RasterizerState.CullCounterClockwise);

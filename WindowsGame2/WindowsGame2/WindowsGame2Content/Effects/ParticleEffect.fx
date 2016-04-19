@@ -14,6 +14,8 @@ float3 Up;
 float3 Side;
 float FadeInTime;
 float2 Size;
+float G = 9.8f;
+float3 UpVector;
 
 struct VertexShaderInput
 {
@@ -23,6 +25,7 @@ struct VertexShaderInput
 	float Speed : TEXCOORD2;
 	float StartTime : TEXCOORD3;
 	float2 ParticleScale : TEXCOORD4;
+	float2 ParticleMass : TEXCOORD5;
 };
 
 struct VertexShaderOutput
@@ -43,13 +46,16 @@ VertexShaderOutput VertexShaderFunction(VertexShaderInput input, float4x4 instan
 	float3 position = input.Position;
 	float2 scale = Size;
 	// Move to billboard corner
-	
+
 	float2 offset = scale * float2((input.UV.x - 0.5f) * 2.0f, -(input.UV.y - 0.5f) * 2.0f);
-	offset *= input.ParticleScale * relativeTime;
+	offset *= input.ParticleScale * relativeTime + 1;
 
 	position += offset.x * Side + offset.y * Up;
+
+	float acceleration = G * input.ParticleMass;
+
 	// Move the vertex along its movement direction and the wind direction
-	position += (input.Direction * input.Speed + Wind) * relativeTime;
+	position += (input.Direction * input.Speed + Wind) * relativeTime - UpVector * acceleration * relativeTime * relativeTime / 2;
 
 	float4 worldPosition = mul(float4(position, 1), instanceTransform);
 	float4 viewPosition = mul(worldPosition, View);

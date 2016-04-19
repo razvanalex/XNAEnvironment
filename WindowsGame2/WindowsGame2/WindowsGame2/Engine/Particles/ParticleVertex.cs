@@ -16,6 +16,7 @@ namespace Engine.Particles
         float speed;
         float startTime;
         Vector2 particleScale;
+        float particleMass;
 
         // Starting position of that particle (t = 0)
         public Vector3 StartPosition
@@ -59,9 +60,14 @@ namespace Engine.Particles
             get { return particleScale; }
             set { particleScale = value; }
         }
+        public float ParticleMass
+        {
+            get { return particleMass; }
+            set { particleMass = value; }
+        }
 
         public ParticleVertex(Vector3 StartPosition, Vector2 UV, Vector3 Direction,
-            float Speed, float StartTime, Vector2 ParticleScale)
+            float Speed, float StartTime, Vector2 ParticleScale, float ParticleMass)
         {
             this.startPosition = StartPosition;
             this.uv = UV;
@@ -69,6 +75,7 @@ namespace Engine.Particles
             this.speed = Speed;
             this.startTime = StartTime;
             this.particleScale = ParticleScale;
+            this.particleMass = ParticleMass;
         }
 
         // Vertex declaration
@@ -84,7 +91,9 @@ namespace Engine.Particles
             new VertexElement(36, VertexElementFormat.Single, // Start time
                 VertexElementUsage.TextureCoordinate, 3),
             new VertexElement(40, VertexElementFormat.Vector2, // Particle Scale
-                VertexElementUsage.TextureCoordinate, 4)
+                VertexElementUsage.TextureCoordinate, 4),
+            new VertexElement(48, VertexElementFormat.Single, // Particle Mass
+                VertexElementUsage.TextureCoordinate, 5)
         );
 
         VertexDeclaration IVertexType.VertexDeclaration { get { return VertexDeclaration; } }

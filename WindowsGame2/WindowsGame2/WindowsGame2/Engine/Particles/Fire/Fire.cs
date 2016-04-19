@@ -27,9 +27,9 @@ namespace Engine.Particles
             this.game = game;
         }
 
-        public void AddFire(Vector3 Position, Vector2 Scale, int NoParticles, Vector2 ParticleSize, float LifeSpan, Vector3 Wind, float FadeInTime)
+        public void AddFire(Vector3 Position, Vector2 Scale, int NoParticles, Vector2 ParticleSize, Vector2 ParticleScaleSpeed, float LifeSpan, Vector3 Wind, float FadeInTime)
         {
-            FireParticle.Add(new FireSystem(game, Position, Scale, NoParticles, ParticleSize, LifeSpan, Wind, FadeInTime));
+            FireParticle.Add(new FireSystem(game, Position, Scale, NoParticles, ParticleSize, ParticleScaleSpeed, LifeSpan, Wind, FadeInTime));
         }
 
         public void AddLight(ref LightingClass light)

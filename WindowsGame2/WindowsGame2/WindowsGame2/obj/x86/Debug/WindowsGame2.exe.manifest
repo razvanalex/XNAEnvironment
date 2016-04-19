@@ -68,14 +68,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WindowsGame2.exe" size="213416">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="WindowsGame2.exe" size="214440">
       <assemblyIdentity name="WindowsGame2" version="1.0.0.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>qE1vjSlZAuj/sA99onDNGgSKowo=</dsig:DigestValue>
+        <dsig:DigestValue>zBhJCsfRWDTpU94x2JD0QL3QWlo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -97,13 +97,13 @@
       <dsig:DigestValue>oxiNoXkK3KoQQaxPPovc4lkcOiY=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="Content\Effects\ParticleEffect.xnb" size="11444">
+  <file name="Content\Effects\ParticleEffect.xnb" size="12376">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-      <dsig:DigestValue>xytcGkciCm+Vqpjn/7F22V94Lx8=</dsig:DigestValue>
+      <dsig:DigestValue>7nwxvx7QjB6jZe9NKZOUDPXqPzI=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\Effects\Sky\scatter.xnb" size="18800">
@@ -977,6 +977,15 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
       <dsig:DigestValue>UHGm8zK1Zl/DqHM5gcT86TzIPvM=</dsig:DigestValue>
+    </hash>
+  </file>
+  <file name="Content\textures\Particles\soil-rock.xnb" size="8099">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
+      <dsig:DigestValue>GFlhIVNoyK7bN5Qh05GwzJ5v/0M=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Content\textures\Sky\moon.xnb" size="262331">

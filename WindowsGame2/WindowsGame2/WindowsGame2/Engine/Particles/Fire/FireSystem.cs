@@ -24,6 +24,7 @@ namespace Engine.Particles
         public Vector2 scale;
         int nParticle;
         Vector2 ParticleSize;
+        Vector2 ParticleScaleSpeed;
         Vector2 SmokeSize;
         float lifeSpan;
         Vector3 wind;
@@ -42,7 +43,7 @@ namespace Engine.Particles
         }
 
         public FireSystem(Game game, Vector3 Position, Vector2 scale, int nParticle,
-            Vector2 ParticleSize, float lifeSpan, Vector3 wind, float FadeInTime)
+            Vector2 ParticleSize, Vector2 ParticleScaleSpeed, float lifeSpan, Vector3 wind, float FadeInTime)
             : base(game)
         {
             this.graphicsDevice = game.GraphicsDevice;
@@ -50,13 +51,14 @@ namespace Engine.Particles
             this.scale = scale;
             this.nParticle = nParticle;
             this.ParticleSize = ParticleSize;
+            this.ParticleScaleSpeed = ParticleScaleSpeed;
             this.lifeSpan = lifeSpan;
             this.wind = wind;
             this.FadeInTime = FadeInTime;
             SmokeSize = ParticleSize;
 
             ps = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/fire"), nParticle, ParticleSize, lifeSpan, wind, FadeInTime);
-            smoke = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/smoke"), nParticle * 3, ParticleSize, lifeSpan * 50, wind * 2, FadeInTime /1000);
+            smoke = new ParticleSystem(graphicsDevice, game.Content, game.Content.Load<Texture2D>("textures/Particles/smoke"), nParticle, ParticleSize, lifeSpan * 5, wind * 2, FadeInTime /100);
         }
 
         // Returns a random Vector3 between min and max
@@ -79,10 +81,10 @@ namespace Engine.Particles
 
             float randSpeed = ((float)r.NextDouble() + 2) * scale.Y;
 
-            ps.AddParticle(randPosition + Position, randAngle, randSpeed, new Vector2(1));
+            ps.AddParticle(randPosition + Position, randAngle, randSpeed, new Vector2(0), 0);
             ps.Update();
 
-            smoke.AddParticle(randPosition + Position + new Vector3(0, scale.Y, 0), randAngle, randSpeed * 2, new Vector2(1f));
+            smoke.AddParticle(randPosition + Position + new Vector3(0, scale.Y * 3, 0), randAngle, randSpeed * 2, ParticleScaleSpeed, 0);
             smoke.Update();
 
             TransformMatrix(ref transformPS, Position, new Vector3(((FreeCamera)camera).Yaw, ((FreeCamera)camera).Pitch, 0));
@@ -102,8 +104,8 @@ namespace Engine.Particles
 
         public void Draw(Matrix[] instanceTransformsPS, Matrix[] instanceTransformsSM, Camera.Camera camera)
         {
-            //   ps.DrawHardwareInstancing(instanceTransformsPS, ((FreeCamera)camera), Position);
-            //   smoke.DrawHardwareInstancing(instanceTransformsSM, ((FreeCamera)camera), Position);         
+            //ps.DrawHardwareInstancing(instanceTransformsPS, ((FreeCamera)camera), Position);
+            //smoke.DrawHardwareInstancing(instanceTransformsSM, ((FreeCamera)camera), Position);         
             ps.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
             smoke.Draw(camera.View, camera.Projection, camera.Transform.Up, camera.Transform.Right);
         }
