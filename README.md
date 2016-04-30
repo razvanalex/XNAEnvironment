@@ -2,6 +2,7 @@
 This project is an environment made in C# with XNA 4.0 framework. The engine is an union of many projects made in XNA 3.0/3.1, adapted and converted for XNA 4.0, with my work. This project contains: sky with light scattering with day/night cycle and sun/moon, water plane, terrain, billboard system(for trees rendering) and many more. New features are coming soon! This project is free for all, so you can use it as you wish, but include me in your devs list(I've been working hard for this).
 
 #Changelog
+###v0.2
 * Added quadtree rendering terrain system
 * Added light shaft effect
 * Added tone mapping 
@@ -12,7 +13,7 @@ This project is an environment made in C# with XNA 4.0 framework. The engine is 
 * Added DebugShapeRenderer as a developing tool, very useful for point light and spot light
 * Fixed some bugs
 
-
+###v0.1
 * First version uploaded in GitHub!
 * Changed the old sky rendering system (skybox) with a new one (skydome)
 * Added day/night cycle
